@@ -3,6 +3,7 @@ package com.funkydeveloper.fashion_commerce.products;
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
+import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public record ProductController(ProductService productService) {
 
     @PostMapping("{admin-id}")
-    public ResponseEntity<Response<?>> createNewProduct(
+    public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(
             @PathVariable("admin-id") String id,
             @RequestBody CreateNewProductRequest request
     ) throws FashionCommerceException {
