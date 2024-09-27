@@ -1,4 +1,4 @@
-package com.funkydeveloper.fashion_commerce.collection.products;
+package com.funkydeveloper.fashion_commerce.products;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

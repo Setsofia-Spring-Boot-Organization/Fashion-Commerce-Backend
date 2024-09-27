@@ -1,4 +1,4 @@
-package com.funkydeveloper.fashion_commerce.collection.products;
+package com.funkydeveloper.fashion_commerce.products;
 
 import org.springframework.stereotype.Service;
 
