@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/product")
 public record ProductController(ProductService productService) {
 
-    @PostMapping("{admin-id}")
+    @PostMapping()
     public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(
-            @PathVariable("admin-id") String id,
             @RequestBody CreateNewProductRequest request
     ) throws FashionCommerceException {
-        return productService.createNewProduct(id, request);
+        return productService.createNewProduct(request);
     }
     
 }

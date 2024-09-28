@@ -9,10 +9,9 @@ public interface ProductService {
     /**
      * This method creates a new product based on the provided details in the request.
      *
-     * @param id the identifier for the new product
      * @param request the {@link CreateNewProductRequest} object containing the details of the product to be created
      *        such as name, price, available sizes, colors, images, availability status, and description
      * @return a {@link ResponseEntity} containing the response with the status of the product creation
      */
-    ResponseEntity<Response<CreatedProductResponse>> createNewProduct(String id, CreateNewProductRequest request);
+    ResponseEntity<Response<CreatedProductResponse>> createNewProduct(CreateNewProductRequest request);
 }
