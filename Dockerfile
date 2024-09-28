@@ -7,8 +7,8 @@ RUN mvn clean package -DskipTests
 #create the final image
 FROM openjdk:17.0.1-slim
 WORKDIR /app
-COPY --from=BUILD /app/target/fashhion-commerce-0.0.1-SNAPSHOT.jar fashion-commerce.jar
+COPY --from=BUILD app/target/fashion-commerce-0.0.1-SNAPSHOT.jar fashion.jar
 
 #set the port
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "fashion-commerce.jar"]
+ENTRYPOINT ["java", "-jar", "fashion.jar"]
