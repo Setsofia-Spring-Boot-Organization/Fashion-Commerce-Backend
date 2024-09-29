@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
 
         switch (error) {
             case ERROR_SAVING_DATA -> status = HttpStatus.BAD_GATEWAY;
+            case NO_EMPTY_FIELDS_ALLOWED -> status = HttpStatus.BAD_REQUEST;
         }
 
         FashionExceptionResponse response = new FashionExceptionResponse(
