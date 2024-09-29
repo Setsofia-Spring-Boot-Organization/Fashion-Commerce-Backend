@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         FashionExceptionResponse response = new FashionExceptionResponse(
                 status.value(),
                 error.label,
-                exception.getMessage(),
+                exception.getCause().getMessage(),
                 path
         );
 
