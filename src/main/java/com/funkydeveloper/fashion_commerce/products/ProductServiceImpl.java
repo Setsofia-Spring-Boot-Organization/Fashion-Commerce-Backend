@@ -1,6 +1,5 @@
-package com.funkydeveloper.fashion_commerce.products;
+﻿package com.funkydeveloper.fashion_commerce.products;
 
-import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +16,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    @Transactional(rollbackFor = {FashionCommerceException.class, RuntimeException.class})
     @Override
     public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(CreateNewProductRequest request) {
 
