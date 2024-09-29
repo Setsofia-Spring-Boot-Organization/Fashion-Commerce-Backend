@@ -62,6 +62,9 @@ public class ProductServiceImpl implements ProductService {
         if (request.name().isEmpty() || request.name().isBlank())
             emptyFields.add("name");
 
+        if (request.price().isEmpty() || request.price().isBlank())
+            emptyFields.add("price");
+
         if (!emptyFields.isEmpty())
             throw new FashionCommerceException(
                     Error.NO_EMPTY_FIELDS_ALLOWED,
