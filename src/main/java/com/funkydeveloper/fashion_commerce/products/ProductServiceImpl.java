@@ -27,21 +27,8 @@ public class ProductServiceImpl implements ProductService {
         // sanitize the incoming request
         sanitizeRequest(request);
 
-
-        Product product = Product.builder()
-                .name(request.name())
-                .price(request.price())
-                .sizes(request.sizes())
-                .colors(request.colors())
-                .images(request.images())
-                .isAvailable(true)
-                .description(request.description())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-
-        //save the product
-        Product createdProduct = productRepository.save(product);
+        // create the new product
+        Product product = createProduct(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 Response.<CreatedProductResponse>builder()
@@ -49,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
                         .message("product created successfully")
                         .data(
                                 new CreatedProductResponse(
-                                        createdProduct
+                                        product
                                 )
                         )
                         .build()
@@ -70,5 +57,26 @@ public class ProductServiceImpl implements ProductService {
                     Error.NO_EMPTY_FIELDS_ALLOWED,
                     new Throwable(Message.THE_FOLLOWING_FIELDS_ARE_EMPTY.label + emptyFields)
             );
+    }
+
+    private Product createProduct(CreateNewProductRequest request) {
+        Product product = Product.builder()
+                .name(request.name())
+                .price(request.price())
+                .sizes(request.sizes())
+                .colors(request.colors())
+                .images(request.images())
+                .isAvailable(true)
+                .description(request.description())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        //save the product
+        try {
+            return productRepository.save(product);
+        } catch (Exception exception) {
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
+        }
     }
 }
