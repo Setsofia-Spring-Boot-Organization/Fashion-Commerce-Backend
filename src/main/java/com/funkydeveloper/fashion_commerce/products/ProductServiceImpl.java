@@ -1,5 +1,8 @@
-﻿package com.funkydeveloper.fashion_commerce.products;
+package com.funkydeveloper.fashion_commerce.products;
 
+import com.funkydeveloper.fashion_commerce.exception.Error;
+import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
+import com.funkydeveloper.fashion_commerce.exception.Message;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
@@ -9,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(CreateNewProductRequest request) {
+
+        // sanitize the incoming request
+        sanitizeRequest(request);
+
 
         Product product = Product.builder()
                 .name(request.name())
@@ -45,5 +54,18 @@ public class ProductServiceImpl implements ProductService {
                         )
                         .build()
         );
+    }
+
+    private void sanitizeRequest(CreateNewProductRequest request) {
+        List<String> emptyFields = new ArrayList<>();
+
+        if (request.name().isEmpty() || request.name().isBlank())
+            emptyFields.add("name");
+
+        if (!emptyFields.isEmpty())
+            throw new FashionCommerceException(
+                    Error.NO_EMPTY_FIELDS_ALLOWED,
+                    new Throwable(Message.THE_FOLLOWING_FIELDS_ARE_EMPTY.label + emptyFields)
+            );
     }
 }
