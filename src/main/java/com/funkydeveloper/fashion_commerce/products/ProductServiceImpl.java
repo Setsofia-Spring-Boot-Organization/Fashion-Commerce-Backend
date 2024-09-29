@@ -7,6 +7,7 @@ import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -76,6 +78,8 @@ public class ProductServiceImpl implements ProductService {
         try {
             return productRepository.save(product);
         } catch (Exception exception) {
+            log.error("an error occur while saving the data {}", exception.getMessage());
+
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }
     }
