@@ -1,6 +1,7 @@
 package com.funkydeveloper.fashion_commerce.products.responses;
 
-public record CreatedProductResponse() {
+import com.funkydeveloper.fashion_commerce.products.Product;
 
-
-}
+public record CreatedProductResponse(
+        Product product
+) { }
