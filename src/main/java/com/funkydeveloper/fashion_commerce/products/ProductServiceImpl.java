@@ -5,6 +5,7 @@ import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +35,18 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         //save the product
-        productRepository.save(product);
+        Product createdProduct = productRepository.save(product);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Response.<CreatedProductResponse>builder()
+                        .status(HttpStatus.CREATED.value())
+                        .message("product created successfully")
+                        .data(
+                                new CreatedProductResponse(
+                                        createdProduct
+                                )
+                        )
+                        .build()
+        );
     }
 }
