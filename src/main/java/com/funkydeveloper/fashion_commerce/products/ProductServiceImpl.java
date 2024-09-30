@@ -6,6 +6,7 @@ import com.funkydeveloper.fashion_commerce.exception.Message;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
+import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,13 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+    /**
+     * This method validates the product creation request by checking if any required fields are empty or blank.
+     * If any of the required fields such as name or price are empty, it throws a {@link FashionCommerceException}.
+     *
+     * @param request the {@link CreateNewProductRequest} object containing product details to be validated
+     * @throws FashionCommerceException if any required fields (name or price) are empty or blank
+     */
     private void sanitizeRequest(CreateNewProductRequest request) {
         List<String> emptyFields = new ArrayList<>();
 
@@ -61,6 +69,16 @@ public class ProductServiceImpl implements ProductService {
             );
     }
 
+    /**
+     * This method creates a new {@link Product} based on the provided product details and saves it to the repository.
+     * It constructs a new product entity, assigns values such as name, price, sizes, colors, images, genders, availability,
+     * description, and timestamps, and attempts to save the product. If an error occurs while saving, a
+     * {@link FashionCommerceException} is thrown.
+     *
+     * @param request the {@link CreateNewProductRequest} object containing product details
+     * @return the saved {@link Product} entity
+     * @throws FashionCommerceException if an error occurs while saving the product
+     */
     private Product createProduct(CreateNewProductRequest request) {
         Product product = Product.builder()
                 .name(request.name())
@@ -83,5 +101,11 @@ public class ProductServiceImpl implements ProductService {
 
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }
+    }
+
+
+    @Override
+    public ResponseEntity<Response<GetNewCollectionResponse>> getNewCollections() {
+        return null;
     }
 }
