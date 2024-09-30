@@ -6,6 +6,8 @@ import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResp
 import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface ProductService {
     /**
      * This method creates a new product based on the provided details in the request.
@@ -21,5 +23,5 @@ public interface ProductService {
      *
      * @return a {@link ResponseEntity} containing a {@link Response} with the details of the new product collection
      */
-    ResponseEntity<Response<GetNewCollectionResponse>> getNewCollections();
+    ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections();
 }

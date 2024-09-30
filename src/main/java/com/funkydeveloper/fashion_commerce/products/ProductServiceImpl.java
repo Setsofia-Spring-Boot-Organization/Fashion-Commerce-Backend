@@ -105,9 +105,25 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<GetNewCollectionResponse>> getNewCollections() {
+    public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
+        List<Product> products = productRepository.findAllFromLastSevenDays();
+        List<GetNewCollectionResponse> newCollections = new ArrayList<>();
 
+        for (Product product : products) {
+            newCollections.add(
+                    new GetNewCollectionResponse(
+                            product.getId(),
+                            product.getImages()
+                    )
+            );
+        }
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<GetNewCollectionResponse>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("new collections")
+                        .data(newCollections)
+                        .build()
+        );
     }
 }
