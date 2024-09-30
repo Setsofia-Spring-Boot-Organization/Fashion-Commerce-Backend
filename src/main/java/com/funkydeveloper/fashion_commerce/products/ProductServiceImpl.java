@@ -106,6 +106,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<GetNewCollectionResponse>> getNewCollections() {
+
+
         return null;
     }
 }
