@@ -4,8 +4,11 @@ import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
 import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
+import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/product")
@@ -17,5 +20,10 @@ public record ProductController(ProductService productService) {
     ) throws FashionCommerceException {
         return productService.createNewProduct(request);
     }
-    
+
+
+    @GetMapping
+    public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
+        return productService.getNewCollections();
+    }
 }

@@ -1,5 +1,12 @@
 package com.funkydeveloper.fashion_commerce.products;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ProductRepository extends CrudRepository<Product, String> { }
+import java.time.LocalDateTime;
+import java.util.List;
+
+
+public interface ProductRepository extends MongoRepository<Product, String> {
+
+    List<Product> findAllByCreatedAtAfter(LocalDateTime localDateTime);
+}
