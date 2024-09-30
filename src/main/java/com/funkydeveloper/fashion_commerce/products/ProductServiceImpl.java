@@ -106,7 +106,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
-        List<Product> products = productRepository.findAllFromLastSevenDays();
+
+        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
+
+        log.info("the last seven days {}", lastSevenDays);
+
+        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
         List<GetNewCollectionResponse> newCollections = new ArrayList<>();
 
         for (Product product : products) {
