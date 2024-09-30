@@ -68,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
                 .sizes(request.sizes())
                 .colors(request.colors())
                 .images(request.images())
+                .genders(request.genders())
                 .isAvailable(true)
                 .description(request.description())
                 .createdAt(LocalDateTime.now())
