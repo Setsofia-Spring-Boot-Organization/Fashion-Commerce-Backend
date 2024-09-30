@@ -8,6 +8,8 @@ import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionRe
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/product")
 public record ProductController(ProductService productService) {
@@ -21,7 +23,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping
-    public ResponseEntity<Response<GetNewCollectionResponse>> getNewCollections() {
+    public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
         return productService.getNewCollections();
     }
 }
