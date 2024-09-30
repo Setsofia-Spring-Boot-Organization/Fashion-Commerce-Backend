@@ -1,14 +1,12 @@
 package com.funkydeveloper.fashion_commerce.products;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, String>, JpaSpecificationExecutor<Product> {
 
-    default List<Product> findAllFromLastSevenDays() {
-        return findAll(ProductSpecification.getCollectionsFromLastSevenDays());
-    }
+public interface ProductRepository extends MongoRepository<Product, String> {
+
+    List<Product> findAllByCreatedAtAfter(LocalDateTime localDateTime);
 }

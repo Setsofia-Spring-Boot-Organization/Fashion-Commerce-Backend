@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collation = "products")
+@Document(collection = "product")
 public class Product {
 
     @MongoId
