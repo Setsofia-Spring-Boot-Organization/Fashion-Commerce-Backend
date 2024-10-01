@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = Product.builder()
                 .name(request.name())
                 .price(request.price())
-                .categories(request.categories())
+                .type(request.type())
                 .sizes(request.sizes())
                 .colors(request.colors())
                 .images(request.images())
@@ -210,7 +210,7 @@ public class ProductServiceImpl implements ProductService {
                     new ThisWeekProducts(
                             product.getId(),
                             product.getImages(),
-                            product.getCategories(),
+                            product.getType(),
                             product.getName(),
                             product.getPrice()
                     )
