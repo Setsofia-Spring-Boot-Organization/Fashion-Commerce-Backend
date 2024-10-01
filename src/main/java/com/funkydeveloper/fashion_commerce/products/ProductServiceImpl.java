@@ -157,7 +157,7 @@ public class ProductServiceImpl implements ProductService {
                     new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
             );
 
-        List<Product> products = productRepository.findAllByGendersIs(gender);
+        List<Product> products = productRepository.findAllByGendersContains(gender);
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 Response.<List<Product>>builder()
