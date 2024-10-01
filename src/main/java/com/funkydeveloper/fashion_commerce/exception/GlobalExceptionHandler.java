@@ -22,7 +22,8 @@ public class GlobalExceptionHandler {
 
         switch (error) {
             case ERROR_SAVING_DATA,
-                 NO_PRODUCT_FOUND -> status = HttpStatus.BAD_GATEWAY;
+                 NO_PRODUCT_FOUND,
+                 INVALID_GENDER -> status = HttpStatus.BAD_GATEWAY;
             case NO_EMPTY_FIELDS_ALLOWED -> status = HttpStatus.BAD_REQUEST;
         }
 
