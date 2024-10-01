@@ -28,4 +28,6 @@ public interface ProductService {
     ResponseEntity<Response<Product>> getProduct(String id);
 
     ResponseEntity<Response<List<Product>>> filterProductsByGender(String gender);
+
+    ResponseEntity<Response<List<Product>>> searchProduct(String product);
 }
