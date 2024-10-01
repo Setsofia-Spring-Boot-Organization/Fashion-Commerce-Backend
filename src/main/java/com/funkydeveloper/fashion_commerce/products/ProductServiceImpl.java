@@ -37,11 +37,7 @@ public class ProductServiceImpl implements ProductService {
                 Response.<CreatedProductResponse>builder()
                         .status(HttpStatus.CREATED.value())
                         .message("product created successfully")
-                        .data(
-                                new CreatedProductResponse(
-                                        product
-                                )
-                        )
+                        .data(new CreatedProductResponse(product))
                         .build()
         );
     }
