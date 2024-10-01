@@ -33,4 +33,6 @@ public interface ProductService {
     ResponseEntity<Response<List<Product>>> searchProduct(String product);
 
     ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts();
+
+    ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(boolean all, String gender);
 }

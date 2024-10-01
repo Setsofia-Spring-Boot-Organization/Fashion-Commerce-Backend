@@ -62,4 +62,14 @@ public record ProductController(ProductService productService) {
     public ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts() {
         return productService.getThisWeekProducts();
     }
+
+
+
+    @GetMapping("filter/all")
+    public ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(
+            @RequestParam boolean all,
+            @RequestParam String gender
+    ) {
+        return productService.filterProductsFromLastYear(all, gender);
+    }
 }
