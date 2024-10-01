@@ -21,10 +21,14 @@ public record ProductController(ProductService productService) {
         return productService.createNewProduct(request);
     }
 
+
+
     @GetMapping("new-collection")
     public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
         return productService.getNewCollections();
     }
+
+
 
     @GetMapping("{product-id}")
     public ResponseEntity<Response<Product>> getProduct(
@@ -33,10 +37,21 @@ public record ProductController(ProductService productService) {
         return productService.getProduct(id);
     }
 
+
+
     @GetMapping("filter/gender")
     public ResponseEntity<Response<List<Product>>> filterProductsByGender(
             @RequestParam String gender
     ) {
         return productService.filterProductsByGender(gender);
+    }
+
+
+
+    @GetMapping
+    public ResponseEntity<Response<List<Product>>> searchProduct(
+            @RequestParam String product
+    ) {
+        return productService.searchProduct(product);
     }
 }
