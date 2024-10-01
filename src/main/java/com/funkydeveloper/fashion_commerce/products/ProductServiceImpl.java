@@ -80,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = Product.builder()
                 .name(request.name())
                 .price(request.price())
+                .categories(request.categories())
                 .sizes(request.sizes())
                 .colors(request.colors())
                 .images(request.images())
