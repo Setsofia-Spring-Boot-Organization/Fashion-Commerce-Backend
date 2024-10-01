@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -124,6 +125,25 @@ public class ProductServiceImpl implements ProductService {
                         .status(HttpStatus.OK.value())
                         .message("new collections")
                         .data(newCollections)
+                        .build()
+        );
+    }
+
+    @Override
+    public ResponseEntity<Response<Product>> getProduct(String id) {
+
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new FashionCommerceException(
+                        Error.NO_PRODUCT_FOUND,
+                        new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label)
+                )
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<Product>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("product details")
+                        .data(product)
                         .build()
         );
     }
