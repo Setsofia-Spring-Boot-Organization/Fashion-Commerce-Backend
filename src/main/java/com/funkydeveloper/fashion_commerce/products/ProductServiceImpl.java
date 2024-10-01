@@ -222,7 +222,39 @@ public class ProductServiceImpl implements ProductService {
                         .status(HttpStatus.OK.value())
                         .message("new products this week")
                         .data(newThisWeek)
-                        .total(newThisWeek.size())
+                        .total(String.valueOf(newThisWeek.size()))
+                        .build()
+        );
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(boolean all, String gender) {
+
+        LocalDateTime lastYear = LocalDateTime.now().minusYears(1).withMonth(1).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(1);
+        List<Product> products;
+
+        if (all) {
+            products = productRepository.findAllByCreatedAtAfter(lastYear);
+        } else {
+
+            // confirm the gender is valid
+            if (!isValidGender(gender))
+                throw new FashionCommerceException(
+                        Error.INVALID_GENDER,
+                        new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
+                );
+
+            products = productRepository.findAllByCreatedAtAfterAndGendersContains(lastYear, gender.toLowerCase());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("products from " + lastYear.getYear())
+                        .data(products)
+                        .total(String.valueOf(products.size()))
                         .build()
         );
     }
