@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -146,5 +145,31 @@ public class ProductServiceImpl implements ProductService {
                         .data(product)
                         .build()
         );
+    }
+
+    @Override
+    public ResponseEntity<Response<List<Product>>> filterProductsByGender(String gender) {
+
+        // confirm the gender is valid
+        if (!isValidGender(gender))
+            throw new FashionCommerceException(
+                    Error.INVALID_GENDER,
+                    new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
+            );
+
+        List<Product> products = productRepository.findAllByGendersIs(gender);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message(gender + " products")
+                        .data(products)
+                        .build()
+        );
+    }
+
+    private boolean isValidGender(String gender) {
+        List<String> genders = List.of("male", "female", "children");
+        return genders.contains(gender);
     }
 }

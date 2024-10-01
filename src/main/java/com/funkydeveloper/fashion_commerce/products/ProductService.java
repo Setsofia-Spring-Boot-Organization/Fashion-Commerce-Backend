@@ -26,4 +26,6 @@ public interface ProductService {
     ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections();
 
     ResponseEntity<Response<Product>> getProduct(String id);
+
+    ResponseEntity<Response<List<Product>>> filterProductsByGender(String gender);
 }
