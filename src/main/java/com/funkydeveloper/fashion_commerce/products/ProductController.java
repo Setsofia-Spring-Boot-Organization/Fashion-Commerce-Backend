@@ -3,8 +3,9 @@ package com.funkydeveloper.fashion_commerce.products;
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionResponse;
+import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
+import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
+import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public record ProductController(ProductService productService) {
 
     @PostMapping()
-    public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(
+    public ResponseEntity<Response<CreatedProduct>> createNewProduct(
             @RequestBody CreateNewProductRequest request
     ) throws FashionCommerceException {
         return productService.createNewProduct(request);
@@ -24,7 +25,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-collection")
-    public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
+    public ResponseEntity<Response<List<GetNewCollection>>> getNewCollections() {
         return productService.getNewCollections();
     }
 
@@ -53,5 +54,12 @@ public record ProductController(ProductService productService) {
             @RequestParam String product
     ) {
         return productService.searchProduct(product);
+    }
+
+
+
+    @GetMapping("new-this-week")
+    public ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts() {
+        return productService.getThisWeekProducts();
     }
 }
