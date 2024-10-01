@@ -32,4 +32,11 @@ public record ProductController(ProductService productService) {
     ) {
         return productService.getProduct(id);
     }
+
+    @GetMapping("filter/gender")
+    public ResponseEntity<Response<List<Product>>> filterProductsByGender(
+            @RequestParam String gender
+    ) {
+        return productService.filterProductsByGender(gender);
+    }
 }
