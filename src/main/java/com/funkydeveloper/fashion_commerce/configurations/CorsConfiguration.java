@@ -13,7 +13,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     private String LOCAL_FRONTEND_URL;
 
     @Override
-    public void addCorsMappings (CorsRegistry registry) {
+    public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/api/v1/**")
                 .allowedOrigins(LOCAL_FRONTEND_URL+"/", DEPLOYED_FRONTEND_URL+"/")
