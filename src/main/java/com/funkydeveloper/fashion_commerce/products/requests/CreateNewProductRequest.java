@@ -9,6 +9,6 @@ public record CreateNewProductRequest(
         List<String>sizes,
         List<String> colors,
         List<String> images,
-        List<String> genders,
+        List<String> categories,
         String description
 ) { }
