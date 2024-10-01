@@ -25,4 +25,11 @@ public record ProductController(ProductService productService) {
     public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
         return productService.getNewCollections();
     }
+
+    @GetMapping("{product-id}")
+    public ResponseEntity<Response<Product>> getProduct(
+            @PathVariable("product-id") String id
+    ) {
+        return productService.getProduct(id);
+    }
 }

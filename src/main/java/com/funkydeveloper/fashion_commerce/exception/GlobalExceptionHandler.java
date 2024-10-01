@@ -21,7 +21,8 @@ public class GlobalExceptionHandler {
         Error error = exception.error;
 
         switch (error) {
-            case ERROR_SAVING_DATA -> status = HttpStatus.BAD_GATEWAY;
+            case ERROR_SAVING_DATA,
+                 NO_PRODUCT_FOUND -> status = HttpStatus.BAD_GATEWAY;
             case NO_EMPTY_FIELDS_ALLOWED -> status = HttpStatus.BAD_REQUEST;
         }
 
