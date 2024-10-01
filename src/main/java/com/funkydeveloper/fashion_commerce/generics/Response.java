@@ -11,4 +11,5 @@ public class Response<T> {
     private int status;
     private String message;
     private T data;
+    private int total;
 }
