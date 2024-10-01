@@ -21,6 +21,7 @@ public class Product {
     private String id;
     private String name;
     private String price;
+    private List<String> categories;
     private List<String> sizes;
     private List<String> colors;
     private List<String> images;

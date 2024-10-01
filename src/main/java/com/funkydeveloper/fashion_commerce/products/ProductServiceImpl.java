@@ -5,8 +5,9 @@ import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.exception.Message;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProductResponse;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollectionResponse;
+import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
+import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
+import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public ResponseEntity<Response<CreatedProductResponse>> createNewProduct(CreateNewProductRequest request) {
+    public ResponseEntity<Response<CreatedProduct>> createNewProduct(CreateNewProductRequest request) {
 
         // sanitize the incoming request
         sanitizeRequest(request);
@@ -34,10 +35,10 @@ public class ProductServiceImpl implements ProductService {
         Product product = createProduct(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<CreatedProductResponse>builder()
+                Response.<CreatedProduct>builder()
                         .status(HttpStatus.CREATED.value())
                         .message("product created successfully")
-                        .data(new CreatedProductResponse(product))
+                        .data(new CreatedProduct(product))
                         .build()
         );
     }
@@ -102,18 +103,16 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
+    public ResponseEntity<Response<List<GetNewCollection>>> getNewCollections() {
 
-        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
-
-        log.info("the last seven days {}", lastSevenDays);
+        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
         List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
-        List<GetNewCollectionResponse> newCollections = new ArrayList<>();
+        List<GetNewCollection> newCollections = new ArrayList<>();
 
         for (Product product : products) {
             newCollections.add(
-                    new GetNewCollectionResponse(
+                    new GetNewCollection(
                             product.getId(),
                             product.getImages()
                     )
@@ -121,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<GetNewCollectionResponse>>builder()
+                Response.<List<GetNewCollection>>builder()
                         .status(HttpStatus.OK.value())
                         .message("new collections")
                         .data(newCollections)
@@ -190,6 +189,39 @@ public class ProductServiceImpl implements ProductService {
                         .status(HttpStatus.OK.value())
                         .message("products with name " + product)
                         .data(products)
+                        .build()
+        );
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts() {
+
+        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
+
+
+        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
+        List<ThisWeekProducts> newThisWeek = new ArrayList<>();
+
+        for (Product product : products) {
+            newThisWeek.add(
+                    new ThisWeekProducts(
+                            product.getId(),
+                            product.getImages(),
+                            product.getCategories(),
+                            product.getName(),
+                            product.getPrice()
+                    )
+            );
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<ThisWeekProducts>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("new products this week")
+                        .data(newThisWeek)
+                        .total(newThisWeek.size())
                         .build()
         );
     }
