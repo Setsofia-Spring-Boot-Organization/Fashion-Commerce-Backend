@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
                 .sizes(request.sizes())
                 .colors(request.colors())
                 .images(request.images())
-                .genders(request.genders())
+                .categories(request.categories())
                 .isAvailable(true)
                 .description(request.description())
                 .createdAt(LocalDateTime.now())
@@ -162,7 +162,7 @@ public class ProductServiceImpl implements ProductService {
                     new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
             );
 
-        List<Product> products = productRepository.findAllByGendersContains(gender);
+        List<Product> products = productRepository.findAllByCategoriesContains(gender);
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 Response.<List<Product>>builder()
@@ -246,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
                         new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
                 );
 
-            products = productRepository.findAllByCreatedAtAfterAndGendersContains(lastYear, gender.toLowerCase());
+            products = productRepository.findAllByCreatedAtAfterAndCategoriesContains(lastYear, gender.toLowerCase());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(
