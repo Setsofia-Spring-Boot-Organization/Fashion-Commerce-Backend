@@ -237,10 +237,8 @@ public class ProductServiceImpl implements ProductService {
 
         if (all) {
             products = productRepository.findAllByCreatedAtAfter(lastYear);
-
-            log.info("the last year products {}", products);
-
         } else {
+
             // confirm the gender is valid
             if (!isValidGender(gender))
                 throw new FashionCommerceException(
@@ -249,8 +247,6 @@ public class ProductServiceImpl implements ProductService {
                 );
 
             products = productRepository.findAllByCreatedAtAfterAndGendersContains(lastYear, gender.toLowerCase());
-
-            log.info("the last year products with filter{}", products);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(
