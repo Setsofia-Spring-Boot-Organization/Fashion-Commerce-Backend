@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-public class CorsConfiguration implements WebMvcConfigurer {
+public class CorsConfiguration {
     @Value("${deployed-frontend-url}")
     private String DEPLOYED_FRONTEND_URL;
     @Value("${local-frontend-url}")
