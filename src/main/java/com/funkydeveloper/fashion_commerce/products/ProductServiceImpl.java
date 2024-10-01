@@ -100,6 +100,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
     @Override
     public ResponseEntity<Response<List<GetNewCollectionResponse>>> getNewCollections() {
 
@@ -128,6 +129,8 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+
+
     @Override
     public ResponseEntity<Response<Product>> getProduct(String id) {
 
@@ -146,6 +149,8 @@ public class ProductServiceImpl implements ProductService {
                         .build()
         );
     }
+
+
 
     @Override
     public ResponseEntity<Response<List<Product>>> filterProductsByGender(String gender) {
@@ -171,5 +176,21 @@ public class ProductServiceImpl implements ProductService {
     private boolean isValidGender(String gender) {
         List<String> genders = List.of("male", "female", "children");
         return genders.contains(gender);
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<Product>>> searchProduct(String product) {
+
+        List<Product> products = productRepository.findAllByNameContainingIgnoreCase(product.toLowerCase());
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("products with name " + product)
+                        .data(products)
+                        .build()
+        );
     }
 }
