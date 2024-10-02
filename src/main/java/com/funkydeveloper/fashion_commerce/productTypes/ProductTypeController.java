@@ -16,10 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductTypeController {
 
+    private final ProductTypeService productTypeService;
+
     @PostMapping
     public ResponseEntity<Response<CreatedProductTypes>> createNewProductType(
             @RequestBody List<String> names
     ) {
-        return
+        return productTypeService.createNewProduct(names);
     }
 }
