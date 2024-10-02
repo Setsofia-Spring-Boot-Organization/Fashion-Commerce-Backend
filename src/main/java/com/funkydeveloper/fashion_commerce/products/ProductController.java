@@ -24,6 +24,13 @@ public record ProductController(ProductService productService) {
 
 
 
+    @GetMapping("all")
+    public ResponseEntity<Response<List<Product>>> getProducts() {
+        return productService.getProducts();
+    }
+
+
+
     @GetMapping("new-collection")
     public ResponseEntity<Response<List<GetNewCollection>>> getNewCollections() {
         return productService.getNewCollections();
