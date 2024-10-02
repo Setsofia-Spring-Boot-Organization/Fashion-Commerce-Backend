@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProductTypeService {
 
     ResponseEntity<Response<List<ProductType>>> createNewProduct(CreateProductType productType);
+
+    ResponseEntity<Response<List<ProductType>>> getProductTypes();
 }
