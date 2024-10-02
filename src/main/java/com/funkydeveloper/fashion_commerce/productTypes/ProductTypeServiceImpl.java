@@ -72,4 +72,19 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         return validNames;
     }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<ProductType>>> getProductTypes() {
+        List<ProductType> productTypes = productTypeRepository.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<ProductType>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("product types")
+                        .data(productTypes)
+                        .build()
+        );
+    }
 }
