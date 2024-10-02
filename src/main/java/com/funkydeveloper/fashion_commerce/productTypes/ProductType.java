@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "product_types")
+@Document(collection = "product_type")
 public class ProductType {
 
     @MongoId
