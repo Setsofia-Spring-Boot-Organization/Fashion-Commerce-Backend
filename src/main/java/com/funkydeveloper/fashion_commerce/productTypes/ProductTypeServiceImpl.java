@@ -1,8 +1,5 @@
 package com.funkydeveloper.fashion_commerce.productTypes;
 
-import com.funkydeveloper.fashion_commerce.exception.Error;
-import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
-import com.funkydeveloper.fashion_commerce.exception.Message;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.productTypes.requests.CreateProductType;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -28,7 +26,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         List<ProductType> productTypes = new ArrayList<>();
 
         // verify the product type names
-        List<String> validNames = getValidNames(createProductType);
+        Set<String> validNames = getValidNames(createProductType);
 
         for (String name : validNames) {
             productTypes.add(
@@ -51,42 +49,29 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         );
     }
 
-    private List<String> getValidNames(CreateProductType createProductType) {
+    private Set<String> getValidNames(CreateProductType createProductType) {
 
-        List<String> validNames = new ArrayList<>();
+        Set<String> validNames = new HashSet<>();
         List<ProductType> productTypes = productTypeRepository.findAll();
 
-
         if (productTypes.isEmpty()) {
-             validNames.addAll(createProductType.names());
-             return validNames;
-        }
-
-        if (productTypes.size() <= createProductType.names().size()) {
-            for (String name : createProductType.names()) {
-                productTypes.forEach(
-                        type -> {
-                            if (!Objects.equals(name, type.getName())) {
-                                validNames.add(name);
-                            }
-                        }
-                );
-                return validNames;
-            }
-
-        } else {
-            for (ProductType productType : productTypes) {
-                createProductType.names().forEach(
-                        name -> {
-                            if (!Objects.equals(name, productType.getName())) {
-                                validNames.add(name);
-                            }
-                        }
-                );
-            }
+            validNames.addAll(createProductType.names());
             return validNames;
         }
 
-        throw new FashionCommerceException(Error.INVALID_PRODUCT_TYPES, new Throwable(Message.THE_PRODUCT_TYPES_COULD_NOT_BE_VERIFIED.label));
+        List<String> existingNames = new ArrayList<>();
+        for (ProductType type : productTypes) {
+            existingNames.add(type.getName());
+        }
+
+        for (String name : createProductType.names()) {
+            for (String ignored : existingNames) {
+                if (!existingNames.contains(name)) {
+                    validNames.add(name);
+                }
+            }
+        }
+
+        return validNames;
     }
 }
