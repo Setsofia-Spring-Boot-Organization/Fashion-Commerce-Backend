@@ -18,18 +18,20 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     private final ProductTypeRepository productTypeRepository;
 
     @Override
-    public ResponseEntity<Response<List<ProductType>>> createNewProduct(List<CreateProductType> createProductTypes) {
+    public ResponseEntity<Response<List<ProductType>>> createNewProduct(CreateProductType createProductType) {
 
         List<ProductType> productTypes = new ArrayList<>();
         List<String> validNames = new ArrayList<>();
         List<ProductType> productTypes1 = productTypeRepository.findAll();
 
         for (ProductType productType : productTypes1) {
-            if (!Objects.equals(createProductTypes.iterator().next().name(), productType.getName())) {
-                validNames.add(
-                        createProductTypes.iterator().next().name()
-                );
-            }
+            createProductType.names().forEach(
+                    name -> {
+                        if (!Objects.equals(name, productType.getName())) {
+                            validNames.add(name);
+                        }
+                    }
+            );
         }
 
         for (String name : validNames) {
