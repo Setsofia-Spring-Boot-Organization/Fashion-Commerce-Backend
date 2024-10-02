@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,16 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ResponseEntity<Response<CreatedProductTypes>> createNewProduct(List<String> names) {
 
         List<ProductType> productTypes = new ArrayList<>();
+        List<String> validNames = new ArrayList<>();
+        List<ProductType> productTypes1 = productTypeRepository.findAll();
 
-        for (String name : names) {
+        for (ProductType productType : productTypes1) {
+            if (!Objects.equals(names.iterator().next(), productType.getName())) {
+                validNames.add(names.iterator().next());
+            }
+        }
+
+        for (String name : validNames) {
             productTypes.add(
                     ProductType.builder()
                             .name(name)
