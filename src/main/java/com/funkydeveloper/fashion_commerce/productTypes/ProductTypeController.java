@@ -1,6 +1,7 @@
 package com.funkydeveloper.fashion_commerce.productTypes;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
+import com.funkydeveloper.fashion_commerce.productTypes.requests.CreateProductType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class ProductTypeController {
 
     @PostMapping
     public ResponseEntity<Response<List<ProductType>>> createNewProductType(
-            @RequestBody List<String> names
+            @RequestBody List<CreateProductType> names
     ) {
         return productTypeService.createNewProduct(names);
     }
