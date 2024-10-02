@@ -1,8 +1,8 @@
 package com.funkydeveloper.fashion_commerce.productTypes;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.productTypes.responses.CreatedProductTypes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     private final ProductTypeRepository productTypeRepository;
 
     @Override
-    public ResponseEntity<Response<CreatedProductTypes>> createNewProduct(List<String> names) {
+    public ResponseEntity<Response<List<ProductType>>> createNewProduct(List<String> names) {
 
         List<ProductType> productTypes = new ArrayList<>();
         List<String> validNames = new ArrayList<>();
@@ -37,8 +37,14 @@ public class ProductTypeServiceImpl implements ProductTypeService {
             );
         }
 
-        productTypeRepository.saveAll(productTypes);
+        List<ProductType> createdProductTypes = productTypeRepository.saveAll(productTypes);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Response.<List<ProductType>>builder()
+                        .status(HttpStatus.CREATED.value())
+                        .message("product type(s) created successfully")
+                        .data(createdProductTypes)
+                        .build()
+        );
     }
 }
