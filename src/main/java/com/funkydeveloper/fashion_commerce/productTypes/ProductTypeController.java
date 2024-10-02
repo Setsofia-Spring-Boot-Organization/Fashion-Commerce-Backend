@@ -20,8 +20,8 @@ public class ProductTypeController {
 
     @PostMapping
     public ResponseEntity<Response<List<ProductType>>> createNewProductType(
-            @RequestBody List<CreateProductType> names
+            @RequestBody CreateProductType productType
     ) {
-        return productTypeService.createNewProduct(names);
+        return productTypeService.createNewProduct(productType);
     }
 }
