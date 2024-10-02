@@ -15,6 +15,8 @@ public class ProductTypeController {
 
     private final ProductTypeService productTypeService;
 
+
+
     @PostMapping
     public ResponseEntity<Response<List<ProductType>>> createNewProductType(
             @RequestBody CreateProductType productType
