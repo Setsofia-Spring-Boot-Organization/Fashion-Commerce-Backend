@@ -1,5 +1,7 @@
 package com.funkydeveloper.fashion_commerce.productTypes.requests;
 
+import java.util.List;
+
 public record CreateProductType(
-        String name
+        List<String> names
 ) { }
