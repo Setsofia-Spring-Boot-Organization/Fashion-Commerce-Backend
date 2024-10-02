@@ -38,8 +38,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         List<ProductType> createdProductTypes = productTypeRepository.saveAll(productTypes);
 
-        log.info("created product types {}", createdProductTypes);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 Response.<List<ProductType>>builder()
                         .status(HttpStatus.CREATED.value())
