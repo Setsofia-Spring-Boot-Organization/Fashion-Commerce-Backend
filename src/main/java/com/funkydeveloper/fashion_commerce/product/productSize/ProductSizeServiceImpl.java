@@ -18,6 +18,8 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
     private final ProductSizeRepository productSizeRepository;
 
+
+
     @Override
     public ResponseEntity<Response<List<ProductSize>>> createNewProductSize(CreateProductSize productSize) {
 
@@ -69,5 +71,21 @@ public class ProductSizeServiceImpl implements ProductSizeService {
         }
 
         return validSizes;
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<ProductSize>>> getAllProductSizes() {
+
+        List<ProductSize> productSizes = productSizeRepository.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<ProductSize>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("product types")
+                        .data(productSizes)
+                        .build()
+        );
     }
 }

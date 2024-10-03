@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ProductSizeService {
     ResponseEntity<Response<List<ProductSize>>> createNewProductSize(CreateProductSize productSize);
+
+    ResponseEntity<Response<List<ProductSize>>> getAllProductSizes();
 }
