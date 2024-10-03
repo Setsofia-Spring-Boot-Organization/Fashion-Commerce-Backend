@@ -1,11 +1,11 @@
-package com.funkydeveloper.fashion_commerce.products;
+package com.funkydeveloper.fashion_commerce.product;
 
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
-import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
+import com.funkydeveloper.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.funkydeveloper.fashion_commerce.product.responses.CreatedProduct;
+import com.funkydeveloper.fashion_commerce.product.responses.GetNewCollection;
+import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProducts;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

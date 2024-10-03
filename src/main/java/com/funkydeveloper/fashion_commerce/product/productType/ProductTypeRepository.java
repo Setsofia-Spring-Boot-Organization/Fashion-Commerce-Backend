@@ -1,4 +1,4 @@
-package com.funkydeveloper.fashion_commerce.productTypes;
+package com.funkydeveloper.fashion_commerce.product.productType;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

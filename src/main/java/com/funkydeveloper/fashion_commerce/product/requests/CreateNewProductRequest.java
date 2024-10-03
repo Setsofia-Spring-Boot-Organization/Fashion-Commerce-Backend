@@ -1,4 +1,4 @@
-package com.funkydeveloper.fashion_commerce.products.requests;
+package com.funkydeveloper.fashion_commerce.product.requests;
 
 import java.util.List;
 

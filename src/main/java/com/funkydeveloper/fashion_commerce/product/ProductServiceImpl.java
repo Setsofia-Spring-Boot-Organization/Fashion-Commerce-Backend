@@ -1,13 +1,13 @@
-package com.funkydeveloper.fashion_commerce.products;
+package com.funkydeveloper.fashion_commerce.product;
 
 import com.funkydeveloper.fashion_commerce.exception.Error;
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.exception.Message;
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
-import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
+import com.funkydeveloper.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.funkydeveloper.fashion_commerce.product.responses.CreatedProduct;
+import com.funkydeveloper.fashion_commerce.product.responses.GetNewCollection;
+import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProducts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
