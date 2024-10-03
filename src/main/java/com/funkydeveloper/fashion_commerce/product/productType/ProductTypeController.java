@@ -1,7 +1,7 @@
-package com.funkydeveloper.fashion_commerce.productTypes;
+package com.funkydeveloper.fashion_commerce.product.productType;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.productTypes.requests.CreateProductType;
+import com.funkydeveloper.fashion_commerce.product.productType.requests.CreateProductType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

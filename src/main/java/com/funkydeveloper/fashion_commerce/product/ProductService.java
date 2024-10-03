@@ -1,10 +1,11 @@
-package com.funkydeveloper.fashion_commerce.products;
+package com.funkydeveloper.fashion_commerce.product;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
-import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
+import com.funkydeveloper.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.funkydeveloper.fashion_commerce.product.responses.AllProductsRes;
+import com.funkydeveloper.fashion_commerce.product.responses.CreatedProductRes;
+import com.funkydeveloper.fashion_commerce.product.responses.GetNewCollectionRes;
+import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProductsRes;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -17,14 +18,14 @@ public interface ProductService {
      *        such as name, price, available sizes, colors, images, availability status, and description
      * @return a {@link ResponseEntity} containing the response with the status of the product creation
      */
-    ResponseEntity<Response<CreatedProduct>> createNewProduct(CreateNewProductRequest request);
+    ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request);
 
     /**
      * This method retrieves the new product collection.
      *
      * @return a {@link ResponseEntity} containing a {@link Response} with the details of the new product collection
      */
-    ResponseEntity<Response<List<GetNewCollection>>> getNewCollections();
+    ResponseEntity<Response<List<GetNewCollectionRes>>> getNewCollections();
 
     ResponseEntity<Response<Product>> getProduct(String id);
 
@@ -32,9 +33,9 @@ public interface ProductService {
 
     ResponseEntity<Response<List<Product>>> searchProduct(String product);
 
-    ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts();
+    ResponseEntity<Response<List<ThisWeekProductsRes>>> getThisWeekProducts();
 
     ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(boolean all, String gender);
 
-    ResponseEntity<Response<List<Product>>> getProducts();
+    ResponseEntity<Response<AllProductsRes>> getProducts();
 }

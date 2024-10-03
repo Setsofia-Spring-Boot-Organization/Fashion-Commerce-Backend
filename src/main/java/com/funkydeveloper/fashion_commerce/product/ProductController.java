@@ -1,11 +1,12 @@
-package com.funkydeveloper.fashion_commerce.products;
+package com.funkydeveloper.fashion_commerce.product;
 
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.generics.Response;
-import com.funkydeveloper.fashion_commerce.products.requests.CreateNewProductRequest;
-import com.funkydeveloper.fashion_commerce.products.responses.CreatedProduct;
-import com.funkydeveloper.fashion_commerce.products.responses.GetNewCollection;
-import com.funkydeveloper.fashion_commerce.products.responses.ThisWeekProducts;
+import com.funkydeveloper.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.funkydeveloper.fashion_commerce.product.responses.AllProductsRes;
+import com.funkydeveloper.fashion_commerce.product.responses.CreatedProductRes;
+import com.funkydeveloper.fashion_commerce.product.responses.GetNewCollectionRes;
+import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProductsRes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public record ProductController(ProductService productService) {
 
     @PostMapping()
-    public ResponseEntity<Response<CreatedProduct>> createNewProduct(
+    public ResponseEntity<Response<CreatedProductRes>> createNewProduct(
             @RequestBody CreateNewProductRequest request
     ) throws FashionCommerceException {
         return productService.createNewProduct(request);
@@ -25,14 +26,14 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("all")
-    public ResponseEntity<Response<List<Product>>> getProducts() {
+    public ResponseEntity<Response<AllProductsRes>> getProducts() {
         return productService.getProducts();
     }
 
 
 
     @GetMapping("new-collection")
-    public ResponseEntity<Response<List<GetNewCollection>>> getNewCollections() {
+    public ResponseEntity<Response<List<GetNewCollectionRes>>> getNewCollections() {
         return productService.getNewCollections();
     }
 
@@ -66,7 +67,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-this-week")
-    public ResponseEntity<Response<List<ThisWeekProducts>>> getThisWeekProducts() {
+    public ResponseEntity<Response<List<ThisWeekProductsRes>>> getThisWeekProducts() {
         return productService.getThisWeekProducts();
     }
 
