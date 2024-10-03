@@ -1,7 +1,0 @@
-package com.funkydeveloper.fashion_commerce.product.responses;
-
-import com.funkydeveloper.fashion_commerce.product.Product;
-
-public record CreatedProductRes(
-        Product product
-) { }
