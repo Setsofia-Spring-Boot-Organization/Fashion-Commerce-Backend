@@ -24,6 +24,6 @@ public class ProductSizeController {
     public ResponseEntity<Response<List<ProductSize>>> createNewProductSize(
             @RequestBody CreateProductSize productSize
     ) {
-        return productSizeService.createNewProductSize();
+        return productSizeService.createNewProductSize(productSize);
     }
 }
