@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
 
+    List<Product> findProductsByOrderByCreatedAtDesc();
+
     List<Product> findAllByCreatedAtAfter(LocalDateTime localDateTime);
 
     List<Product> findAllByCategoriesContains(String gender);

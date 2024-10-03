@@ -258,4 +258,22 @@ public class ProductServiceImpl implements ProductService {
                         .build()
         );
     }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<Product>>> getProducts() {
+
+
+        List<Product> products = productRepository.findProductsByOrderByCreatedAtDesc();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("products")
+                        .data(products)
+                        .total(String.valueOf(products.size()))
+                        .build()
+        );
+    }
 }
