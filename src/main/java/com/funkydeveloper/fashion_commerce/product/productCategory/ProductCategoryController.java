@@ -2,12 +2,10 @@ package com.funkydeveloper.fashion_commerce.product.productCategory;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.product.productCategory.requests.CreateNewCategory;
+import com.funkydeveloper.fashion_commerce.product.productSize.ProductSize;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,12 @@ public class ProductCategoryController {
             @RequestBody CreateNewCategory category
     ) {
         return categoryService.createNewProductCategory(category);
+    }
+
+
+
+    @GetMapping
+    public ResponseEntity<Response<List<ProductCategory>>> getProductCategories() {
+        return categoryService.getProductCategories();
     }
 }
