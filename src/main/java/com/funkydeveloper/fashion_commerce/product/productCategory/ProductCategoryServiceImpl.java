@@ -19,8 +19,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
     private final ProductCategoryRepository productCategoryRepository;
 
-
-
     @Override
     public ResponseEntity<Response<List<ProductCategory>>> createNewProductCategory(CreateNewCategory category) {
 
@@ -78,6 +76,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
     @Override
     public ResponseEntity<Response<List<ProductCategory>>> getProductCategories() {
+
         List<ProductCategory> categories = productCategoryRepository.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(

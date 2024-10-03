@@ -8,6 +8,7 @@ import com.funkydeveloper.fashion_commerce.product.responses.GetNewCollectionRes
 import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProductsRes;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
@@ -18,7 +19,7 @@ public interface ProductService {
      *        such as name, price, available sizes, colors, images, availability status, and description
      * @return a {@link ResponseEntity} containing the response with the status of the product creation
      */
-    ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request);
+    ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException;
 
     /**
      * This method retrieves the new product collection.

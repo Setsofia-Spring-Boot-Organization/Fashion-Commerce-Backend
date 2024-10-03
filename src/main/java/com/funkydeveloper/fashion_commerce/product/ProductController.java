@@ -10,6 +10,7 @@ import com.funkydeveloper.fashion_commerce.product.responses.ThisWeekProductsRes
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,8 @@ public record ProductController(ProductService productService) {
 
     @PostMapping()
     public ResponseEntity<Response<CreatedProductRes>> createNewProduct(
-            @RequestBody CreateNewProductRequest request
-    ) throws FashionCommerceException {
+            @ModelAttribute CreateNewProductRequest request
+    ) throws FashionCommerceException, IOException {
         return productService.createNewProduct(request);
     }
 

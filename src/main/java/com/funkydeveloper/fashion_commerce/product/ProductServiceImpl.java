@@ -1,5 +1,6 @@
 package com.funkydeveloper.fashion_commerce.product;
 
+import com.funkydeveloper.fashion_commerce.cloudinary.CloudinaryConfig;
 import com.funkydeveloper.fashion_commerce.exception.Error;
 import com.funkydeveloper.fashion_commerce.exception.FashionCommerceException;
 import com.funkydeveloper.fashion_commerce.exception.Message;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,10 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CloudinaryConfig cloudinaryConfig;
 
     @Override
-    public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) {
+    public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException {
 
         // sanitize the incoming request
         sanitizeRequest(request);
@@ -54,10 +57,10 @@ public class ProductServiceImpl implements ProductService {
     private void sanitizeRequest(CreateNewProductRequest request) {
         List<String> emptyFields = new ArrayList<>();
 
-        if (request.name().isEmpty() || request.name().isBlank())
+        if (request.getName().isEmpty() || request.getName().isBlank())
             emptyFields.add("name");
 
-        if (request.price().isEmpty() || request.price().isBlank())
+        if (request.getPrice().isEmpty() || request.getPrice().isBlank())
             emptyFields.add("price");
 
         if (!emptyFields.isEmpty())
@@ -77,17 +80,20 @@ public class ProductServiceImpl implements ProductService {
      * @return the saved {@link Product} entity
      * @throws FashionCommerceException if an error occurs while saving the product
      */
-    private Product createProduct(CreateNewProductRequest request) {
+    private Product createProduct(CreateNewProductRequest request) throws IOException {
+
+        List<String> images = cloudinaryConfig.uploadImageToCloudinary(request.getImages());
+
         Product product = Product.builder()
-                .name(request.name())
-                .price(request.price())
-                .type(request.type())
-                .sizes(request.sizes())
-                .colors(request.colors())
-                .images(request.images())
-                .categories(request.categories())
+                .name(request.getName())
+                .price(request.getPrice())
+                .type(request.getType())
+                .sizes(request.getSizes())
+                .colors(request.getColors())
+                .images(images)
+                .categories(request.getCategories())
                 .isAvailable(true)
-                .description(request.description())
+                .description(request.getDescription())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
