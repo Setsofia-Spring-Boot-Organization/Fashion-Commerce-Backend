@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -16,7 +18,7 @@ public class CloudinaryConfig {
     @Value("${cloudinary-url}")
     private String CLOUDINARY_URL;
 
-    public void uploadImageToCloudinary(MultipartFile image) throws IOException {
+    public List<String> uploadImageToCloudinary(List<MultipartFile> multipartFiles) throws IOException {
         Cloudinary cloudinary = new Cloudinary(CLOUDINARY_URL);
         cloudinary.config.secure = true;
 
@@ -26,8 +28,15 @@ public class CloudinaryConfig {
                 "overwrite", true
         );
 
-        var uploadedImage = cloudinary.uploader().upload(image, params);
+        List<String> finalImages = new ArrayList<>();
+        for (MultipartFile multipartFile : multipartFiles) {
 
-        log.info("the cloudinary info {}", uploadedImage);
+            byte[] bytes = multipartFile.getBytes();
+
+            var uploadedImage = cloudinary.uploader().upload(bytes, params);
+            finalImages.add(uploadedImage.get("secure_url").toString());
+        }
+
+        return finalImages;
     }
 }
