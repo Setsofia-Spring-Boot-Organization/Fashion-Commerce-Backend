@@ -2,8 +2,6 @@ package com.funkydeveloper.fashion_commerce.product.productCategory;
 
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.product.productCategory.requests.CreateNewCategory;
-import com.funkydeveloper.fashion_commerce.product.productSize.ProductSize;
-import com.funkydeveloper.fashion_commerce.product.productSize.requests.CreateProductSize;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

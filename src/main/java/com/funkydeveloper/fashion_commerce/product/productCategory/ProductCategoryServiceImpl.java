@@ -3,6 +3,7 @@ package com.funkydeveloper.fashion_commerce.product.productCategory;
 import com.funkydeveloper.fashion_commerce.generics.Response;
 import com.funkydeveloper.fashion_commerce.product.productCategory.requests.CreateNewCategory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,29 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
     @Override
     public ResponseEntity<Response<List<ProductCategory>>> createNewProductCategory(CreateNewCategory category) {
-        return null;
+
+        List<ProductCategory> productCategories = new ArrayList<>();
+
+        // verify the product type names
+        Set<String> validCategories = getValidCategories(category);
+
+        for (String name : validCategories) {
+            productCategories.add(
+                    ProductCategory.builder()
+                            .name(name)
+                            .build()
+            );
+        }
+
+        List<ProductCategory> categories = productCategoryRepository.saveAll(productCategories);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Response.<List<ProductCategory>>builder()
+                        .status(HttpStatus.CREATED.value())
+                        .message("product sizes(s) created successfully")
+                        .data(categories)
+                        .build()
+        );
     }
 
     private Set<String> getValidCategories(CreateNewCategory category) {
