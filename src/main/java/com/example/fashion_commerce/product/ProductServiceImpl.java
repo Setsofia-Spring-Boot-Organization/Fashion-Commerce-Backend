@@ -12,7 +12,6 @@ import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
 import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
