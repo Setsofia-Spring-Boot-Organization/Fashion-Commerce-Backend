@@ -89,6 +89,7 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 			<version>5.1.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -106,7 +107,7 @@
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
 							<processor>
-								org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor
+								<processor>com.querydsl.apt.mongodb.MongoAnnotationProcessor</processor>
 							</processor>
 						</configuration>
 					</execution>

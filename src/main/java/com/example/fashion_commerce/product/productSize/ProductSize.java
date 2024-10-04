@@ -1,6 +1,6 @@
 package com.example.fashion_commerce.product.productSize;
 
-import com.querydsl.core.annotations.QueryEntity;
+import com.mysema.query.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
