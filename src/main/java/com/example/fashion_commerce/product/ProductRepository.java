@@ -1,6 +1,7 @@
 package com.example.fashion_commerce.product;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
