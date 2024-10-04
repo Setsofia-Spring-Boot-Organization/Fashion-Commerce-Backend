@@ -24,8 +24,8 @@ public class CloudinaryConfig {
 
         Map<String, Boolean> params  = Map.of(
                 "use_filename", true,
-                "unique_filename", false,
-                "overwrite", true
+                "unique_filename", true,
+                "overwrite", false
         );
 
         List<String> finalImages = new ArrayList<>();
