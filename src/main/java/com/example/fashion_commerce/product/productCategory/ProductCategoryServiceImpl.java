@@ -30,7 +30,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
         for (String name : validCategories) {
             productCategories.add(
                     ProductCategory.builder()
-                            .name(name)
+                            .category(name)
                             .build()
             );
         }
@@ -58,7 +58,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         List<String> existingNames = new ArrayList<>();
         for (ProductCategory productCategory : productCategories) {
-            existingNames.add(productCategory.getName());
+            existingNames.add(productCategory.getCategory());
         }
 
         for (String name : category.names()) {
