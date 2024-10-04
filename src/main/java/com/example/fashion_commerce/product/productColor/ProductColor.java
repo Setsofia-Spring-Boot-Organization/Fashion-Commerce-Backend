@@ -1,4 +1,4 @@
-package com.example.fashion_commerce.product.productCategory;
+package com.example.fashion_commerce.product.productColor;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,10 +11,10 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "category")
-public class ProductCategory {
+@Document(collection = "product_size")
+public class ProductColor {
 
     @MongoId
     private String id;
-    private String category;
+    private String color;
 }
