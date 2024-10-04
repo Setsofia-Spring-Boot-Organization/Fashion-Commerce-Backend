@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ProductColorService {
     ResponseEntity<Response<List<ProductColor>>> createNewProductColor(CreateProductColor productColor);
+
+    ResponseEntity<Response<List<ProductColor>>> getProductColors();
 }

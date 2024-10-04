@@ -73,4 +73,18 @@ public class ProductColorServiceImpl implements ProductColorService {
 
         return validColors;
     }
+
+
+    @Override
+    public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
+        List<ProductColor> colors = productColorRepository.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<ProductColor>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("product colors")
+                        .data(colors)
+                        .build()
+        );
+    }
 }
