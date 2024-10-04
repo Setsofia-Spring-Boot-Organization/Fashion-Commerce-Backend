@@ -4,10 +4,7 @@ import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,12 @@ public class ProductColorController {
             @RequestBody CreateProductColor productColor
     ) {
         return colorService.createNewProductColor(productColor);
+    }
+
+
+
+    @GetMapping
+    public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
+        return colorService.getProductColors();
     }
 }
