@@ -30,19 +30,31 @@ public class ProductPredicates {
         ListIterator<String> categoryIterator = getDefaultCategories(filter).listIterator();
         ListIterator<String> colorsIterator = getDefaultColors(filter).listIterator();
 
-        log.info("the sizes {}", sizeIterator.next());
-        log.info("the categories {}", categoryIterator.next());
-        log.info("the colors {}", colorsIterator.next());
+        List<String> sizes = new ArrayList<>();
+        sizeIterator.forEachRemaining(sizes::add);
+
+        List<String> categories = new ArrayList<>();
+        categoryIterator.forEachRemaining(categories::add);
+
+        List<String> colors = new ArrayList<>();
+        colorsIterator.forEachRemaining(colors::add);
+
+        if (filter.getStartPrice() == null || filter.getStartPrice().isEmpty()) {
+            filter.setStartPrice("0");
+        }
+        if (filter.getEndPrice() == null || filter.getEndPrice().isEmpty()) {
+            filter.setEndPrice("100000");
+        }
 
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
                 .type.eq(filter.getType())
-                .or(qProduct.sizes.contains(sizeIterator.next()))
+                .or(qProduct.sizes.any().in(sizes)
                 .or(qProduct.isAvailable.eq(filter.isAvailable()))
-                .or(qProduct.categories.contains(categoryIterator.next()))
-                .or(qProduct.colors.contains(colorsIterator.next()))
-                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
+                .or(qProduct.categories.any().in(categories))
+                .or(qProduct.colors.any().in(colors))
+                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
         return (List<Product>) productRepository.findAll(predicate);
     }
 
