@@ -1,6 +1,7 @@
 package com.example.fashion_commerce.product;
 
 import com.example.fashion_commerce.product.productCategory.ProductCategoryRepository;
+import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.querydsl.core.types.Predicate;
@@ -18,13 +19,14 @@ public class ProductPredicates {
     private final ProductRepository productRepository;
     private final ProductSizeRepository productSizeRepository;
     private final ProductCategoryRepository productCategoryRepository;
+    private final ProductColorRepository productColorRepository;
 
     public List<Product> globalProductFilter(FilterProducts filter) {
 
 
         ListIterator<String> sizeIterator = getDefaultSizes(filter).listIterator();
         ListIterator<String> categoryIterator = getDefaultCategories(filter).listIterator();
-        ListIterator<String> colorsIterator = filter.getColors().listIterator();
+        ListIterator<String> colorsIterator = getDefaultColors(filter).listIterator();
 
 
         QProduct qProduct = new QProduct("product");
@@ -58,5 +60,16 @@ public class ProductPredicates {
             return categories;
         }
         return filter.getCategories();
+    }
+
+    private List<String> getDefaultColors(FilterProducts filter) {
+        List<String> colors = new ArrayList<>();
+        if (filter.getColors().isEmpty()) {
+            productColorRepository.findAll().forEach(
+                    productColor -> colors.add(productColor.getColor())
+            );
+            return colors;
+        }
+        return filter.getColors();
     }
 }
