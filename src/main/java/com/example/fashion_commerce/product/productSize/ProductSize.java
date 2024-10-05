@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.product.productSize;
 
+import com.mysema.query.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@QueryEntity
 @Document(collection = "product_size")
 public class ProductSize {
 

@@ -6,6 +6,7 @@ import com.example.fashion_commerce.exception.Message;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
@@ -28,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CloudinaryConfig cloudinaryConfig;
+    private final ProductPredicates productPredicates;
 
     @Override
     public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException {
@@ -270,6 +272,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<AllProductsRes>> getProducts() {
+
         List<Product> products = productRepository.findProductsByOrderByCreatedAtDesc();
 
         List<Product> availableProducts = new ArrayList<>();
@@ -293,6 +296,22 @@ public class ProductServiceImpl implements ProductService {
                                 unAvailableProducts.size()
                         ))
                         .total(String.valueOf(products.size()))
+                        .build()
+        );
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter) {
+
+        List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("filtered products")
+                        .data(filteredProducts)
                         .build()
         );
     }

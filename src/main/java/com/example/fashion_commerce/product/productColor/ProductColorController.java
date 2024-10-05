@@ -16,7 +16,6 @@ public class ProductColorController {
     private final ProductColorService colorService;
 
 
-
     @PostMapping
     public ResponseEntity<Response<List<ProductColor>>> createNewProductColor(
             @RequestBody CreateProductColor productColor
@@ -28,6 +27,7 @@ public class ProductColorController {
 
     @GetMapping
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
+
         return colorService.getProductColors();
     }
 }

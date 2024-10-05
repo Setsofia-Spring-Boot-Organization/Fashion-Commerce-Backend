@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.product;
 
+import com.mysema.query.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -14,6 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@QueryEntity //this annotation helps to create a QueryDSL support for the entity
 @Document(collection = "product")
 public class Product {
 
