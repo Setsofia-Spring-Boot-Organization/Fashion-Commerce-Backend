@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.productColor;
 
 import com.example.fashion_commerce.generics.Response;
-import com.example.fashion_commerce.product.ProductPredicates;
 import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     private final ProductColorRepository productColorRepository;
 
-    public ProductColorServiceImpl(ProductColorRepository productColorRepository, ProductPredicates productPredicates) {
+    public ProductColorServiceImpl(ProductColorRepository productColorRepository) {
         this.productColorRepository = productColorRepository;
     }
 
