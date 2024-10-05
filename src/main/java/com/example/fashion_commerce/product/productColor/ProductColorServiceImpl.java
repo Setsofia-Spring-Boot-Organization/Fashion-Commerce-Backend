@@ -1,6 +1,7 @@
 package com.example.fashion_commerce.product.productColor;
 
 import com.example.fashion_commerce.generics.Response;
+import com.example.fashion_commerce.product.ProductPredicates;
 import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +11,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ProductColorServiceImpl implements ProductColorService {
 
 
     private final ProductColorRepository productColorRepository;
+    private final ProductPredicates productPredicates;
 
-    public ProductColorServiceImpl(ProductColorRepository productColorRepository) {
+    public ProductColorServiceImpl(ProductColorRepository productColorRepository, ProductPredicates productPredicates) {
         this.productColorRepository = productColorRepository;
+        this.productPredicates = productPredicates;
     }
 
     @Override
@@ -77,6 +82,10 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Override
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
+
+        var products = productPredicates.globalProductFilter();
+        log.info("the predicate function {}", products);
+
         List<ProductColor> colors = productColorRepository.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(

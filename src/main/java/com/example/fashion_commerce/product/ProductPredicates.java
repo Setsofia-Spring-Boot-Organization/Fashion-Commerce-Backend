@@ -1,18 +1,21 @@
 package com.example.fashion_commerce.product;
 
+import com.querydsl.core.types.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.function.Predicate;
+import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ProductPredicates {
 
-    public static Predicate<Product> getNewCollectionsPredicate() {
-        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
+    private final ProductRepository productRepository;
 
-        return product -> product.getCreatedAt().isAfter(
-                lastSevenDays
-        );
+    public List<Product> globalProductFilter() {
+        QProduct qProduct = new QProduct("product");
+        Predicate predicate = qProduct.name.startsWith("D");
+
+        return (List<Product>) productRepository.findAll(predicate);
     }
 }
