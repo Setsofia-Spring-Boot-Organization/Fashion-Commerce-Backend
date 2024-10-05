@@ -6,12 +6,14 @@ import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ProductPredicates {
@@ -28,6 +30,10 @@ public class ProductPredicates {
         ListIterator<String> categoryIterator = getDefaultCategories(filter).listIterator();
         ListIterator<String> colorsIterator = getDefaultColors(filter).listIterator();
 
+        log.info("the sizes {}", sizeIterator.next());
+        log.info("the categories {}", categoryIterator.next());
+        log.info("the colors {}", colorsIterator.next());
+
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
@@ -42,7 +48,7 @@ public class ProductPredicates {
 
     private List<String> getDefaultSizes(FilterProducts filter) {
         List<String> sizes = new ArrayList<>();
-        if (filter.getSizes().isEmpty()) {
+        if (filter.getSizes() == null) {
             productSizeRepository.findAll().forEach(
                     productSize -> sizes.add(productSize.getSize())
             );
@@ -53,7 +59,7 @@ public class ProductPredicates {
 
     private List<String> getDefaultCategories(FilterProducts filter) {
         List<String> categories = new ArrayList<>();
-        if (filter.getCategories().isEmpty()) {
+        if (filter.getCategories() == null || filter.getCategories().isEmpty()) {
             productCategoryRepository.findAll().forEach(
                     productCategory -> categories.add(productCategory.getCategory())
             );
@@ -64,7 +70,7 @@ public class ProductPredicates {
 
     private List<String> getDefaultColors(FilterProducts filter) {
         List<String> colors = new ArrayList<>();
-        if (filter.getColors().isEmpty()) {
+        if (filter.getColors() == null) {
             productColorRepository.findAll().forEach(
                     productColor -> colors.add(productColor.getColor())
             );
