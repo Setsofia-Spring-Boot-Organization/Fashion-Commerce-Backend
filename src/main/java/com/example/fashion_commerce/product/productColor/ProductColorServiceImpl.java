@@ -19,11 +19,9 @@ public class ProductColorServiceImpl implements ProductColorService {
 
 
     private final ProductColorRepository productColorRepository;
-    private final ProductPredicates productPredicates;
 
     public ProductColorServiceImpl(ProductColorRepository productColorRepository, ProductPredicates productPredicates) {
         this.productColorRepository = productColorRepository;
-        this.productPredicates = productPredicates;
     }
 
     @Override
@@ -82,17 +80,6 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Override
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
-
-        var products = productPredicates.globalProductFilter(
-                "Dior",
-                List.of("Ss", "L"),
-                false,
-                List.of("Mens"),
-                List.of("Blacks"),
-                "15s",
-                "1500s"
-        );
-        log.info("the predicate function {}", products);
 
         List<ProductColor> colors = productColorRepository.findAll();
 
