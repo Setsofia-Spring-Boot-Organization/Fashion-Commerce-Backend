@@ -106,9 +106,9 @@
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
-							<processor>
+							<processors>
 								<processor>com.querydsl.apt.mongodb.MongoAnnotationProcessor</processor>
-							</processor>
+							</processors>
 						</configuration>
 					</execution>
 				</executions>
