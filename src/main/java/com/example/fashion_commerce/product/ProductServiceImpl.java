@@ -6,6 +6,7 @@ import com.example.fashion_commerce.exception.Message;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
@@ -296,5 +297,15 @@ public class ProductServiceImpl implements ProductService {
                         .total(String.valueOf(products.size()))
                         .build()
         );
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<Product>> filterAllProducts(FilterProducts filter) {
+
+
+
+        return null;
     }
 }

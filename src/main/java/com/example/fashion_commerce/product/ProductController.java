@@ -3,6 +3,7 @@ package com.example.fashion_commerce.product;
 import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
@@ -80,5 +81,14 @@ public record ProductController(ProductService productService) {
             @RequestParam String gender
     ) {
         return productService.filterProductsFromLastYear(all, gender);
+    }
+
+
+
+    @GetMapping(path = "filter/all/products")
+    public ResponseEntity<Response<Product>> filterAllProducts(
+            FilterProducts filter
+    ) {
+        return productService.filterAllProducts(filter);
     }
 }

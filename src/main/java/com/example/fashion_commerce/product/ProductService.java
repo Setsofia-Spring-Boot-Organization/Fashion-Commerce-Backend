@@ -2,6 +2,7 @@ package com.example.fashion_commerce.product;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
+import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
@@ -39,4 +40,6 @@ public interface ProductService {
     ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(boolean all, String gender);
 
     ResponseEntity<Response<AllProductsRes>> getProducts();
+
+    ResponseEntity<Response<Product>> filterAllProducts(FilterProducts filter);
 }
