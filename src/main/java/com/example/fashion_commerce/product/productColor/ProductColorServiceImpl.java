@@ -84,6 +84,7 @@ public class ProductColorServiceImpl implements ProductColorService {
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
 
         var products = productPredicates.globalProductFilter(
+                "Dior",
                 List.of("Ss", "L"),
                 false,
                 List.of("Mens"),
