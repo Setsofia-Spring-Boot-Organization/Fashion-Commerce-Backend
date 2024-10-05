@@ -86,7 +86,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping(path = "filter/all/products")
-    public ResponseEntity<Response<Product>> filterAllProducts(
+    public ResponseEntity<Response<List<Product>>> filterAllProducts(
             FilterProducts filter
     ) {
         return productService.filterAllProducts(filter);

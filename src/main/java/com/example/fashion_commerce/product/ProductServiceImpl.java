@@ -29,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CloudinaryConfig cloudinaryConfig;
+    private final ProductPredicates productPredicates;
 
     @Override
     public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException {
@@ -302,10 +303,16 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<Product>> filterAllProducts(FilterProducts filter) {
+    public ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter) {
 
+        List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
 
-
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("filtered products")
+                        .data(filteredProducts)
+                        .build()
+        );
     }
 }

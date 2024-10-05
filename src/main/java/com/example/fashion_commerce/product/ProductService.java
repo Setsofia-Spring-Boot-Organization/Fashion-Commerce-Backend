@@ -41,5 +41,5 @@ public interface ProductService {
 
     ResponseEntity<Response<AllProductsRes>> getProducts();
 
-    ResponseEntity<Response<Product>> filterAllProducts(FilterProducts filter);
+    ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter);
 }
