@@ -307,15 +307,12 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
 
-        log.info("the filtered products {}", filteredProducts);
-
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                Response.<List<Product>>builder()
-//                        .status(HttpStatus.OK.value())
-//                        .message("filtered products")
-//                        .data(filteredProducts)
-//                        .build()
-//        );
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Response.<List<Product>>builder()
+                        .status(HttpStatus.OK.value())
+                        .message("filtered products")
+                        .data(filteredProducts)
+                        .build()
+        );
     }
 }
