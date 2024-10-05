@@ -83,7 +83,14 @@ public class ProductColorServiceImpl implements ProductColorService {
     @Override
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
 
-        var products = productPredicates.globalProductFilter();
+        var products = productPredicates.globalProductFilter(
+                List.of("Ss", "L"),
+                false,
+                List.of("Mens"),
+                List.of("Blacks"),
+                "15s",
+                "1500s"
+        );
         log.info("the predicate function {}", products);
 
         List<ProductColor> colors = productColorRepository.findAll();
