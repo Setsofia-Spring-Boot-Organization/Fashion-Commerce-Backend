@@ -1,10 +1,12 @@
 package com.example.fashion_commerce.product;
 
+import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,22 +15,35 @@ import java.util.ListIterator;
 public class ProductPredicates {
 
     private final ProductRepository productRepository;
+    private final ProductSizeRepository productSizeRepository;
 
-    public List<Product> globalProductFilter(FilterProducts filterProducts) {
+    public List<Product> globalProductFilter(FilterProducts filter) {
 
-        ListIterator<String> sizeIterator = filterProducts.getSizes().listIterator();
-        ListIterator<String> categoryIterator = filterProducts.getCategories().listIterator();
-        ListIterator<String> colorsIterator = filterProducts.getColors().listIterator();
+
+        ListIterator<String> sizeIterator = getDefaultSizes(filter).listIterator();
+        ListIterator<String> categoryIterator = filter.getCategories().listIterator();
+        ListIterator<String> colorsIterator = filter.getColors().listIterator();
 
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
-                .type.eq(filterProducts.getType())
+                .type.eq(filter.getType())
                 .or(qProduct.sizes.contains(sizeIterator.next()))
-                .or(qProduct.isAvailable.eq(filterProducts.isAvailable()))
+                .or(qProduct.isAvailable.eq(filter.isAvailable()))
                 .or(qProduct.categories.contains(categoryIterator.next()))
                 .or(qProduct.colors.contains(colorsIterator.next()))
-                .or(qProduct.price.between(filterProducts.getStartPrice(), filterProducts.getEndPrice()));
+                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
         return (List<Product>) productRepository.findAll(predicate);
+    }
+
+    private List<String> getDefaultSizes(FilterProducts filter) {
+        List<String> sizes = new ArrayList<>();
+        if (filter.getSizes().isEmpty()) {
+            productSizeRepository.findAll().forEach(
+                    productSize -> sizes.add(productSize.getSize())
+            );
+            return sizes;
+        }
+        return filter.getSizes();
     }
 }
