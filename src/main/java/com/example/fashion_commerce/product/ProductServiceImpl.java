@@ -173,13 +173,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByCategoriesContains(gender);
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(gender + " products")
-                        .data(products)
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                gender + " products",
+                products
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
     private boolean isValidGender(String gender) {
