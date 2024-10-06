@@ -194,13 +194,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByNameContainingIgnoreCase(product.toLowerCase());
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products with name " + product)
-                        .data(products)
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products with name " + product,
+                products
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
