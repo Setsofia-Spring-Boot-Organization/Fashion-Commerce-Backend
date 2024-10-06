@@ -77,12 +77,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         List<ProductCategory> categories = productCategoryRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductCategory>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product categories")
-                        .data(categories)
-                        .build()
+        Response<List<ProductCategory>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product categories",
+                categories
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 }
