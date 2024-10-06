@@ -76,7 +76,6 @@ public class Product {
         return images;
     }
 
-
     public boolean isAvailable() {
         return isAvailable;
     }

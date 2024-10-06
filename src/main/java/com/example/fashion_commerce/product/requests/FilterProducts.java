@@ -23,6 +23,10 @@ public class FilterProducts {
 
     public FilterProducts() {}
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
     public String getType() {
         return type;
     }

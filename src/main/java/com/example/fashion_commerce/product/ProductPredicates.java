@@ -4,6 +4,7 @@ import com.example.fashion_commerce.product.productCategory.ProductCategoryRepos
 import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
+import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,11 +17,13 @@ public class ProductPredicates {
     private final ProductSizeRepository productSizeRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductColorRepository productColorRepository;
+    private final ProductRepository productRepository;
 
-    public ProductPredicates(ProductSizeRepository productSizeRepository, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository) {
+    public ProductPredicates(ProductSizeRepository productSizeRepository, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductRepository productRepository) {
         this.productSizeRepository = productSizeRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.productColorRepository = productColorRepository;
+        this.productRepository = productRepository;
     }
 
     public List<Product> globalProductFilter(FilterProducts filter) {
@@ -46,17 +49,15 @@ public class ProductPredicates {
             filter.setEndPrice("100000");
         }
 
-        return null;
-
-//        QProduct qProduct = new QProduct("product");
-//        Predicate predicate = qProduct
-//                .type.eq(filter.getType())
-//                .or(qProduct.sizes.any().in(sizes)
-//                .or(qProduct.isAvailable.eq(filter.isAvailable()))
-//                .or(qProduct.categories.any().in(categories))
-//                .or(qProduct.colors.any().in(colors))
-//                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
-//        return (List<Product>) productRepository.findAll(predicate);
+        QProduct qProduct = new QProduct("product");
+        Predicate predicate = qProduct
+                .type.eq(filter.getType())
+                .or(qProduct.sizes.any().in(sizes)
+                .or(qProduct.isAvailable.eq(filter.isAvailable()))
+                .or(qProduct.categories.any().in(categories))
+                .or(qProduct.colors.any().in(colors))
+                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
+        return (List<Product>) productRepository.findAll(predicate);
     }
 
     private List<String> getDefaultSizes(FilterProducts filter) {

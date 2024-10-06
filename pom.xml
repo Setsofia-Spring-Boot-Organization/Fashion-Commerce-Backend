@@ -90,6 +90,7 @@
 
 	<build>
 		<plugins>
+			<!-- Compiler plugin to process QueryDSL annotations -->
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -101,12 +102,15 @@
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
-								<processor>com.querydsl.apt.mongodb.MongoAnnotationProcessor</processor>
+							<processor>
+								org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor
+							</processor>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 
+			<!-- Spring Boot plugin for packaging the application -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -115,9 +119,6 @@
 						<goals>
 							<goal>repackage</goal>
 						</goals>
-						<configuration>
-							<classifier>exec</classifier>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
