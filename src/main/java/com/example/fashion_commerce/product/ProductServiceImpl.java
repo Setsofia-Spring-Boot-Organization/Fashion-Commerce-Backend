@@ -40,13 +40,13 @@ public class ProductServiceImpl implements ProductService {
         // create the new product
         Product product = createProduct(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<CreatedProductRes>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product created successfully")
-                        .data(new CreatedProductRes(product))
-                        .build()
+        Response<CreatedProductRes> response = new Response<>(
+                HttpStatus.OK.value(),
+                "product created successfully",
+                new CreatedProductRes(product)
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     /**
@@ -129,13 +129,13 @@ public class ProductServiceImpl implements ProductService {
             );
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<GetNewCollectionRes>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("new collections")
-                        .data(newCollections)
-                        .build()
+        Response<List<GetNewCollectionRes>> response = new Response<>(
+                HttpStatus.OK.value(),
+                "new collections",
+                newCollections
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 

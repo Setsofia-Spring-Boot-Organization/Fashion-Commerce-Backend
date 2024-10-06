@@ -15,13 +15,17 @@ import java.util.ListIterator;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class ProductPredicates {
 
-    private final ProductRepository productRepository;
     private final ProductSizeRepository productSizeRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductColorRepository productColorRepository;
+
+    public ProductPredicates(ProductSizeRepository productSizeRepository, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository) {
+        this.productSizeRepository = productSizeRepository;
+        this.productCategoryRepository = productCategoryRepository;
+        this.productColorRepository = productColorRepository;
+    }
 
     public List<Product> globalProductFilter(FilterProducts filter) {
 
