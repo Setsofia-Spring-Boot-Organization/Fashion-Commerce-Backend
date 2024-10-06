@@ -2,7 +2,7 @@ package com.example.fashion_commerce.product.productCategory;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productCategory.requests.CreateNewCategory;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,15 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class ProductCategoryServiceImpl implements ProductCategoryService{
 
 
     private final ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryRepository = productCategoryRepository;
+    }
 
     @Override
     public ResponseEntity<Response<List<ProductCategory>>> createNewProductCategory(CreateNewCategory category) {
