@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.productColor;
 
 import com.example.fashion_commerce.generics.Response;
-import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,12 +77,12 @@ public class ProductColorServiceImpl implements ProductColorService {
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
         List<ProductColor> colors = productColorRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductColor>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product colors")
-                        .data(colors)
-                        .build()
+        Response<List<ProductColor>> productColorResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products colors",
+                colors
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productColorResponse);
     }
 }
