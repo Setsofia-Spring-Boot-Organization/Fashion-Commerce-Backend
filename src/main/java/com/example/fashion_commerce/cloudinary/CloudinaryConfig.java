@@ -1,9 +1,8 @@
 package com.example.fashion_commerce.cloudinary;
 
 import com.cloudinary.Cloudinary;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
-@Component
+@Configuration
 public class CloudinaryConfig {
 
-    @Value("${cloudinary-url}")
+    @Value("${cloudinary.url}")
     private String CLOUDINARY_URL;
 
     public List<String> uploadImageToCloudinary(List<MultipartFile> multipartFiles) throws IOException {

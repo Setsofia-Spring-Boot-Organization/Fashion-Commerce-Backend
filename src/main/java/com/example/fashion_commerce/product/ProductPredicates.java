@@ -5,23 +5,26 @@ import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.querydsl.core.types.Predicate;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-@Slf4j
 @Component
-@RequiredArgsConstructor
 public class ProductPredicates {
 
-    private final ProductRepository productRepository;
     private final ProductSizeRepository productSizeRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductColorRepository productColorRepository;
+    private final ProductRepository productRepository;
+
+    public ProductPredicates(ProductSizeRepository productSizeRepository, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductRepository productRepository) {
+        this.productSizeRepository = productSizeRepository;
+        this.productCategoryRepository = productCategoryRepository;
+        this.productColorRepository = productColorRepository;
+        this.productRepository = productRepository;
+    }
 
     public List<Product> globalProductFilter(FilterProducts filter) {
 
@@ -45,7 +48,6 @@ public class ProductPredicates {
         if (filter.getEndPrice() == null || filter.getEndPrice().isEmpty()) {
             filter.setEndPrice("100000");
         }
-
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct

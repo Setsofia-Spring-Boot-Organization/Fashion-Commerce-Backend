@@ -11,8 +11,6 @@ import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
 import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,14 +20,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CloudinaryConfig cloudinaryConfig;
     private final ProductPredicates productPredicates;
+
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryConfig cloudinaryConfig, ProductPredicates productPredicates) {
+        this.productRepository = productRepository;
+        this.cloudinaryConfig = cloudinaryConfig;
+        this.productPredicates = productPredicates;
+    }
 
     @Override
     public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException {
@@ -40,13 +42,13 @@ public class ProductServiceImpl implements ProductService {
         // create the new product
         Product product = createProduct(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<CreatedProductRes>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product created successfully")
-                        .data(new CreatedProductRes(product))
-                        .build()
+        Response<CreatedProductRes> response = new Response<>(
+                HttpStatus.OK.value(),
+                "product created successfully",
+                new CreatedProductRes(product)
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     /**
@@ -86,25 +88,24 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> images = cloudinaryConfig.uploadImageToCloudinary(request.getImages());
 
-        Product product = Product.builder()
-                .name(request.getName())
-                .price(request.getPrice())
-                .type(request.getType())
-                .sizes(request.getSizes())
-                .colors(request.getColors())
-                .images(images)
-                .categories(request.getCategories())
-                .isAvailable(true)
-                .description(request.getDescription())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        Product product = new Product(
+                request.getName(),
+                request.getPrice(),
+                request.getType(),
+                request.getSizes(),
+                request.getColors(),
+                images,
+                request.getCategories(),
+                true,
+                request.getDescription(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
 
         //save the product
         try {
             return productRepository.save(product);
         } catch (Exception exception) {
-            log.error("an error occur while saving the data {}", exception.getMessage());
 
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }
@@ -129,13 +130,13 @@ public class ProductServiceImpl implements ProductService {
             );
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<GetNewCollectionRes>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("new collections")
-                        .data(newCollections)
-                        .build()
+        Response<List<GetNewCollectionRes>> response = new Response<>(
+                HttpStatus.OK.value(),
+                "new collections",
+                newCollections
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 
@@ -150,13 +151,13 @@ public class ProductServiceImpl implements ProductService {
                 )
         );
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<Product>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product details")
-                        .data(product)
-                        .build()
+        Response<Product> productResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product details",
+                product
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productResponse);
     }
 
 
@@ -173,13 +174,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByCategoriesContains(gender);
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message(gender + " products")
-                        .data(products)
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                gender + " products",
+                products
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
     private boolean isValidGender(String gender) {
@@ -194,13 +195,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByNameContainingIgnoreCase(product.toLowerCase());
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products with name " + product)
-                        .data(products)
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products with name " + product,
+                products
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
@@ -226,14 +227,14 @@ public class ProductServiceImpl implements ProductService {
             );
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ThisWeekProductsRes>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("new products this week")
-                        .data(newThisWeek)
-                        .total(String.valueOf(newThisWeek.size()))
-                        .build()
+        Response<List<ThisWeekProductsRes>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "new products this week",
+                newThisWeek,
+                String.valueOf(newThisWeek.size())
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
@@ -258,14 +259,14 @@ public class ProductServiceImpl implements ProductService {
             products = productRepository.findAllByCreatedAtAfterAndCategoriesContains(lastYear, gender.toLowerCase());
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products from " + lastYear.getYear())
-                        .data(products)
-                        .total(String.valueOf(products.size()))
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products from " + lastYear.getYear(),
+                products,
+                String.valueOf(products.size())
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
@@ -286,18 +287,20 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<AllProductsRes>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products")
-                        .data(new AllProductsRes(
-                                products,
-                                availableProducts.size(),
-                                unAvailableProducts.size()
-                        ))
-                        .total(String.valueOf(products.size()))
-                        .build()
+        AllProductsRes allProductsRes = new AllProductsRes(
+                products,
+                availableProducts.size(),
+                unAvailableProducts.size()
         );
+
+        Response<AllProductsRes> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products",
+                allProductsRes,
+                String.valueOf(products.size())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
@@ -307,12 +310,12 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("filtered products")
-                        .data(filteredProducts)
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "filtered products",
+                filteredProducts
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 }

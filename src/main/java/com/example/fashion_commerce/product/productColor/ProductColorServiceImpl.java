@@ -31,21 +31,19 @@ public class ProductColorServiceImpl implements ProductColorService {
 
         for (String color : validColors) {
             colors.add(
-                    ProductColor.builder()
-                            .color(color)
-                            .build()
+                    new ProductColor(color)
             );
         }
 
         List<ProductColor> productColors = productColorRepository.saveAll(colors);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductColor>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product sizes(s) created successfully")
-                        .data(productColors)
-                        .build()
+        Response<List<ProductColor>> productColorResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product color(s) created successfully",
+                productColors
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productColorResponse);
     }
 
     private Set<String> getValidColors(CreateProductColor productColor) {
@@ -79,12 +77,12 @@ public class ProductColorServiceImpl implements ProductColorService {
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
         List<ProductColor> colors = productColorRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductColor>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product colors")
-                        .data(colors)
-                        .build()
+        Response<List<ProductColor>> productColorResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products colors",
+                colors
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productColorResponse);
     }
 }

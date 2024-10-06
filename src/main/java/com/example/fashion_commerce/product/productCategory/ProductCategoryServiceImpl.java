@@ -2,7 +2,6 @@ package com.example.fashion_commerce.product.productCategory;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productCategory.requests.CreateNewCategory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,11 +12,13 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class ProductCategoryServiceImpl implements ProductCategoryService{
 
-
     private final ProductCategoryRepository productCategoryRepository;
+
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryRepository = productCategoryRepository;
+    }
 
     @Override
     public ResponseEntity<Response<List<ProductCategory>>> createNewProductCategory(CreateNewCategory category) {
@@ -29,21 +30,19 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         for (String name : validCategories) {
             productCategories.add(
-                    ProductCategory.builder()
-                            .category(name)
-                            .build()
+                    new ProductCategory(name)
             );
         }
 
         List<ProductCategory> categories = productCategoryRepository.saveAll(productCategories);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductCategory>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product sizes(s) created successfully")
-                        .data(categories)
-                        .build()
+        Response<List<ProductCategory>> productsCategoryResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product category(s) created successfully",
+                categories
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productsCategoryResponse);
     }
 
     private Set<String> getValidCategories(CreateNewCategory category) {
@@ -79,12 +78,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         List<ProductCategory> categories = productCategoryRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductCategory>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product categories")
-                        .data(categories)
-                        .build()
+        Response<List<ProductCategory>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product categories",
+                categories
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 }

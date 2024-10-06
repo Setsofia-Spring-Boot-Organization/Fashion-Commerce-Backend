@@ -2,8 +2,6 @@ package com.example.fashion_commerce.product.productType;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,12 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+
+    public ProductTypeServiceImpl(ProductTypeRepository productTypeRepository) {
+        this.productTypeRepository = productTypeRepository;
+    }
 
     @Override
     public ResponseEntity<Response<List<ProductType>>> createNewProduct(CreateProductType createProductType) {
@@ -30,21 +30,19 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         for (String name : validNames) {
             productTypes.add(
-                    ProductType.builder()
-                            .name(name)
-                            .build()
+                    new ProductType(name)
             );
         }
 
         List<ProductType> createdProductTypes = productTypeRepository.saveAll(productTypes);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductType>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product type(s) created successfully")
-                        .data(createdProductTypes)
-                        .build()
+        Response<List<ProductType>> productTypeResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product type(s) created successfully",
+                createdProductTypes
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productTypeResponse);
     }
 
     private Set<String> getValidNames(CreateProductType createProductType) {
@@ -79,12 +77,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ResponseEntity<Response<List<ProductType>>> getProductTypes() {
         List<ProductType> productTypes = productTypeRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductType>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product types")
-                        .data(productTypes)
-                        .build()
+        Response<List<ProductType>> productTypesResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product types",
+                productTypes
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productTypesResponse);
     }
 }

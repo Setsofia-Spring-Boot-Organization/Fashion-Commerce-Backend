@@ -3,7 +3,6 @@ package com.example.fashion_commerce.product.productSize;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productSize.requests.CreateProductSize;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,13 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class ProductSizeServiceImpl implements ProductSizeService {
 
     private final ProductSizeRepository productSizeRepository;
 
+    public ProductSizeServiceImpl(ProductSizeRepository productSizeRepository) {
+        this.productSizeRepository = productSizeRepository;
+    }
 
 
     @Override
@@ -31,21 +32,19 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         for (String size : validSizes) {
             productSizes.add(
-                    ProductSize.builder()
-                            .size(size)
-                            .build()
+                    new ProductSize(size)
             );
         }
 
-        List<ProductSize> createdProductTypes = productSizeRepository.saveAll(productSizes);
+        List<ProductSize> createdProductSizes = productSizeRepository.saveAll(productSizes);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductSize>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product sizes(s) created successfully")
-                        .data(createdProductTypes)
-                        .build()
+        Response<List<ProductSize>> productSizesResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product sizes(s) created successfully",
+                createdProductSizes
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productSizesResponse);
     }
 
     private Set<String> getValidSizes(CreateProductSize productSize) {
@@ -81,12 +80,12 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         List<ProductSize> productSizes = productSizeRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductSize>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product types")
-                        .data(productSizes)
-                        .build()
+        Response<List<ProductSize>> productSizesResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product sizes",
+                productSizes
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productSizesResponse);
     }
 }
