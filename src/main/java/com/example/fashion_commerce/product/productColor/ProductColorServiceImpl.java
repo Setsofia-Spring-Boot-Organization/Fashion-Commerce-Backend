@@ -31,9 +31,7 @@ public class ProductColorServiceImpl implements ProductColorService {
 
         for (String color : validColors) {
             colors.add(
-                    ProductColor.builder()
-                            .color(color)
-                            .build()
+                    new ProductColor(color)
             );
         }
 
