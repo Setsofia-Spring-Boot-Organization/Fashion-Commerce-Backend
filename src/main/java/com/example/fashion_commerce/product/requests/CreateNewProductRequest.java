@@ -27,6 +27,8 @@ public class CreateNewProductRequest {
                 this.description = description;
         }
 
+        public CreateNewProductRequest() {}
+
         public String getName() {
                 return name;
         }
@@ -37,10 +39,6 @@ public class CreateNewProductRequest {
 
         public String getPrice() {
                 return price;
-        }
-
-        public void setPrice(String price) {
-                this.price = price;
         }
 
         public String getType() {
@@ -55,40 +53,20 @@ public class CreateNewProductRequest {
                 return sizes;
         }
 
-        public void setSizes(List<String> sizes) {
-                this.sizes = sizes;
-        }
-
         public List<String> getColors() {
                 return colors;
-        }
-
-        public void setColors(List<String> colors) {
-                this.colors = colors;
         }
 
         public List<MultipartFile> getImages() {
                 return images;
         }
 
-        public void setImages(List<MultipartFile> images) {
-                this.images = images;
-        }
-
         public List<String> getCategories() {
                 return categories;
         }
 
-        public void setCategories(List<String> categories) {
-                this.categories = categories;
-        }
-
         public String getDescription() {
                 return description;
-        }
-
-        public void setDescription(String description) {
-                this.description = description;
         }
 
         @Override

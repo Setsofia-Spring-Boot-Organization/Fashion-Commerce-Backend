@@ -19,6 +19,8 @@ public class ProductColor {
         this.color = color;
     }
 
+    public ProductColor() {}
+
     public ProductColor(String id) {
         this.id = id;
     }
