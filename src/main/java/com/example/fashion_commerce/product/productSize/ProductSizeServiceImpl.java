@@ -79,12 +79,12 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         List<ProductSize> productSizes = productSizeRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductSize>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product types")
-                        .data(productSizes)
-                        .build()
+        Response<List<ProductSize>> productSizesResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product sizes",
+                productSizes
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productSizesResponse);
     }
 }
