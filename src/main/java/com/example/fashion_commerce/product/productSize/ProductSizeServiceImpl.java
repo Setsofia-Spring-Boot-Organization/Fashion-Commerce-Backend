@@ -3,7 +3,6 @@ package com.example.fashion_commerce.product.productSize;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productSize.requests.CreateProductSize;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,13 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class ProductSizeServiceImpl implements ProductSizeService {
 
     private final ProductSizeRepository productSizeRepository;
 
+    public ProductSizeServiceImpl(ProductSizeRepository productSizeRepository) {
+        this.productSizeRepository = productSizeRepository;
+    }
 
 
     @Override
