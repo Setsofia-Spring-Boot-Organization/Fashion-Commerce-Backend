@@ -10,6 +10,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class CreateNewProductRequest {
         private String name;
         private String price;

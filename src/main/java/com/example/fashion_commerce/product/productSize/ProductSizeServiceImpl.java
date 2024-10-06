@@ -31,9 +31,7 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         for (String size : validSizes) {
             productSizes.add(
-                    ProductSize.builder()
-                            .size(size)
-                            .build()
+                    new ProductSize(size)
             );
         }
 

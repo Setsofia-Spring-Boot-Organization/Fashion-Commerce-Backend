@@ -29,9 +29,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         for (String name : validCategories) {
             productCategories.add(
-                    ProductCategory.builder()
-                            .category(name)
-                            .build()
+                    new ProductCategory(name)
             );
         }
 

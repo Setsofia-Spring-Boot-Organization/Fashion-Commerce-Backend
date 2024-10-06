@@ -46,16 +46,17 @@ public class ProductPredicates {
             filter.setEndPrice("100000");
         }
 
+        return null;
 
-        QProduct qProduct = new QProduct("product");
-        Predicate predicate = qProduct
-                .type.eq(filter.getType())
-                .or(qProduct.sizes.any().in(sizes)
-                .or(qProduct.isAvailable.eq(filter.isAvailable()))
-                .or(qProduct.categories.any().in(categories))
-                .or(qProduct.colors.any().in(colors))
-                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
-        return (List<Product>) productRepository.findAll(predicate);
+//        QProduct qProduct = new QProduct("product");
+//        Predicate predicate = qProduct
+//                .type.eq(filter.getType())
+//                .or(qProduct.sizes.any().in(sizes)
+//                .or(qProduct.isAvailable.eq(filter.isAvailable()))
+//                .or(qProduct.categories.any().in(categories))
+//                .or(qProduct.colors.any().in(colors))
+//                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
+//        return (List<Product>) productRepository.findAll(predicate);
     }
 
     private List<String> getDefaultSizes(FilterProducts filter) {
