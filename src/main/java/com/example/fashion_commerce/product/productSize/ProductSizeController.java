@@ -3,6 +3,7 @@ package com.example.fashion_commerce.product.productSize;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productSize.requests.CreateProductSize;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ public class ProductSizeController {
 
     private final ProductSizeService productSizeService;
 
+    @Autowired
     public ProductSizeController(ProductSizeService productSizeService) {
         this.productSizeService = productSizeService;
     }

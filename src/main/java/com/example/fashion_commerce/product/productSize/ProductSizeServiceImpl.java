@@ -35,15 +35,15 @@ public class ProductSizeServiceImpl implements ProductSizeService {
             );
         }
 
-        List<ProductSize> createdProductTypes = productSizeRepository.saveAll(productSizes);
+        List<ProductSize> createdProductSizes = productSizeRepository.saveAll(productSizes);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductSize>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product sizes(s) created successfully")
-                        .data(createdProductTypes)
-                        .build()
+        Response<List<ProductSize>> productSizesResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product sizes(s) created successfully",
+                createdProductSizes
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productSizesResponse);
     }
 
     private Set<String> getValidSizes(CreateProductSize productSize) {
