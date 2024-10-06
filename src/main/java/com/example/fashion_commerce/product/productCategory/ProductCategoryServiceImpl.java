@@ -15,10 +15,8 @@ import java.util.Set;
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService{
 
-
     private final ProductCategoryRepository productCategoryRepository;
 
-    @Autowired
     public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
         this.productCategoryRepository = productCategoryRepository;
     }
