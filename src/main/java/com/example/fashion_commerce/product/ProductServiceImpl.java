@@ -11,7 +11,6 @@ import com.example.fashion_commerce.product.responses.AllProductsRes;
 import com.example.fashion_commerce.product.responses.CreatedProductRes;
 import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
 import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +23,17 @@ import java.util.List;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CloudinaryConfig cloudinaryConfig;
     private final ProductPredicates productPredicates;
+
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryConfig cloudinaryConfig, ProductPredicates productPredicates) {
+        this.productRepository = productRepository;
+        this.cloudinaryConfig = cloudinaryConfig;
+        this.productPredicates = productPredicates;
+    }
 
     @Override
     public ResponseEntity<Response<CreatedProductRes>> createNewProduct(CreateNewProductRequest request) throws IOException {
@@ -104,7 +108,6 @@ public class ProductServiceImpl implements ProductService {
         try {
             return productRepository.save(product);
         } catch (Exception exception) {
-            log.error("an error occur while saving the data {}", exception.getMessage());
 
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }

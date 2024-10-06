@@ -10,11 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/categories")
-@RequiredArgsConstructor
 public class ProductCategoryController {
 
     private final ProductCategoryService categoryService;
 
+    public ProductCategoryController(ProductCategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
 
     @PostMapping
