@@ -35,13 +35,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         List<ProductCategory> categories = productCategoryRepository.saveAll(productCategories);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductCategory>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product sizes(s) created successfully")
-                        .data(categories)
-                        .build()
+        Response<List<ProductCategory>> productsCategoryResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product category(s) created successfully",
+                categories
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productsCategoryResponse);
     }
 
     private Set<String> getValidCategories(CreateNewCategory category) {
