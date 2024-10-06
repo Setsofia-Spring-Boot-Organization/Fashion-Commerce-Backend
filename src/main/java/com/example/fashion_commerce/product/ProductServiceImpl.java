@@ -258,14 +258,14 @@ public class ProductServiceImpl implements ProductService {
             products = productRepository.findAllByCreatedAtAfterAndCategoriesContains(lastYear, gender.toLowerCase());
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<Product>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products from " + lastYear.getYear())
-                        .data(products)
-                        .total(String.valueOf(products.size()))
-                        .build()
+        Response<List<Product>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products from " + lastYear.getYear(),
+                products,
+                String.valueOf(products.size())
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
