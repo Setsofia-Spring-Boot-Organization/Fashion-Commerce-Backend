@@ -86,19 +86,19 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> images = cloudinaryConfig.uploadImageToCloudinary(request.getImages());
 
-        Product product = Product.builder()
-                .name(request.getName())
-                .price(request.getPrice())
-                .type(request.getType())
-                .sizes(request.getSizes())
-                .colors(request.getColors())
-                .images(images)
-                .categories(request.getCategories())
-                .isAvailable(true)
-                .description(request.getDescription())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        Product product = new Product(
+                request.getName(),
+                request.getPrice(),
+                request.getType(),
+                request.getSizes(),
+                request.getColors(),
+                images,
+                request.getCategories(),
+                true,
+                request.getDescription(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
 
         //save the product
         try {
