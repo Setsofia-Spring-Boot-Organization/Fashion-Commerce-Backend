@@ -286,18 +286,20 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<AllProductsRes>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("products")
-                        .data(new AllProductsRes(
-                                products,
-                                availableProducts.size(),
-                                unAvailableProducts.size()
-                        ))
-                        .total(String.valueOf(products.size()))
-                        .build()
+        AllProductsRes allProductsRes = new AllProductsRes(
+                products,
+                availableProducts.size(),
+                unAvailableProducts.size()
         );
+
+        Response<AllProductsRes> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "products",
+                allProductsRes,
+                String.valueOf(products.size())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
