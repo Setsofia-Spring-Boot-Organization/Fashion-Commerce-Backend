@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
 
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
-        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
+        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
         List<GetNewCollectionRes> newCollections = new ArrayList<>();
 
         for (Product product : products) {
@@ -212,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
 
 
-        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
+        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
         List<ThisWeekProductsRes> newThisWeek = new ArrayList<>();
 
         for (Product product : products) {
@@ -246,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products;
 
         if (all) {
-            products = productRepository.findAllByCreatedAtAfter(lastYear);
+            products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastYear);
         } else {
 
             // confirm the gender is valid

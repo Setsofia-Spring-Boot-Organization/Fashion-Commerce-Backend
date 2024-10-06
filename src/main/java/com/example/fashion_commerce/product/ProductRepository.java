@@ -11,7 +11,7 @@ public interface ProductRepository extends MongoRepository<Product, String>, Que
 
     List<Product> findProductsByOrderByCreatedAtDesc();
 
-    List<Product> findAllByCreatedAtAfter(LocalDateTime localDateTime);
+    List<Product> findAllByCreatedAtAfterOrderByCreatedAtDesc(LocalDateTime localDateTime);
 
     List<Product> findAllByCategoriesContains(String gender);
 
