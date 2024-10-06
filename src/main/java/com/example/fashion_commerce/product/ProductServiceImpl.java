@@ -150,13 +150,13 @@ public class ProductServiceImpl implements ProductService {
                 )
         );
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<Product>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product details")
-                        .data(product)
-                        .build()
+        Response<Product> productResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product details",
+                product
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productResponse);
     }
 
 
