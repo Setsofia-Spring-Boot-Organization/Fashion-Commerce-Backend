@@ -2,7 +2,6 @@ package com.example.fashion_commerce.product.productType;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +14,13 @@ import java.util.Set;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProductTypeServiceImpl implements ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+
+    public ProductTypeServiceImpl(ProductTypeRepository productTypeRepository) {
+        this.productTypeRepository = productTypeRepository;
+    }
 
     @Override
     public ResponseEntity<Response<List<ProductType>>> createNewProduct(CreateProductType createProductType) {
