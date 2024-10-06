@@ -14,6 +14,15 @@ public class FilterProducts {
     private String startPrice;
     private String endPrice;
 
+    public FilterProducts(List<String> sizes, boolean isAvailable, List<String> categories, List<String> colors) {
+        this.sizes = sizes;
+        this.isAvailable = isAvailable;
+        this.categories = categories;
+        this.colors = colors;
+    }
+
+    public FilterProducts() {}
+
     public String getType() {
         return type;
     }
@@ -26,32 +35,12 @@ public class FilterProducts {
         return sizes;
     }
 
-    public void setSizes(List<String> sizes) {
-        this.sizes = sizes;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
     public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
-    }
-
     public List<String> getColors() {
         return colors;
-    }
-
-    public void setColors(List<String> colors) {
-        this.colors = colors;
     }
 
     public String getStartPrice() {

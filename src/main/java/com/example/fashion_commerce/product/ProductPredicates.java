@@ -4,16 +4,12 @@ import com.example.fashion_commerce.product.productCategory.ProductCategoryRepos
 import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
-import com.querydsl.core.types.Predicate;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-@Slf4j
 @Component
 public class ProductPredicates {
 

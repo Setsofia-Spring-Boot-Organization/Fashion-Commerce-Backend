@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.productCategory;
 
 import com.mysema.query.annotations.QueryEntity;
-import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -32,10 +31,6 @@ public class ProductCategory {
 
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     @Override

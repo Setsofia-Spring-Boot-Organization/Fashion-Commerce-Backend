@@ -2,7 +2,6 @@ package com.example.fashion_commerce.product.productType;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
 @Service
 public class ProductTypeServiceImpl implements ProductTypeService {
 

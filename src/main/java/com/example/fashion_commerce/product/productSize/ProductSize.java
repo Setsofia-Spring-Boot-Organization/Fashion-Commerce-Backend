@@ -32,10 +32,6 @@ public class ProductSize {
         return size;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

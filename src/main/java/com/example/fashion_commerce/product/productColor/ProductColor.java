@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.productColor;
 
 import com.mysema.query.annotations.QueryEntity;
-import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -15,11 +14,14 @@ public class ProductColor {
     private String id;
     private String color;
 
-    public ProductColor(String color) {
+    public ProductColor(String id, String color) {
+        this.id = id;
         this.color = color;
     }
 
-    public ProductColor() {}
+    public ProductColor(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return id;
@@ -27,10 +29,6 @@ public class ProductColor {
 
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     @Override
