@@ -1,6 +1,6 @@
 package com.example.fashion_commerce.product;
 
-import com.example.fashion_commerce.cloudinary.CloudinaryConfig;
+import com.example.fashion_commerce.cloudinary.CloudinaryService;
 import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.exception.Message;
 import com.example.fashion_commerce.exception.Error;
@@ -24,12 +24,12 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final CloudinaryConfig cloudinaryConfig;
+    private final CloudinaryService cloudinaryService;
     private final ProductPredicates productPredicates;
 
-    public ProductServiceImpl(ProductRepository productRepository, CloudinaryConfig cloudinaryConfig, ProductPredicates productPredicates) {
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates) {
         this.productRepository = productRepository;
-        this.cloudinaryConfig = cloudinaryConfig;
+        this.cloudinaryService = cloudinaryService;
         this.productPredicates = productPredicates;
     }
 
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
      */
     private Product createProduct(CreateNewProductRequest request) throws IOException {
 
-        List<String> images = cloudinaryConfig.uploadImageToCloudinary(request.getImages());
+        List<String> images = cloudinaryService.uploadFiles(request.getImages());
 
         Product product = new Product(
                 request.getName(),
@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService {
 
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
-        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
+        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
         List<GetNewCollectionRes> newCollections = new ArrayList<>();
 
         for (Product product : products) {
@@ -212,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
 
 
-        List<Product> products = productRepository.findAllByCreatedAtAfter(lastSevenDays);
+        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
         List<ThisWeekProductsRes> newThisWeek = new ArrayList<>();
 
         for (Product product : products) {
@@ -246,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products;
 
         if (all) {
-            products = productRepository.findAllByCreatedAtAfter(lastYear);
+            products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastYear);
         } else {
 
             // confirm the gender is valid
