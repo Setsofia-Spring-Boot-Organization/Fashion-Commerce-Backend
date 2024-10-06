@@ -33,6 +33,30 @@ public class CreateNewProductRequest {
                 return name;
         }
 
+        public void setPrice(String price) {
+                this.price = price;
+        }
+
+        public void setSizes(List<String> sizes) {
+                this.sizes = sizes;
+        }
+
+        public void setColors(List<String> colors) {
+                this.colors = colors;
+        }
+
+        public void setImages(List<MultipartFile> images) {
+                this.images = images;
+        }
+
+        public void setCategories(List<String> categories) {
+                this.categories = categories;
+        }
+
+        public void setDescription(String description) {
+                this.description = description;
+        }
+
         public void setName(String name) {
                 this.name = name;
         }

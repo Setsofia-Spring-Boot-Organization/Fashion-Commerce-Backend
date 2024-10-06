@@ -13,7 +13,7 @@ import java.util.Map;
 @Component
 public class CloudinaryConfig {
 
-    @Value("${cloudinary-url}")
+    @Value("${cloudinary.url}")
     private String CLOUDINARY_URL;
 
     public List<String> uploadImageToCloudinary(List<MultipartFile> multipartFiles) throws IOException {
