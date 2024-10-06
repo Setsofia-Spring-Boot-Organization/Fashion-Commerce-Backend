@@ -226,14 +226,14 @@ public class ProductServiceImpl implements ProductService {
             );
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ThisWeekProductsRes>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("new products this week")
-                        .data(newThisWeek)
-                        .total(String.valueOf(newThisWeek.size()))
-                        .build()
+        Response<List<ThisWeekProductsRes>> productsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "new products this week",
+                newThisWeek,
+                String.valueOf(newThisWeek.size())
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
 
 
