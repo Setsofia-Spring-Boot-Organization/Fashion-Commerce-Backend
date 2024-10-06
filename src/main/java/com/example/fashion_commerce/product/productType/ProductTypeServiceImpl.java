@@ -30,21 +30,19 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         for (String name : validNames) {
             productTypes.add(
-                    ProductType.builder()
-                            .name(name)
-                            .build()
+                    new ProductType(name)
             );
         }
 
         List<ProductType> createdProductTypes = productTypeRepository.saveAll(productTypes);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Response.<List<ProductType>>builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("product type(s) created successfully")
-                        .data(createdProductTypes)
-                        .build()
+        Response<List<ProductType>> productTypeResponse = new Response<>(
+                HttpStatus.CREATED.value(),
+                "product type(s) created successfully",
+                createdProductTypes
         );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productTypeResponse);
     }
 
     private Set<String> getValidNames(CreateProductType createProductType) {
@@ -79,12 +77,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ResponseEntity<Response<List<ProductType>>> getProductTypes() {
         List<ProductType> productTypes = productTypeRepository.findAll();
 
-        return ResponseEntity.status(HttpStatus.OK).body(
-                Response.<List<ProductType>>builder()
-                        .status(HttpStatus.OK.value())
-                        .message("product types")
-                        .data(productTypes)
-                        .build()
+        Response<List<ProductType>> productTypesResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "product types",
+                productTypes
         );
+
+        return ResponseEntity.status(HttpStatus.OK).body(productTypesResponse);
     }
 }
