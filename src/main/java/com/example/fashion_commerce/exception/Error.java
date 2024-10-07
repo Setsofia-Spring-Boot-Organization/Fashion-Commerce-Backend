@@ -5,7 +5,8 @@ public enum Error {
     NO_EMPTY_FIELDS_ALLOWED("no empty fields allowed"),
     NO_PRODUCT_FOUND("product unavailable"),
     INVALID_GENDER("invalid gender"),
-    INVALID_PRODUCT_TYPES("invalid product type(s)");
+    INVALID_PRODUCT_TYPES("invalid product type(s)"),
+    FILE_SIZE_TOO_LARGE("file size too large");
 
     public final String label;
     Error(String label) {
