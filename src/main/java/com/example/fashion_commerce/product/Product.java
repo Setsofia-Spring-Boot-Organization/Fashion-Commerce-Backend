@@ -72,6 +72,30 @@ public class Product {
         this.type = type;
     }
 
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public List<String> getColors() {
+        return colors;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     public List<String> getImages() {
         return images;
     }
@@ -96,16 +120,16 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", type='" + type + '\'' +
+                "id='" + id +
+                ", name='" + name +
+                ", price='" + price +
+                ", type='" + type +
                 ", sizes=" + sizes +
                 ", colors=" + colors +
                 ", images=" + images +
                 ", categories=" + categories +
                 ", isAvailable=" + isAvailable +
-                ", description='" + description + '\'' +
+                ", description='" + description +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
