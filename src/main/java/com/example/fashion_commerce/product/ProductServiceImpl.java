@@ -172,7 +172,7 @@ public class ProductServiceImpl implements ProductService {
                     new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
             );
 
-        List<Product> products = productRepository.findAllByCategoriesContains(gender);
+        List<Product> products = productRepository.findAllByCategoriesContainsIgnoreCase(gender);
 
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
@@ -256,7 +256,7 @@ public class ProductServiceImpl implements ProductService {
                         new Throwable(Message.THE_REQUESTED_GENDER_IS_INVALID.label)
                 );
 
-            products = productRepository.findAllByCreatedAtAfterAndCategoriesContains(lastYear, gender.toLowerCase());
+            products = productRepository.findAllByCreatedAtAfterAndCategoriesContainsIgnoreCase(lastYear, gender.toLowerCase());
         }
 
         Response<List<Product>> productsResponse = new Response<>(
