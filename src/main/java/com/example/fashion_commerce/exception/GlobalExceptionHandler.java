@@ -24,7 +24,8 @@ public class GlobalExceptionHandler {
             case ERROR_SAVING_DATA -> status = HttpStatus.BAD_GATEWAY;
             case NO_EMPTY_FIELDS_ALLOWED,
                  INVALID_GENDER,
-                 INVALID_PRODUCT_TYPES -> status = HttpStatus.BAD_REQUEST;
+                 INVALID_PRODUCT_TYPES,
+                 FILE_SIZE_TOO_LARGE -> status = HttpStatus.BAD_REQUEST;
             case NO_PRODUCT_FOUND -> status = HttpStatus.NOT_FOUND;
         }
 
