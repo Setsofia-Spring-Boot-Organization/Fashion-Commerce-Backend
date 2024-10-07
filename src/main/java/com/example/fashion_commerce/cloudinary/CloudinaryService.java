@@ -35,7 +35,7 @@ public class CloudinaryService {
             }
 
             // Upload the image without any transformation
-            Map uploadResult = cloudinary.uploader().uploadLarge(bytes, ObjectUtils.emptyMap());
+            Map<?, ?> uploadResult = cloudinary.uploader().uploadLarge(bytes, ObjectUtils.emptyMap());
             String publicId = uploadResult.get("public_id").toString();
 
             // Generate the URL with the transformation
