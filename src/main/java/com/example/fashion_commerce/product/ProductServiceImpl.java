@@ -184,7 +184,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private boolean isValidGender(String gender) {
-        List<String> genders = List.of("male", "female", "children");
+        List<String> genders = List.of("men", "women", "children");
         return genders.contains(gender);
     }
 
