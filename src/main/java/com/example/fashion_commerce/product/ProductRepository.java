@@ -13,9 +13,9 @@ public interface ProductRepository extends MongoRepository<Product, String>, Que
 
     List<Product> findAllByCreatedAtAfterOrderByCreatedAtDesc(LocalDateTime localDateTime);
 
-    List<Product> findAllByCategoriesContains(String gender);
+    List<Product> findAllByCategoriesContainsIgnoreCase(String gender);
 
     List<Product> findAllByNameContainingIgnoreCase(String product);
 
-    List<Product> findAllByCreatedAtAfterAndCategoriesContains(LocalDateTime localDateTime, String gender);
+    List<Product> findAllByCreatedAtAfterAndCategoriesContainsIgnoreCase(LocalDateTime localDateTime, String gender);
 }
