@@ -87,7 +87,7 @@ public record ProductController(ProductService productService) {
 
     @GetMapping(path = "filter/all/products")
     public ResponseEntity<Response<List<Product>>> filterAllProducts(
-            FilterProducts filter
+            @ModelAttribute FilterProducts filter
     ) {
         return productService.filterAllProducts(filter);
     }
