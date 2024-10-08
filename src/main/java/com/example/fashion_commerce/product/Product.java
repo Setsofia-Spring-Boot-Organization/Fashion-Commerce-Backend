@@ -21,14 +21,14 @@ public class Product {
     private List<String> colors;
     private List<String> images;
     private List<String> categories;
-    private boolean available;
+    private boolean isAvailable;
 
     private String description;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(String name, String price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean available, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(String name, String price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean isAvailable, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -36,7 +36,7 @@ public class Product {
         this.colors = colors;
         this.images = images;
         this.categories = categories;
-        this.available = available;
+        this.isAvailable = isAvailable;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -100,8 +100,8 @@ public class Product {
         return images;
     }
 
-    public boolean available() {
-        return available;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
     @Override
@@ -109,12 +109,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return available == product.available && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(type, product.type) && Objects.equals(sizes, product.sizes) && Objects.equals(colors, product.colors) && Objects.equals(images, product.images) && Objects.equals(categories, product.categories) && Objects.equals(description, product.description) && Objects.equals(createdAt, product.createdAt) && Objects.equals(updatedAt, product.updatedAt);
+        return isAvailable == product.isAvailable && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(type, product.type) && Objects.equals(sizes, product.sizes) && Objects.equals(colors, product.colors) && Objects.equals(images, product.images) && Objects.equals(categories, product.categories) && Objects.equals(description, product.description) && Objects.equals(createdAt, product.createdAt) && Objects.equals(updatedAt, product.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, type, sizes, colors, images, categories, available, description, createdAt, updatedAt);
+        return Objects.hash(id, name, price, type, sizes, colors, images, categories, isAvailable, description, createdAt, updatedAt);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class Product {
                 ", colors=" + colors +
                 ", images=" + images +
                 ", categories=" + categories +
-                ", available=" + available +
+                ", isAvailable=" + isAvailable +
                 ", description='" + description +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

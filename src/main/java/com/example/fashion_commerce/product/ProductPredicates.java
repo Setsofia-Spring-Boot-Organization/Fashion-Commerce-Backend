@@ -50,8 +50,7 @@ public class ProductPredicates {
         }
 
         QProduct qProduct = new QProduct("product");
-        Predicate predicate =
-                qProduct.type.equalsIgnoreCase(filter.getType())
+        Predicate predicate = qProduct.type.equalsIgnoreCase(filter.getType())
                 .and(qProduct.isAvailable.eq(filter.isAvailable()));
         return (List<Product>) productRepository.findAll(predicate);
     }
