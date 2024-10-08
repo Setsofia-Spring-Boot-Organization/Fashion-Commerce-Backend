@@ -52,7 +52,7 @@ public class ProductPredicates {
             filter.setEndPrice("100000");
         }
 
-        log.info("the value from the filter: {}", filter.isAvailable());
+        log.info("the value from the filter: {}", filter);
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct.isAvailable.eq(false);
