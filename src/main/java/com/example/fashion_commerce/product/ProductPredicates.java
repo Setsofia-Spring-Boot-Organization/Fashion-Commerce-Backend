@@ -51,15 +51,24 @@ public class ProductPredicates {
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
-                .type.eq(filter.getType())
-                .or(qProduct.sizes.any().in(sizes)
-                .or(qProduct.isAvailable.eq(filter.isAvailable()))
-                .or(qProduct.categories.any().in(categories))
-                .or(qProduct.colors.any().in(colors))
-                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
+                .type.equalsIgnoreCase(filter.getType())
+                .orAllOf(
+                        qProduct.sizes.any().in(sizes),
+                        qProduct.categories.any().in(categories),
+                        qProduct.colors.any().in(colors)
+                )
+                .and(qProduct.isAvailable.eq(filter.isAvailable()))
+                .and(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
         return (List<Product>) productRepository.findAll(predicate);
     }
 
+    /**
+     * This method retrieves the default list of sizes. If no sizes are specified in the filter,
+     * it fetches all available sizes from the {@link ProductSizeRepository}.
+     *
+     * @param filter the {@link FilterProducts} object containing product filter criteria
+     * @return a list of sizes, either from the filter or all available sizes if no sizes are provided in the filter
+     */
     private List<String> getDefaultSizes(FilterProducts filter) {
         List<String> sizes = new ArrayList<>();
         if (filter.getSizes() == null) {
@@ -71,6 +80,13 @@ public class ProductPredicates {
         return filter.getSizes();
     }
 
+    /**
+     * This method retrieves the default list of categories. If no categories are specified in the filter or the
+     * category list is empty, it fetches all available categories from the {@link ProductCategoryRepository}.
+     *
+     * @param filter the {@link FilterProducts} object containing product filter criteria
+     * @return a list of categories, either from the filter or all available categories if none are provided or the list is empty
+     */
     private List<String> getDefaultCategories(FilterProducts filter) {
         List<String> categories = new ArrayList<>();
         if (filter.getCategories() == null || filter.getCategories().isEmpty()) {
@@ -82,6 +98,13 @@ public class ProductPredicates {
         return filter.getCategories();
     }
 
+    /**
+     * This method retrieves the default list of colors. If no colors are specified in the filter,
+     * it fetches all available colors from the {@link ProductColorRepository}.
+     *
+     * @param filter the {@link FilterProducts} object containing product filter criteria
+     * @return a list of colors, either from the filter or all available colors if no colors are provided
+     */
     private List<String> getDefaultColors(FilterProducts filter) {
         List<String> colors = new ArrayList<>();
         if (filter.getColors() == null) {

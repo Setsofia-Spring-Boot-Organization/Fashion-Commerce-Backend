@@ -87,8 +87,24 @@ public record ProductController(ProductService productService) {
 
     @GetMapping(path = "filter/all/products")
     public ResponseEntity<Response<List<Product>>> filterAllProducts(
-            FilterProducts filter
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) List<String> sizes,
+            @RequestParam(required = false) boolean isAvailable,
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam(required = false) List<String> colors,
+            @RequestParam(required = false) String startPrice,
+            @RequestParam(required = false) String endPrice
     ) {
+        FilterProducts filter = new FilterProducts();
+        filter.setType(type);
+        filter.setSizes(sizes);
+        filter.setAvailable(isAvailable);
+        filter.setCategories(categories);
+        filter.setColors(colors);
+        filter.setStartPrice(startPrice);
+        filter.setEndPrice(endPrice);
+
         return productService.filterAllProducts(filter);
     }
+
 }
