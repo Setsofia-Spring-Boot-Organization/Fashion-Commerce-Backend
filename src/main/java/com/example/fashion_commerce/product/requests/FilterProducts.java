@@ -21,6 +21,19 @@ public class FilterProducts {
         this.colors = colors;
     }
 
+    @Override
+    public String toString() {
+        return "FilterProducts{" +
+                "type='" + type + '\'' +
+                ", sizes=" + sizes +
+                ", isAvailable=" + isAvailable +
+                ", categories=" + categories +
+                ", colors=" + colors +
+                ", startPrice='" + startPrice + '\'' +
+                ", endPrice='" + endPrice + '\'' +
+                '}';
+    }
+
     public FilterProducts() {}
 
     public boolean isAvailable() {
@@ -77,31 +90,5 @@ public class FilterProducts {
 
     public void setEndPrice(String endPrice) {
         this.endPrice = endPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "FilterProducts{" +
-                "type='" + type + '\'' +
-                ", sizes=" + sizes +
-                ", isAvailable=" + isAvailable +
-                ", categories=" + categories +
-                ", colors=" + colors +
-                ", startPrice='" + startPrice + '\'' +
-                ", endPrice='" + endPrice + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FilterProducts that = (FilterProducts) o;
-        return isAvailable == that.isAvailable && Objects.equals(type, that.type) && Objects.equals(sizes, that.sizes) && Objects.equals(categories, that.categories) && Objects.equals(colors, that.colors) && Objects.equals(startPrice, that.startPrice) && Objects.equals(endPrice, that.endPrice);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, sizes, isAvailable, categories, colors, startPrice, endPrice);
     }
 }
