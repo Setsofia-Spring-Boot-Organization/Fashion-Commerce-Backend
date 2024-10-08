@@ -47,6 +47,22 @@ public class FilterProducts {
         return colors;
     }
 
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
+    }
+
+    public void setColors(List<String> colors) {
+        this.colors = colors;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     public String getStartPrice() {
         return startPrice;
     }
