@@ -55,10 +55,10 @@ public class ProductPredicates {
                         .orAllOf(
                                 qProduct.sizes.any().in(sizes),
                                 qProduct.categories.any().in(categories),
-                                qProduct.colors.any().in(colors),
-                                qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())
+                                qProduct.colors.any().in(colors)
                         )
-                .and(qProduct.isAvailable.eq(filter.isAvailable()));
+                .and(qProduct.isAvailable.eq(filter.isAvailable()))
+                .and(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
         return (List<Product>) productRepository.findAll(predicate);
     }
 
