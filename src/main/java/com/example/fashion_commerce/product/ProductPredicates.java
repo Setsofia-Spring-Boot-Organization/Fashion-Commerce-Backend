@@ -5,6 +5,8 @@ import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.querydsl.core.types.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.ListIterator;
 @Component
 public class ProductPredicates {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductPredicates.class);
     private final ProductSizeRepository productSizeRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductColorRepository productColorRepository;
@@ -49,8 +52,10 @@ public class ProductPredicates {
             filter.setEndPrice("100000");
         }
 
+        log.info("the value from the filter: {}", filter.isAvailable());
+
         QProduct qProduct = new QProduct("product");
-        Predicate predicate = qProduct.isAvailable.eq(filter.isAvailable());
+        Predicate predicate = qProduct.isAvailable.eq(false);
 //                .and(qProduct.isAvailable.eq(filter.isAvailable()));
         return (List<Product>) productRepository.findAll(predicate);
     }
