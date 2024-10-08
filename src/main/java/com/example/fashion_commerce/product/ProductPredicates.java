@@ -50,12 +50,15 @@ public class ProductPredicates {
         }
 
         QProduct qProduct = new QProduct("product");
-        Predicate predicate = qProduct.type.equalsIgnoreCase(filter.getType())
-//                .and(qProduct.sizes.any().in(sizes)
-                .and(qProduct.isAvailable.eq(filter.isAvailable()));
-//                .or(qProduct.categories.any().in(categories))
-//                .or(qProduct.colors.any().in(colors))
-//                .or(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())));
+        Predicate predicate =
+                qProduct.type.equalsIgnoreCase(filter.getType())
+                        .andAnyOf(
+                                qProduct.sizes.any().in(sizes),
+                                qProduct.isAvailable.eq(filter.isAvailable()),
+                                qProduct.categories.any().in(categories),
+                                qProduct.colors.any().in(colors),
+                                qProduct.price.between(filter.getStartPrice(), filter.getEndPrice())
+                        );
         return (List<Product>) productRepository.findAll(predicate);
     }
 
