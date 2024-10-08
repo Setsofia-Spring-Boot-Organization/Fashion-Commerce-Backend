@@ -53,9 +53,9 @@ public class ProductPredicates {
         Predicate predicate = qProduct
                 .type.equalsIgnoreCase(filter.getType())
                 .orAllOf(
-                        qProduct.sizes.any().in(filter.getSizes()),
-                        qProduct.categories.any().in(filter.getCategories()),
-                        qProduct.colors.any().in(filter.getColors())
+                        qProduct.sizes.any().in(sizes),
+                        qProduct.categories.any().in(categories),
+                        qProduct.colors.any().in(colors)
                 )
                 .and(qProduct.isAvailable.eq(filter.isAvailable()))
                 .and(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
