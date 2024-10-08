@@ -55,7 +55,7 @@ public class ProductPredicates {
         log.info("the value from the filter: {}", filter);
 
         QProduct qProduct = new QProduct("product");
-        Predicate predicate = qProduct.isAvailable.eq(false);
+        Predicate predicate = qProduct.isAvailable.eq(filter.isAvailable());
 //                .and(qProduct.isAvailable.eq(filter.isAvailable()));
         return (List<Product>) productRepository.findAll(predicate);
     }
