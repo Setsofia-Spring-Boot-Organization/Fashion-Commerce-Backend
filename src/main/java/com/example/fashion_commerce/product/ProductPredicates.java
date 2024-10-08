@@ -51,7 +51,8 @@ public class ProductPredicates {
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
-                .isAvailable.eq(filter.isAvailable())
+                .type.equalsIgnoreCase(filter.getType())
+                .and(qProduct.isAvailable.eq(filter.isAvailable()))
                 .and(qProduct.price.between(filter.getStartPrice(), filter.getEndPrice()));
         return (List<Product>) productRepository.findAll(predicate);
     }
