@@ -24,7 +24,7 @@ public class Order {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.productIDs = productIDs;
-        }
+    }
 
     public String getId() {
         return id;
