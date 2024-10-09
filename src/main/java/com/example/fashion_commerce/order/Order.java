@@ -6,6 +6,7 @@ import com.mysema.query.annotations.QueryEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.List;
 import java.util.Objects;
 
 @Document
@@ -17,10 +18,21 @@ public class Order {
 
     private ContactInfo contactInfo;
     private ShippingAddress shippingAddress;
+    private List<String> productIDs;
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress) {
+    public Order(String id, ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs) {
+        this.id = id;
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
+        this.productIDs = productIDs;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public ContactInfo getContactInfo() {
@@ -39,12 +51,12 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public String getId() {
-        return id;
+    public List<String> getProductIDs() {
+        return productIDs;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductIDs(List<String> productIDs) {
+        this.productIDs = productIDs;
     }
 
     @Override
@@ -52,12 +64,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress);
+        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contactInfo, shippingAddress);
+        return Objects.hash(id, contactInfo, shippingAddress, productIDs);
     }
 
     @Override
@@ -66,6 +78,7 @@ public class Order {
                 "id='" + id + '\'' +
                 ", contactInfo=" + contactInfo +
                 ", shippingAddress=" + shippingAddress +
+                ", productIDs=" + productIDs +
                 '}';
     }
 }
