@@ -23,9 +23,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository, ProductRepository productRepository1) {
+    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
-        this.productRepository = productRepository1;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -71,10 +71,16 @@ public class OrderServiceImpl implements OrderService {
         Set<String> inValidIDs = new HashSet<>();
 
         for (String id : ids) {
+            boolean isValid = false;
+
             for (Product product : products) {
-                if (!id.equals(product.getId())) {
-                    inValidIDs.add(id);
+                if (id.equals(product.getId())) {
+                    isValid = true;
+                    break;
                 }
+            }
+            if (!isValid) {
+                inValidIDs.add(id);
             }
         }
         return inValidIDs;
