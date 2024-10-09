@@ -19,11 +19,13 @@ public class Order {
     private ContactInfo contactInfo;
     private ShippingAddress shippingAddress;
     private List<String> productIDs;
+    private OrderStatus orderStatus;
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs) {
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs, OrderStatus orderStatus) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.productIDs = productIDs;
+        this.orderStatus = orderStatus;
     }
 
     public String getId() {
@@ -58,17 +60,25 @@ public class Order {
         this.productIDs = productIDs;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs);
+        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs) && orderStatus == order.orderStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contactInfo, shippingAddress, productIDs);
+        return Objects.hash(id, contactInfo, shippingAddress, productIDs, orderStatus);
     }
 
     @Override
@@ -78,6 +88,7 @@ public class Order {
                 ", contactInfo=" + contactInfo +
                 ", shippingAddress=" + shippingAddress +
                 ", productIDs=" + productIDs +
+                ", orderStatus=" + orderStatus +
                 '}';
     }
 }
