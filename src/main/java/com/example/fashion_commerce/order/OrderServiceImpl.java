@@ -12,10 +12,10 @@ import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
         this.productRepository = productRepository1;
     }
 
-    @Transactional(rollbackFor = {FashionCommerceException.class, Exception.class})
     @Override
     public ResponseEntity<Response<Order>> createOrder(CreateOrder createOrder) {
 
@@ -45,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> invalidIDs = validateIDs(createOrder.productIDs());
+        Set<String> invalidIDs = validateIDs(createOrder.productIDs());
         if (!invalidIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs));
         }
@@ -67,9 +66,9 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private List<String> validateIDs(List<String> ids) {
+    private Set<String> validateIDs(List<String> ids) {
         List<Product> products = productRepository.findAll();
-        List<String> inValidIDs = new ArrayList<>();
+        Set<String> inValidIDs = new HashSet<>();
 
         for (String id : ids) {
             for (Product product : products) {
