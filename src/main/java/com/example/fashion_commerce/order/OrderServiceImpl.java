@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
         Set<String> invalidIDs = validateIDs(createOrder.productIDs());
         if (!invalidIDs.isEmpty()) {
-            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs));
+            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
         }
 
         ContactInfo contactInfo = createContactInfo(createOrder);
