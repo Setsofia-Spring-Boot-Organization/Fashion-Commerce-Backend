@@ -7,17 +7,23 @@ import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
+import com.example.fashion_commerce.product.Product;
+import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
     }
 
@@ -37,6 +43,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order createdOrder(CreateOrder createOrder) {
+
+        if (!validateIDs(createOrder.productIDs()).isEmpty()) {
+            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label));
+        }
+
         ContactInfo contactInfo = createContactInfo(createOrder);
         ShippingAddress shippingAddress = createShippingAddress(createOrder);
 
@@ -52,6 +63,20 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception exception) {
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
         }
+    }
+
+    private List<String> validateIDs(List<String> ids) {
+        List<Product> products = productRepository.findAll();
+        List<String> inValidIDs = new ArrayList<>();
+
+        for (String id : ids) {
+            for (Product product : products) {
+                if (!id.equals(product.getId())) {
+                    inValidIDs.add(id);
+                }
+            }
+        }
+        return inValidIDs;
     }
 
     private ContactInfo createContactInfo(CreateOrder createOrder) {
