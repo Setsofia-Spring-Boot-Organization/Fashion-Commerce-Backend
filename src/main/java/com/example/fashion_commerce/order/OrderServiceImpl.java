@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
                 order
         );
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
     }
 
     private Order createdOrder(CreateOrder createOrder) {
