@@ -20,12 +20,11 @@ public class Order {
     private ShippingAddress shippingAddress;
     private List<String> productIDs;
 
-    public Order(String id, ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs) {
-        this.id = id;
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.productIDs = productIDs;
-    }
+        }
 
     public String getId() {
         return id;
