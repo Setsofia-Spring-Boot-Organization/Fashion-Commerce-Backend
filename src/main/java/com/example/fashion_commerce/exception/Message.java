@@ -7,7 +7,8 @@ public enum Message {
     THE_REQUESTED_GENDER_IS_INVALID("the requested gender cannot be found"),
     THE_PRODUCT_TYPES_COULD_NOT_BE_VERIFIED("could not verify the submitted product types"),
     THE_MAXIMUM_FILE_SIZE_IS_BIGGER_THAN_10MB("the maximum file size is 10MB: "),
-    CANNOT_PLACE_ORDER("cannot place order, please try again");
+    CANNOT_PLACE_ORDER("cannot place order, please try again"),
+    THE_FOLLOWING_IDS_DOES_NOT_EXIST("the following product IDs does not exist");
 
     public final String label;
     Message(String label) {

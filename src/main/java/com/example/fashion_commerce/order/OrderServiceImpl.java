@@ -23,8 +23,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository, ProductRepository productRepository1) {
         this.orderRepository = orderRepository;
+        this.productRepository = productRepository1;
     }
 
     @Transactional(rollbackFor = {FashionCommerceException.class, Exception.class})
@@ -44,8 +45,9 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        if (!validateIDs(createOrder.productIDs()).isEmpty()) {
-            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label));
+        List<String> invalidIDs = validateIDs(createOrder.productIDs());
+        if (!invalidIDs.isEmpty()) {
+            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs));
         }
 
         ContactInfo contactInfo = createContactInfo(createOrder);
