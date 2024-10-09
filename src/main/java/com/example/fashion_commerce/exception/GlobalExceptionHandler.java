@@ -25,7 +25,8 @@ public class GlobalExceptionHandler {
             case NO_EMPTY_FIELDS_ALLOWED,
                  INVALID_GENDER,
                  INVALID_PRODUCT_TYPES,
-                 FILE_SIZE_TOO_LARGE -> status = HttpStatus.BAD_REQUEST;
+                 FILE_SIZE_TOO_LARGE,
+                 INVALID_PRODUCT_IDS -> status = HttpStatus.BAD_REQUEST;
             case NO_PRODUCT_FOUND -> status = HttpStatus.NOT_FOUND;
         }
 
