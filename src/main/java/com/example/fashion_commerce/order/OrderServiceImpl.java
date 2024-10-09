@@ -12,7 +12,6 @@ import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ public class OrderServiceImpl implements OrderService {
         this.productRepository = productRepository1;
     }
 
-    @Transactional(rollbackFor = {FashionCommerceException.class, Exception.class})
     @Override
     public ResponseEntity<Response<Order>> createOrder(CreateOrder createOrder) {
 
