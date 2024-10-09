@@ -55,7 +55,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(
                 contactInfo,
                 shippingAddress,
-                createOrder.productIDs()
+                createOrder.productIDs(),
+                OrderStatus.CREATED
         );
 
         try {
