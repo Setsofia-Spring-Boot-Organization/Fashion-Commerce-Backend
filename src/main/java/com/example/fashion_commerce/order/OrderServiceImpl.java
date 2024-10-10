@@ -90,4 +90,12 @@ public class OrderServiceImpl implements OrderService {
                 createOrder.postalCode()
         );
     }
+
+
+    @Override
+    public ResponseEntity<Response<List<Order>>> getOrders(com.example.fashion_commerce.order.requests.OrderStatus status) {
+
+
+        return null;
+    }
 }
