@@ -35,4 +35,11 @@ public class OrderController {
     ) {
         return orderService.getOrders(all, status);
     }
+
+    @GetMapping
+    public ResponseEntity<Response<Order>> getOrder(
+            @RequestParam String id
+    ) {
+        return orderService.getOrder(id);
+    }
 }
