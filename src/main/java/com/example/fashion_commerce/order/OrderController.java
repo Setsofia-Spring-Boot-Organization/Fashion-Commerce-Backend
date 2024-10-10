@@ -28,6 +28,7 @@ public class OrderController {
     }
 
 
+
     @GetMapping
     public ResponseEntity<Response<List<Order>>> getOrders(
             @RequestParam boolean all,
@@ -35,6 +36,8 @@ public class OrderController {
     ) {
         return orderService.getOrders(all, status);
     }
+
+
 
     @GetMapping(path = "/get")
     public ResponseEntity<Response<Order>> getOrder(
