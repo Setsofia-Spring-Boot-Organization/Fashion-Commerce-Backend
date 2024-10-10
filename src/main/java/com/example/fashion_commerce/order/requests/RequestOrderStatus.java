@@ -1,11 +1,14 @@
 package com.example.fashion_commerce.order.requests;
 
+import com.example.fashion_commerce.order.OrderStatus;
+
 import java.util.Objects;
 
-public class OrderStatus {
+public class RequestOrderStatus {
+
     private OrderStatus status;
 
-    public OrderStatus(OrderStatus status) {
+    public RequestOrderStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -21,8 +24,8 @@ public class OrderStatus {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderStatus that = (OrderStatus) o;
-        return Objects.equals(status, that.status);
+        RequestOrderStatus that = (RequestOrderStatus) o;
+        return status == that.status;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class OrderStatus {
 
     @Override
     public String toString() {
-        return "OrderStatus{" +
+        return "RequestOrderStatus{" +
                 "status=" + status +
                 '}';
     }

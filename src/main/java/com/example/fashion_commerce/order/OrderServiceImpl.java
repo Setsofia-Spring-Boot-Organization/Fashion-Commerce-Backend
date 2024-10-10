@@ -12,6 +12,7 @@ import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
 import java.util.List;
 
@@ -93,9 +94,22 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public ResponseEntity<Response<List<Order>>> getOrders(com.example.fashion_commerce.order.requests.OrderStatus status) {
+    public ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status) {
+        List<Order> orders;
 
+        if (all) {
+            orders = orderRepository.findAll();
+        } else {
+            orders = orderRepository.findOrderByStatus(status);
+        }
 
-        return null;
+        Response<List<Order>> orderResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "all orders",
+                orders,
+                String.valueOf(orders.size())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
 }
