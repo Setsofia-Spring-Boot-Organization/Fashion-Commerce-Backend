@@ -31,7 +31,7 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<Response<List<Order>>> getOrders(
             @RequestParam boolean all,
-            @RequestParam RequestOrderStatus status
+            @RequestParam(required = false) RequestOrderStatus status
     ) {
         return orderService.getOrders(all, status);
     }
