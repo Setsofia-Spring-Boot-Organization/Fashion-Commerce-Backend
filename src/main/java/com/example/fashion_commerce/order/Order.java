@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.List;
 import java.util.Objects;
 
-@Document
 @QueryEntity
+@Document(collection = "orders")
 public class Order {
 
     @MongoId

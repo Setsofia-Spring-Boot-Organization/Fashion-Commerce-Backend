@@ -12,10 +12,10 @@ import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        Set<String> invalidIDs = validateIDs(createOrder.productIDs());
+        List<String> invalidIDs = validateIDs(createOrder.productIDs());
         if (!invalidIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
         }
@@ -67,24 +67,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private Set<String> validateIDs(List<String> ids) {
-        List<Product> products = productRepository.findAll();
-        Set<String> inValidIDs = new HashSet<>();
+    private List<String> validateIDs(List<String> ids) {
+        List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
+        ids.removeAll(productIDs);
 
-        for (String id : ids) {
-            boolean isValid = false;
-
-            for (Product product : products) {
-                if (id.equals(product.getId())) {
-                    isValid = true;
-                    break;
-                }
-            }
-            if (!isValid) {
-                inValidIDs.add(id);
-            }
-        }
-        return inValidIDs;
+        return ids;
     }
 
     private ContactInfo createContactInfo(CreateOrder createOrder) {
@@ -104,5 +91,35 @@ public class OrderServiceImpl implements OrderService {
                 createOrder.city(),
                 createOrder.postalCode()
         );
+    }
+
+
+    @Override
+    public ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status) {
+        List<Order> orders;
+
+        if (all) {
+            orders = orderRepository.findAll();
+        } else {
+            if (!isValidOrderStatus(status.getStatus())) {
+                throw new FashionCommerceException(Error.INVALID_ORDER_STATUS, new Throwable(Message.THE_REQUESTED_ORDER_STATUS_IS_INVALID.label));
+            }
+
+            orders = orderRepository.findOrderByStatus(status); //get the orders with the specified status
+        }
+
+        Response<List<Order>> orderResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "all orders",
+                orders,
+                String.valueOf(orders.size())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
+    }
+
+    private boolean isValidOrderStatus(String status) {
+
+        return Arrays.stream(OrderStatus.values()).anyMatch(orderStatus -> orderStatus.name().equals(status.toUpperCase()));
     }
 }
