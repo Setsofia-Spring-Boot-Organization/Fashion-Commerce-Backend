@@ -11,4 +11,6 @@ public interface OrderService {
     ResponseEntity<Response<Order>> createOrder(CreateOrder order);
 
     ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status);
+
+    ResponseEntity<Response<Order>> getOrder(String id);
 }
