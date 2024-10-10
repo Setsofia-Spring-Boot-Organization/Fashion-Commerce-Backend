@@ -11,7 +11,7 @@ public interface OrderRepository extends MongoRepository<Order, String>, Queryds
 
     default List<Order> findOrderByStatus(RequestOrderStatus orderStatus) {
         QOrder qOrder = new QOrder("orders");
-        Predicate predicate = qOrder.orderStatus.eq(orderStatus.getStatus()) ;
+        Predicate predicate = qOrder.orderStatus.eq(OrderStatus.valueOf(orderStatus.getStatus().toUpperCase())) ;
 
         return (List<Order>) findAll(predicate);
     }

@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class RequestOrderStatus {
 
-    private OrderStatus status;
+    private String status;
 
-    public RequestOrderStatus(OrderStatus status) {
+    public RequestOrderStatus(String status) {
         this.status = status;
     }
 
-    public OrderStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -25,7 +25,7 @@ public class RequestOrderStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RequestOrderStatus that = (RequestOrderStatus) o;
-        return status == that.status;
+        return Objects.equals(status, that.status);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RequestOrderStatus {
     @Override
     public String toString() {
         return "RequestOrderStatus{" +
-                "status=" + status +
+                "status='" + status + '\'' +
                 '}';
     }
 }
