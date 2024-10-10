@@ -130,6 +130,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<Order>> getOrder(String id) {
-        return null;
+
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> new FashionCommerceException(Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label))
+        );
+
+        Response<Order> orderResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "order",
+                order
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
 }
