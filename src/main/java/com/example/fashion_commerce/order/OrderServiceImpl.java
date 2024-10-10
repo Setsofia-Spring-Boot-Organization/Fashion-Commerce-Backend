@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -100,6 +101,10 @@ public class OrderServiceImpl implements OrderService {
         if (all) {
             orders = orderRepository.findAll();
         } else {
+            if (!isValidOrderStatus(status.getStatus())) {
+                throw new FashionCommerceException(Error.INVALID_ORDER_STATUS);
+            }
+
             orders = orderRepository.findOrderByStatus(status);
         }
 
@@ -111,5 +116,9 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
+    }
+
+    private boolean isValidOrderStatus(String status) {
+        return Arrays.stream(OrderStatus.values()).toList().stream().anyMatch(OrderStatus.valueOf(status));
     }
 }
