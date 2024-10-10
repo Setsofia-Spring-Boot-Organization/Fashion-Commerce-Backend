@@ -28,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
         this.productRepository = productRepository;
     }
 
+
+
+
     @Override
     public ResponseEntity<Response<Order>> createOrder(CreateOrder createOrder) {
 
@@ -94,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
     @Override
     public ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status) {
         List<Order> orders;
@@ -119,7 +123,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isValidOrderStatus(String status) {
-
         return Arrays.stream(OrderStatus.values()).anyMatch(orderStatus -> orderStatus.name().equals(status.toUpperCase()));
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<Order>> getOrder(String id) {
+        return null;
     }
 }
