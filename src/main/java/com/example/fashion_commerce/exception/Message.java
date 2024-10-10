@@ -9,7 +9,8 @@ public enum Message {
     THE_MAXIMUM_FILE_SIZE_IS_BIGGER_THAN_10MB("the maximum file size is 10MB: "),
     CANNOT_PLACE_ORDER("cannot place order, please try again"),
     THE_FOLLOWING_IDS_DOES_NOT_EXIST("the following product IDs does not exist"),
-    THE_REQUESTED_ORDER_STATUS_IS_INVALID("requested order status is invalid");
+    THE_REQUESTED_ORDER_STATUS_IS_INVALID("requested order status is invalid"),
+    THE_REQUESTED_ORDER_ID_IS_INCORRECT("the requested order id is incorrect");
 
     public final String label;
     Message(String label) {
