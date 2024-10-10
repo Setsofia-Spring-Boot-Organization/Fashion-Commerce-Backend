@@ -2,7 +2,7 @@ package com.example.fashion_commerce.order;
 
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.order.requests.CreateOrder;
-import com.example.fashion_commerce.order.requests.OrderStatus;
+import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +30,9 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<Response<List<Order>>> getOrders(
-            @RequestParam OrderStatus status
+            @RequestParam boolean all,
+            @RequestParam RequestOrderStatus status
     ) {
-        return orderService.getOrders(status);
+        return orderService.getOrders(all, status);
     }
 }
