@@ -27,7 +27,8 @@ public class GlobalExceptionHandler {
                  INVALID_PRODUCT_TYPES,
                  FILE_SIZE_TOO_LARGE,
                  INVALID_PRODUCT_IDS,
-                 INVALID_ORDER_STATUS -> status = HttpStatus.BAD_REQUEST;
+                 INVALID_ORDER_STATUS,
+                 INVALID_ORDER_ID -> status = HttpStatus.BAD_REQUEST;
             case NO_PRODUCT_FOUND -> status = HttpStatus.NOT_FOUND;
         }
 
