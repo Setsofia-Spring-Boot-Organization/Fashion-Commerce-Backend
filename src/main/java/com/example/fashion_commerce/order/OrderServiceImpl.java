@@ -28,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
         this.productRepository = productRepository;
     }
 
+
+
+
     @Override
     public ResponseEntity<Response<Order>> createOrder(CreateOrder createOrder) {
 
@@ -94,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+
     @Override
     public ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status) {
         List<Order> orders;
@@ -119,7 +123,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isValidOrderStatus(String status) {
-
         return Arrays.stream(OrderStatus.values()).anyMatch(orderStatus -> orderStatus.name().equals(status.toUpperCase()));
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<Order>> getOrder(String id) {
+
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> new FashionCommerceException(Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label))
+        );
+
+        Response<Order> orderResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "order",
+                order
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
 }

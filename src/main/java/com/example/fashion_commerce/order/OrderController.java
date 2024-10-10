@@ -28,11 +28,21 @@ public class OrderController {
     }
 
 
+
     @GetMapping
     public ResponseEntity<Response<List<Order>>> getOrders(
             @RequestParam boolean all,
             @RequestParam(required = false) RequestOrderStatus status
     ) {
         return orderService.getOrders(all, status);
+    }
+
+
+
+    @GetMapping(path = "/get")
+    public ResponseEntity<Response<Order>> getOrder(
+            @RequestParam String id
+    ) {
+        return orderService.getOrder(id);
     }
 }
