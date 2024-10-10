@@ -102,10 +102,10 @@ public class OrderServiceImpl implements OrderService {
             orders = orderRepository.findAll();
         } else {
             if (!isValidOrderStatus(status.getStatus())) {
-                throw new FashionCommerceException(Error.INVALID_ORDER_STATUS);
+                throw new FashionCommerceException(Error.INVALID_ORDER_STATUS, new Throwable(Message.THE_REQUESTED_ORDER_STATUS_IS_INVALID.label));
             }
 
-            orders = orderRepository.findOrderByStatus(status);
+            orders = orderRepository.findOrderByStatus(status); //get the orders with the specified status
         }
 
         Response<List<Order>> orderResponse = new Response<>(
@@ -119,6 +119,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private boolean isValidOrderStatus(String status) {
-        return Arrays.stream(OrderStatus.values()).toList().stream().anyMatch(OrderStatus.valueOf(status));
+
+        return Arrays.stream(OrderStatus.values()).anyMatch(orderStatus -> orderStatus.name().equals(status.toUpperCase()));
     }
 }
