@@ -36,7 +36,7 @@ public class OrderController {
         return orderService.getOrders(all, status);
     }
 
-    @GetMapping
+    @GetMapping(path = "/get")
     public ResponseEntity<Response<Order>> getOrder(
             @RequestParam String id
     ) {
