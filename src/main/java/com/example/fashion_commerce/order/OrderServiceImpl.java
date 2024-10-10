@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        Set<String> invalidIDs = validateIDs(createOrder.productIDs());
+        List<String> invalidIDs = validateIDs(createOrder.productIDs());
         if (!invalidIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
         }
@@ -67,24 +65,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private Set<String> validateIDs(List<String> ids) {
-        List<Product> products = productRepository.findAll();
-        Set<String> inValidIDs = new HashSet<>();
+    private List<String> validateIDs(List<String> ids) {
+        List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
+        ids.removeAll(productIDs);
 
-        for (String id : ids) {
-            boolean isValid = false;
-
-            for (Product product : products) {
-                if (id.equals(product.getId())) {
-                    isValid = true;
-                    break;
-                }
-            }
-            if (!isValid) {
-                inValidIDs.add(id);
-            }
-        }
-        return inValidIDs;
+        return ids;
     }
 
     private ContactInfo createContactInfo(CreateOrder createOrder) {
