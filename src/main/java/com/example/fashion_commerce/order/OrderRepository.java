@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderRepository extends MongoRepository<Order, String>, QuerydslPredicateExecutor<Order> {
 
     default List<Order> findOrderByStatus(RequestOrderStatus orderStatus) {
-        QOrder qOrder = new QOrder("order");
+        QOrder qOrder = new QOrder("orders");
         Predicate predicate = qOrder.orderStatus.eq(orderStatus.getStatus()) ;
 
         return (List<Order>) findAll(predicate);
