@@ -109,6 +109,6 @@ public record ProductController(ProductService productService) {
     @GetMapping("/filter/options")
     public ResponseEntity<Response<FilterOptions>> getFilterOptions() {
 
-        
+        return productService.getFilterOptions();
     }
 }
