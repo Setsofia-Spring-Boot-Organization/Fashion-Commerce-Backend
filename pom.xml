@@ -57,6 +57,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- mail dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+
 		<!-- Cloudinary dependencies-->
 		<dependency>
 			<groupId>com.cloudinary</groupId>
