@@ -41,9 +41,9 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             mailSender.sendMail(
-                    "",
-                    "",
-                    ""
+                    order.getContactInfo().getEmail(),
+                    "Thank you for your order 🌹🌹",
+                    "Your order has benn received and is awaiting processing..."
             );
 
             Response<Order> orderResponse = new Response<>(
