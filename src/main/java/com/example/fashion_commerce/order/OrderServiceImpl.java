@@ -4,6 +4,7 @@ import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.exception.Message;
 import com.example.fashion_commerce.generics.Response;
+import com.example.fashion_commerce.mail.MailSender;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
@@ -22,10 +23,12 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final MailSender mailSender;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository, MailSender mailSender) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.mailSender = mailSender;
     }
 
 
@@ -36,13 +39,23 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = createdOrder(createOrder);
 
-        Response<Order> orderResponse = new Response<>(
-                HttpStatus.CREATED.value(),
-                "order created successfully",
-                order
-        );
+        try {
+            mailSender.sendMail(
+                    "",
+                    "",
+                    ""
+            );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
+            Response<Order> orderResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "order created successfully",
+                    order
+            );
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
+
+        } catch (Exception failedException) {
+            throw new FashionCommerceException(Error.ERROR_CREATING_ORDER, new Throwable(failedException.getCause().getMessage()));
+        }
     }
 
     private Order createdOrder(CreateOrder createOrder) {
@@ -64,7 +77,6 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             return orderRepository.save(order);
-
         } catch (Exception exception) {
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
         }
