@@ -5,12 +5,17 @@ import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.exception.Message;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
+import com.example.fashion_commerce.product.productCategory.ProductCategory;
+import com.example.fashion_commerce.product.productCategory.ProductCategoryRepository;
+import com.example.fashion_commerce.product.productColor.ProductColor;
+import com.example.fashion_commerce.product.productColor.ProductColorRepository;
+import com.example.fashion_commerce.product.productSize.ProductSize;
+import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
+import com.example.fashion_commerce.product.productType.ProductType;
+import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
-import com.example.fashion_commerce.product.responses.AllProductsRes;
-import com.example.fashion_commerce.product.responses.CreatedProductRes;
-import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
-import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
+import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,11 +31,19 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CloudinaryService cloudinaryService;
     private final ProductPredicates productPredicates;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ProductColorRepository productColorRepository;
+    private final ProductSizeRepository productSizeRepository;
+    private final ProductTypeRepository productTypeRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates) {
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository) {
         this.productRepository = productRepository;
         this.cloudinaryService = cloudinaryService;
         this.productPredicates = productPredicates;
+        this.productCategoryRepository = productCategoryRepository;
+        this.productColorRepository = productColorRepository;
+        this.productSizeRepository = productSizeRepository;
+        this.productTypeRepository = productTypeRepository;
     }
 
     @Override
@@ -317,5 +330,31 @@ public class ProductServiceImpl implements ProductService {
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<FilterOptions>> getFilterOptions() {
+
+        List<ProductCategory> categories = productCategoryRepository.findAll();
+        List<ProductColor> colors = productColorRepository.findAll();
+        List<ProductSize> productSizes = productSizeRepository.findAll();
+        List<ProductType> productTypes = productTypeRepository.findAll();
+
+        Response<FilterOptions> filterOptionsResponse = new Response<>(
+                HttpStatus.OK.value(),
+                "filter options",
+                new FilterOptions(
+                        categories,
+                        colors,
+                        productSizes,
+                        productTypes
+                )
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                filterOptionsResponse
+        );
     }
 }

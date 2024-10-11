@@ -4,10 +4,7 @@ import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
-import com.example.fashion_commerce.product.responses.AllProductsRes;
-import com.example.fashion_commerce.product.responses.CreatedProductRes;
-import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
-import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
+import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,4 +104,11 @@ public record ProductController(ProductService productService) {
         return productService.filterAllProducts(filter);
     }
 
+
+
+    @GetMapping("/filter/options")
+    public ResponseEntity<Response<FilterOptions>> getFilterOptions() {
+
+        return productService.getFilterOptions();
+    }
 }
