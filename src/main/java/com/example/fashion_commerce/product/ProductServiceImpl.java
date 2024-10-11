@@ -7,10 +7,7 @@ import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
-import com.example.fashion_commerce.product.responses.AllProductsRes;
-import com.example.fashion_commerce.product.responses.CreatedProductRes;
-import com.example.fashion_commerce.product.responses.GetNewCollectionRes;
-import com.example.fashion_commerce.product.responses.ThisWeekProductsRes;
+import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -317,5 +314,13 @@ public class ProductServiceImpl implements ProductService {
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
+    }
+
+
+
+
+    @Override
+    public ResponseEntity<Response<FilterOptions>> getFilterOptions() {
+        return null;
     }
 }
