@@ -29,8 +29,8 @@ public class MailSenderImpl implements MailSender {
 
         TemplateEngine templateEngine = new TemplateEngine();
         Context context = new Context();
-//
-//        context.setVariables(variables);
+
+        context.setVariables(variables);
 
 //        String text = templateEngine.process(template, context);
 
