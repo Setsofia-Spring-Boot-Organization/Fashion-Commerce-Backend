@@ -32,7 +32,7 @@ public class MailSenderImpl implements MailSender {
 
         context.setVariables(variables);
 
-//        String text = templateEngine.process(template, context);
+        String text = templateEngine.process(template, context);
 
 //        MimeMessage mimeMessage = mailSender.createMimeMessage();
 //        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
