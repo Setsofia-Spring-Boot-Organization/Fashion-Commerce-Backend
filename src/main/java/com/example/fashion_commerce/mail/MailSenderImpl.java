@@ -39,7 +39,7 @@ public class MailSenderImpl implements MailSender {
         messageHelper.setPriority(1);
         messageHelper.setSubject(subject);
         messageHelper.setFrom(MAIL_SENDER);
-//        messageHelper.setTo(to);
+        messageHelper.setTo(to);
 //        messageHelper.setText(text, true);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
