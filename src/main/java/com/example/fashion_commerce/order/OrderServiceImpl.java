@@ -48,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
             mailSender.sendMail(
                     order.getContactInfo().getEmail(),
                     "Thank you for your order 🌹🌹",
-                    Map.of("name", "Your order has benn received and is awaiting processing..."),
-                    ""
+                    Map.of("username", "Your order has benn received and is awaiting processing..."),
+                    "SuccessfulOrderFeedback"
             );
 
             Response<Order> orderResponse = new Response<>(
