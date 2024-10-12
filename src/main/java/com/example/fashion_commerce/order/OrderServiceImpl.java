@@ -17,6 +17,7 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -40,10 +41,15 @@ public class OrderServiceImpl implements OrderService {
         Order order = createdOrder(createOrder);
 
         try {
+            //TODO:
+            // 1. replace the hardcoded texts with variables
+            // 2. create a template for the variables
+            // 3. set a sensible email subject
             mailSender.sendMail(
                     order.getContactInfo().getEmail(),
                     "Thank you for your order 🌹🌹",
-                    "Your order has benn received and is awaiting processing..."
+                    Map.of("name", "Your order has benn received and is awaiting processing..."),
+                    ""
             );
 
             Response<Order> orderResponse = new Response<>(
