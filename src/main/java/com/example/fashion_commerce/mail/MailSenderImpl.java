@@ -27,7 +27,7 @@ public class MailSenderImpl implements MailSender {
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
-//        TemplateEngine templateEngine = new TemplateEngine();
+        TemplateEngine templateEngine = new TemplateEngine();
 //        Context context = new Context();
 //
 //        context.setVariables(variables);
