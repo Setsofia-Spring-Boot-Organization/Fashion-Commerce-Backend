@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import java.util.Map;
 
 @Service
 public class MailSenderImpl implements MailSender {
@@ -18,7 +22,14 @@ public class MailSenderImpl implements MailSender {
     private String MAIL_SENDER;
 
     @Override
-    public void sendMail(String to, String subject, String text) {
+    public void sendMail(String to, String subject, Map<String, Object> variables, String template) {
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        Context context = new Context();
+
+        context.setVariables(variables);
+
+        String text = templateEngine.process(template, context);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(MAIL_SENDER);
