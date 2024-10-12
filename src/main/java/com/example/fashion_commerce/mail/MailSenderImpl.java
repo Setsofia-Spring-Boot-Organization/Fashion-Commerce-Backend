@@ -27,11 +27,10 @@ public class MailSenderImpl implements MailSender {
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
-        TemplateEngine templateEngine = new TemplateEngine();
         Context context = new Context();
-
         context.setVariables(variables);
 
+        TemplateEngine templateEngine = new TemplateEngine();
         String text = templateEngine.process(template, context);
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -41,12 +40,6 @@ public class MailSenderImpl implements MailSender {
         messageHelper.setFrom(MAIL_SENDER);
         messageHelper.setTo(to);
         messageHelper.setText(text, true);
-
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(MAIL_SENDER);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject("subject");
-        simpleMailMessage.setText("template");
 
         mailSender.send(simpleMailMessage);
     }
