@@ -41,6 +41,6 @@ public class MailSenderImpl implements MailSender {
         messageHelper.setTo(to);
         messageHelper.setText(text, true);
 
-        mailSender.send(simpleMailMessage);
+        mailSender.send(mimeMessage);
     }
 }
