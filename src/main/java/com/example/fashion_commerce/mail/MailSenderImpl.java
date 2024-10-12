@@ -38,7 +38,7 @@ public class MailSenderImpl implements MailSender {
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         messageHelper.setPriority(1);
         messageHelper.setSubject(subject);
-//        messageHelper.setFrom(MAIL_SENDER);
+        messageHelper.setFrom(MAIL_SENDER);
 //        messageHelper.setTo(to);
 //        messageHelper.setText(text, true);
 
