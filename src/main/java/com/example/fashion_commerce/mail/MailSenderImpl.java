@@ -2,9 +2,7 @@ package com.example.fashion_commerce.mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,35 +14,30 @@ import java.util.Map;
 @Service
 public class MailSenderImpl implements MailSender {
 
-    @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
-    private TemplateEngine templateEngine;
+    private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
 
     @Value("${spring.mail.username}")
     private String MAIL_SENDER;
+
+    public MailSenderImpl(JavaMailSender mailSender, TemplateEngine templateEngine) {
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
+    }
 
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
         Context context = new Context();
-        context.setVariables(variables);
+        context.setVariable("username", to);
 
-        String text = templateEngine.process(template, context);
-
+        String process = templateEngine.process(template, context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        messageHelper.setPriority(1);
-        messageHelper.setSubject(subject);
-        messageHelper.setFrom(MAIL_SENDER);
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+        messageHelper.setSubject("Welcome, " + to);
+        messageHelper.setText(process, true);
         messageHelper.setTo(to);
-        messageHelper.setText(text, true);
-
-//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-//        simpleMailMessage.setFrom(MAIL_SENDER);
-//        simpleMailMessage.setTo(to);
-//        simpleMailMessage.setSubject(subject);
-//        simpleMailMessage.setText("Hello funky");
+        messageHelper.setFrom(MAIL_SENDER);
 
         mailSender.send(mimeMessage);
     }
