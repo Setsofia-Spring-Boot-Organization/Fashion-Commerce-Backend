@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
                     order.getContactInfo().getEmail(),
                     "Thank you for your order 🌹🌹",
                     variables,
-                    "SuccessfulOrderFeedback.html"
+                    "SuccessfulOrderFeedback"
             );
 
             Response<Order> orderResponse = new Response<>(
