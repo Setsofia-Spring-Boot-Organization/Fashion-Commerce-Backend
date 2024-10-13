@@ -29,15 +29,15 @@ public class MailSenderImpl implements MailSender {
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
         Context context = new Context();
-        context.setVariables(variables);
+        context.setVariable("username", to);
 
-        String process = templateEngine.process(template, context);
+        String process = templateEngine.process("SuccessfulOrderFeedback.html", context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-        messageHelper.setSubject(subject);
-        messageHelper.setText(process, true);
-        messageHelper.setTo(to);
-        messageHelper.setFrom(MAIL_SENDER);
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+        helper.setSubject("subject");
+        helper.setText(process, true);
+        helper.setTo(to);
+        helper.setFrom(MAIL_SENDER);
 
         mailSender.send(mimeMessage);
     }
