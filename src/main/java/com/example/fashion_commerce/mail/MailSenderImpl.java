@@ -31,7 +31,6 @@ public class MailSenderImpl implements MailSender {
         Context context = new Context();
         context.setVariables(variables);
 
-        TemplateEngine templateEngine = new TemplateEngine();
         String text = templateEngine.process(template, context);
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
