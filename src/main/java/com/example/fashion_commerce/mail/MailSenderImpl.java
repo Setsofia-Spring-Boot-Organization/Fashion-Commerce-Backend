@@ -27,11 +27,10 @@ public class MailSenderImpl implements MailSender {
 
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
-
         Context context = new Context();
         context.setVariable("username", to);
 
-        String process = templateEngine.process("SuccessfulOrderFeedback", context);
+        String process = templateEngine.process(template, context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject(subject);
