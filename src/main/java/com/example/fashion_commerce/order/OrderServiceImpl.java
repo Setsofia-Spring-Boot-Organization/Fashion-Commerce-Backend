@@ -66,31 +66,27 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        System.out.println("The product IDs: " + createOrder.getProductIDs());
-
         List<String> validIDs = validateIDs(createOrder.getProductIDs());
         if (validIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
 
-            ContactInfo contactInfo = createContactInfo(createOrder);
-            ShippingAddress shippingAddress = createShippingAddress(createOrder);
+        ContactInfo contactInfo = createContactInfo(createOrder);
+        ShippingAddress shippingAddress = createShippingAddress(createOrder);
 
-            System.out.println("The product IDs: " + createOrder.getProductIDs());
-
-            Order order = new Order(
-                    contactInfo,
-                    shippingAddress,
-                    createOrder.getProductIDs(),
-                    OrderStatus.CREATED
-            );
+        Order order = new Order(
+                contactInfo,
+                shippingAddress,
+                createOrder.getProductIDs(),
+                OrderStatus.CREATED
+        );
 
 
-            try {
-                return orderRepository.save(order);
-            } catch (Exception exception) {
-                throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
-            }
+        try {
+            return orderRepository.save(order);
+        } catch (Exception exception) {
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
+        }
     }
 
     private List<String> validateIDs(List<String> ids) {
