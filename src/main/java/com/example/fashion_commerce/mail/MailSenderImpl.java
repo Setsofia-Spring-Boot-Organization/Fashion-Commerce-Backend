@@ -29,7 +29,7 @@ public class MailSenderImpl implements MailSender {
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
         Context context = new Context();
-        context.setVariable("username", to);
+        context.setVariables(variables);
 
         String process = templateEngine.process(template, context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
