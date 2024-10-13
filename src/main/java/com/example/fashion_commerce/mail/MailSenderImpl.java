@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -15,30 +16,30 @@ import java.util.Map;
 public class MailSenderImpl implements MailSender {
 
     private final JavaMailSender mailSender;
-
-    public MailSenderImpl(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    private final TemplateEngine templateEngine;
 
     @Value("${spring.mail.username}")
     private String MAIL_SENDER;
 
+    public MailSenderImpl(JavaMailSender mailSender, TemplateEngine templateEngine) {
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
+    }
+
+    @Async
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
-
         Context context = new Context();
-        context.setVariables(variables);
+        context.setVariable("username", to);
 
-        TemplateEngine templateEngine = new TemplateEngine();
-        String text = templateEngine.process(template, context);
-
+        String process = templateEngine.process(template, context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        messageHelper.setPriority(1);
-        messageHelper.setSubject(subject);
-        messageHelper.setFrom(MAIL_SENDER);
-        messageHelper.setTo(to);
-        messageHelper.setText(text, true);
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        helper.setPriority(1);
+        helper.setSubject(subject);
+        helper.setText(process, true);
+        helper.setTo(to);
+        helper.setFrom(MAIL_SENDER);
 
         mailSender.send(mimeMessage);
     }

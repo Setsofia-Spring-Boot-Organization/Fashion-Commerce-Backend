@@ -45,10 +45,14 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
+            Map<String, Object> variables = Map.of(
+              "username", order.getContactInfo().getEmail()
+            );
+
             mailSender.sendMail(
                     order.getContactInfo().getEmail(),
                     "Thank you for your order 🌹🌹",
-                    Map.of("username", "Your order has benn received and is awaiting processing..."),
+                    variables,
                     "SuccessfulOrderFeedback"
             );
 
@@ -66,9 +70,9 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> invalidIDs = validateIDs(createOrder.productIDs());
-        if (!invalidIDs.isEmpty()) {
-            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
+        List<String> validIDs = validateIDs(createOrder.getProductIDs());
+        if (validIDs.isEmpty()) {
+            throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
 
         ContactInfo contactInfo = createContactInfo(createOrder);
@@ -77,10 +81,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(
                 contactInfo,
                 shippingAddress,
-                createOrder.productIDs(),
+                createOrder.getProductIDs(),
                 OrderStatus.CREATED
         );
-
 
 
         try {
@@ -92,27 +95,26 @@ public class OrderServiceImpl implements OrderService {
 
     private List<String> validateIDs(List<String> ids) {
         List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
-        ids.removeAll(productIDs);
-
+        ids.retainAll(productIDs);
         return ids;
     }
 
     private ContactInfo createContactInfo(CreateOrder createOrder) {
         return new ContactInfo(
-                createOrder.email(),
-                createOrder.phone()
+                createOrder.getEmail(),
+                createOrder.getPhone()
         );
     }
 
     private ShippingAddress createShippingAddress(CreateOrder createOrder) {
         return new ShippingAddress(
-                createOrder.firstname(),
-                createOrder.lastname(),
-                createOrder.country(),
-                createOrder.region(),
-                createOrder.address(),
-                createOrder.city(),
-                createOrder.postalCode()
+                createOrder.getFirstname(),
+                createOrder.getLastname(),
+                createOrder.getCountry(),
+                createOrder.getRegion(),
+                createOrder.getAddress(),
+                createOrder.getCity(),
+                createOrder.getPostalCode()
         );
     }
 
