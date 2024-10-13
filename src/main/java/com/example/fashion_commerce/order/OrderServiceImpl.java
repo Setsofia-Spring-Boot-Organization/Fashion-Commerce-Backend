@@ -98,20 +98,20 @@ public class OrderServiceImpl implements OrderService {
 
     private ContactInfo createContactInfo(CreateOrder createOrder) {
         return new ContactInfo(
-                createOrder.email(),
-                createOrder.phone()
+                createOrder.getEmail(),
+                createOrder.getPhone()
         );
     }
 
     private ShippingAddress createShippingAddress(CreateOrder createOrder) {
         return new ShippingAddress(
-                createOrder.firstname(),
-                createOrder.lastname(),
-                createOrder.country(),
-                createOrder.region(),
-                createOrder.address(),
-                createOrder.city(),
-                createOrder.postalCode()
+                createOrder.getFirstname(),
+                createOrder.getLastname(),
+                createOrder.getCountry(),
+                createOrder.getRegion(),
+                createOrder.getAddress(),
+                createOrder.getCity(),
+                createOrder.getPostalCode()
         );
     }
 
