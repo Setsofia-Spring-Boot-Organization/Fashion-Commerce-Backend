@@ -18,6 +18,8 @@ public class MailSenderImpl implements MailSender {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Value("${spring.mail.username}")
     private String MAIL_SENDER;
@@ -25,25 +27,25 @@ public class MailSenderImpl implements MailSender {
     @Override
     public void sendMail(String to, String subject, Map<String, Object> variables, String template) throws MessagingException {
 
-//        Context context = new Context();
-//        context.setVariables(variables);
-//
-//        String text = templateEngine.process(template, context);
-//
-//        MimeMessage mimeMessage = mailSender.createMimeMessage();
-//        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//        messageHelper.setPriority(1);
-//        messageHelper.setSubject(subject);
-//        messageHelper.setFrom(MAIL_SENDER);
-//        messageHelper.setTo(to);
-//        messageHelper.setText(text, true);
+        Context context = new Context();
+        context.setVariables(variables);
 
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(MAIL_SENDER);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText("Hello funky");
+        String text = templateEngine.process(template, context);
 
-        mailSender.send(simpleMailMessage);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        messageHelper.setPriority(1);
+        messageHelper.setSubject(subject);
+        messageHelper.setFrom(MAIL_SENDER);
+        messageHelper.setTo(to);
+        messageHelper.setText(text, true);
+
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        simpleMailMessage.setFrom(MAIL_SENDER);
+//        simpleMailMessage.setTo(to);
+//        simpleMailMessage.setSubject(subject);
+//        simpleMailMessage.setText("Hello funky");
+
+        mailSender.send(mimeMessage);
     }
 }
