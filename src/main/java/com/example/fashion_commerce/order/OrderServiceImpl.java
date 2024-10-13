@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> invalidIDs = validateIDs(createOrder.productIDs());
+        List<String> invalidIDs = validateIDs(createOrder.getProductIDs());
         if (!invalidIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
         }
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(
                 contactInfo,
                 shippingAddress,
-                createOrder.productIDs(),
+                createOrder.getProductIDs(),
                 OrderStatus.CREATED
         );
 
