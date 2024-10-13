@@ -45,10 +45,14 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
+            Map<String, Object> variables = Map.of(
+              "username", order.getContactInfo().getEmail()
+            );
+
             mailSender.sendMail(
                     order.getContactInfo().getEmail(),
                     "Thank you for your order 🌹🌹",
-                    Map.of("username", "Your order has benn received and is awaiting processing..."),
+                    variables,
                     "SuccessfulOrderFeedback"
             );
 
