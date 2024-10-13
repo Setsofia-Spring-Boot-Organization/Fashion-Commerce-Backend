@@ -34,7 +34,7 @@ public class MailSenderImpl implements MailSender {
         String process = templateEngine.process("SuccessfulOrderFeedback", context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
-        helper.setSubject("subject");
+        helper.setSubject(subject);
         helper.setText(process, true);
         helper.setTo(to);
         helper.setFrom(MAIL_SENDER);
