@@ -34,7 +34,7 @@ public class MailSenderImpl implements MailSender {
 
         String process = templateEngine.process(template, context);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
         helper.setPriority(1);
         helper.setSubject(subject);
         helper.setText(process, true);
