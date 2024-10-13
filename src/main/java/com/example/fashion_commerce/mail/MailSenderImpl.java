@@ -15,9 +15,11 @@ import java.util.Map;
 public class MailSenderImpl implements MailSender {
 
     private final JavaMailSender mailSender;
+    private final TemplateEngine templateEngine;
 
-    public MailSenderImpl(JavaMailSender mailSender) {
+    public MailSenderImpl(JavaMailSender mailSender, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
     }
 
     @Value("${spring.mail.username}")
