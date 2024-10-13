@@ -66,33 +66,36 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
+        System.out.println("The product IDs: " + createOrder.getProductIDs());
+
         List<String> invalidIDs = validateIDs(createOrder.getProductIDs());
         if (!invalidIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_FOLLOWING_IDS_DOES_NOT_EXIST.label + ": " + invalidIDs.stream().sorted().toList()));
         }
 
-        ContactInfo contactInfo = createContactInfo(createOrder);
-        ShippingAddress shippingAddress = createShippingAddress(createOrder);
+            ContactInfo contactInfo = createContactInfo(createOrder);
+            ShippingAddress shippingAddress = createShippingAddress(createOrder);
 
-        Order order = new Order(
-                contactInfo,
-                shippingAddress,
-                createOrder.getProductIDs(),
-                OrderStatus.CREATED
-        );
+            System.out.println("The product IDs: " + createOrder.getProductIDs());
+
+            Order order = new Order(
+                    contactInfo,
+                    shippingAddress,
+                    createOrder.getProductIDs(),
+                    OrderStatus.CREATED
+            );
 
 
-        try {
-            return orderRepository.save(order);
-        } catch (Exception exception) {
-            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
-        }
+            try {
+                return orderRepository.save(order);
+            } catch (Exception exception) {
+                throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_PLACE_ORDER.label));
+            }
     }
 
     private List<String> validateIDs(List<String> ids) {
         List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
-        ids.removeAll(productIDs);
-
+        ids.retainAll(productIDs);
         return ids;
     }
 
