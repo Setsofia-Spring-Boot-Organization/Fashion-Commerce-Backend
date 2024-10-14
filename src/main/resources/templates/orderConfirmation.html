@@ -14,10 +14,10 @@
 
     <div class="billing-address">
       <h3>Billing address</h3>
-      <p><strong>Name</strong>: Jane Smith</p>
-      <p><strong>Address</strong>: 456 Oak St #3b, San Francisco, CA 94102, United States</p>
-      <p><strong>Phone</strong>: +1 (415) 555-1234</p>
-      <p><strong>Email</strong>: jane.smith@email.com</p>
+      <p><strong>Name</strong>: <span th:utext="${username}"></span></p>
+      <p><strong>Address</strong>: <span th:utext="${address}"></span></p>
+      <p><strong>Phone</strong>: <span th:utext="${phone}"></span></p>
+      <p><strong>Email</strong>: <span th:utext="${email}"></span></p>
       <button class="track-order-btn">Track Your Order</button>
     </div>
   </div>
@@ -25,9 +25,9 @@
   <div class="order-summary-section">
     <h3>Order Summary</h3>
     <div class="order-info">
-      <p><strong>Date</strong>: 02 May 2023</p>
-      <p><strong>Order Number</strong>: 024-125478956</p>
-      <p><strong>Payment Method</strong>: Mastercard</p>
+      <p><strong>Date</strong>: <span th:utext="${date}"></span></p>
+      <p><strong>Order Number</strong>: <span th:utext="${orderId}"></span></p>
+      <p><strong>Payment Method</strong>: <span th:utext="${paymentMethod}"></span></p>
     </div>
 
     <table>
@@ -35,45 +35,36 @@
         <th>Product</th>
         <th>Price</th>
       </tr>
-      <tr>
+      <!-- Thymeleaf iteration for each product -->
+      <tr th:each="product : ${products}">
         <td>
           <div class="product">
-            <img src="chocolate-combo.jpg" alt="All in One Chocolate Combo">
+            <!-- Image source is dynamic -->
+            <img th:src="@{${product.imageUrl}}" th:alt="${product.name}">
             <div>
-              <p>All in One Chocolate Combo</p>
-              <p>Pack: Medium, Qty: 1</p>
+              <!-- Product name and details are dynamic -->
+              <p th:text="${product.name}"></p>
+              <p>Pack: <span th:text="${product.pack}"></span>, Qty: <span th:text="${product.quantity}"></span></p>
             </div>
           </div>
         </td>
-        <td>$50.00</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="product">
-            <img src="hearts-combo.jpg" alt="Desire Of Hearts">
-            <div>
-              <p>Desire Of Hearts</p>
-              <p>Pack: Large, Qty: 1</p>
-            </div>
-          </div>
-        </td>
-        <td>$50.00</td>
+        <td th:text="${product.price}"></td>
       </tr>
       <tr>
         <td>Sub Total</td>
-        <td>$100.00</td>
+        <td th:text="${subTotal}"></td>
       </tr>
       <tr>
         <td>Shipping</td>
-        <td>$2.00</td>
+        <td th:text="${shippingCost}"></td>
       </tr>
       <tr>
         <td>Tax</td>
-        <td>$5.00</td>
+        <td th:text="${tax}"></td>
       </tr>
       <tr>
         <td><strong>Order Total</strong></td>
-        <td><strong>$107.00</strong></td>
+        <td><strong th:text="${total}"></strong></td>
       </tr>
     </table>
   </div>
