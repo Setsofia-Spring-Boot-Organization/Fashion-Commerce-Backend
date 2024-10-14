@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
-import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -46,14 +45,6 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
-            List<Product> products = new ArrayList<>();
-            productRepository.findAll().forEach(product -> {
-                order.getProductIDs().forEach(id -> {
-                    if (product.getId().equals(id))
-                        products.add(product);
-                });
-            });
-
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
             Map<String, Object> variables = Map.of(
                     "username", order.getContactInfo().getEmail(),
@@ -62,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
                     "email", order.getContactInfo().getEmail(),
                     "date", simpleFormat.format(order.getDateCreated()),
                     "orderId", order.getId(),
-                    "products", products
+                    "products", order.getProducts()
             );
 
             mailSender.sendMail(
@@ -91,13 +82,19 @@ public class OrderServiceImpl implements OrderService {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
 
+        List<Product> products = new ArrayList<>();
+        for (String id : validIDs) {
+            Product product = productRepository.findProductById(id);
+            products.add(product);
+        }
+
         ContactInfo contactInfo = createContactInfo(createOrder);
         ShippingAddress shippingAddress = createShippingAddress(createOrder);
 
         Order order = new Order(
                 contactInfo,
                 shippingAddress,
-                createOrder.getProductIDs(),
+                products,
                 OrderStatus.CREATED,
                 LocalDateTime.now(),
                 LocalDateTime.now()
