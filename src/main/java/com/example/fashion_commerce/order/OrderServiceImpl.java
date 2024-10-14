@@ -10,6 +10,7 @@ import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -45,13 +47,13 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
-            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             Map<String, Object> variables = Map.of(
                     "username", order.getContactInfo().getEmail(),
                     "address", order.getShippingAddress().getAddress(),
                     "phone", order.getContactInfo().getPhone(),
                     "email", order.getContactInfo().getEmail(),
-                    "date", simpleFormat.format(order.getDateCreated()),
+                    "date", formatter.format(order.getDateCreated()),
                     "orderId", order.getId(),
                     "products", order.getProducts()
             );
