@@ -15,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
+import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,12 +49,13 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
             Map<String, Object> variables = Map.of(
                     "username", order.getContactInfo().getEmail(),
                     "address", order.getShippingAddress().getAddress(),
                     "phone", order.getContactInfo().getPhone(),
                     "email", order.getContactInfo().getEmail(),
-                    "date", order.getDateCreated(),
+                    "date", simpleFormat.format(order.getDateCreated()),
                     "orderId", order.getId()
             );
 
