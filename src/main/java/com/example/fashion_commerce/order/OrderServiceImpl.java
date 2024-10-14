@@ -18,10 +18,7 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -49,6 +46,14 @@ public class OrderServiceImpl implements OrderService {
             // 1. replace the hardcoded texts with variables
             // 2. create a template for the variables
             // 3. set a sensible email subject
+            List<Product> products = new ArrayList<>();
+            productRepository.findAll().forEach(product -> {
+                order.getProductIDs().forEach(id -> {
+                    if (product.getId().equals(id))
+                        products.add(product);
+                });
+            });
+
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
             Map<String, Object> variables = Map.of(
                     "username", order.getContactInfo().getEmail(),
@@ -56,7 +61,8 @@ public class OrderServiceImpl implements OrderService {
                     "phone", order.getContactInfo().getPhone(),
                     "email", order.getContactInfo().getEmail(),
                     "date", simpleFormat.format(order.getDateCreated()),
-                    "orderId", order.getId()
+                    "orderId", order.getId(),
+                    "products", products
             );
 
             mailSender.sendMail(
