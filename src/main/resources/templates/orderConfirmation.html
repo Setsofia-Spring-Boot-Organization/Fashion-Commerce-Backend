@@ -4,197 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Receipt</title>
-<!--  <link rel="stylesheet" href="orderConfirmation.css">-->
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f4ef;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-      padding: 40px;
-      width: 700px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .thank-you-section {
-      width: 50%;
-      padding-right: 20px;
-    }
-
-    h1 {
-      color: #000;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-
-    .billing-address h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .track-order-btn {
-      background-color: #fa6248;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .track-order-btn:hover {
-      background-color: #f0543a;
-    }
-
-    .order-summary-section {
-      width: 50%;
-      padding-left: 20px;
-      border-left: 1px solid #ddd;
-    }
-
-    .order-summary-section h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .order-info p {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 8px 0;
-      font-size: 14px;
-    }
-
-    th {
-      font-weight: bold;
-    }
-
-    td {
-      border-bottom: 1px solid #ddd;
-    }
-
-    td:last-child {
-      text-align: right;
-    }
-
-    strong {
-      font-weight: bold;
-    }
-
-    /* Styles for product images */
-    .product {
-      display: flex;
-      align-items: center;
-    }
-
-    .product img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-
-    .product div {
-      display: flex;
-      flex-direction: column;
-    }
-
-  </style>
 </head>
-<body>
-<div class="container">
-  <div class="thank-you-section">
-    <h1>Thank you for your purchase!</h1>
-    <p>Your order will be processed within 24 hours during working days. We will notify you by email once your order has been shipped.</p>
+<body style="font-family: Arial, sans-serif; background-color: #f9f4ef; margin: 0; padding: 0;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9f4ef; padding: 40px 0;">
+  <tr>
+    <td align="center">
+      <table border="0" cellpadding="0" cellspacing="0" width="700" style="background-color: #fff; border-radius: 15px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);">
+        <tr>
+          <td style="padding: 40px;">
+            <!-- Thank you section -->
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td colspan="2" style="padding-bottom: 20px;">
+                  <h1 style="font-size: 24px; color: #000;">Thank you for your purchase!</h1>
+                  <p style="font-size: 14px; color: #333; line-height: 1.6;">
+                    Your order will be processed within 24 hours during working days. We will notify you by email once your order has been shipped.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td width="50%" valign="top">
+                  <!-- Billing Address -->
+                  <h3 style="font-size: 16px; color: #000; margin-bottom: 10px;">Billing Address</h3>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Name</strong>: <span th:utext="${username}"></span></p>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Address</strong>: <span th:utext="${address}"></span></p>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Phone</strong>: <span th:utext="${phone}"></span></p>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Email</strong>: <span th:utext="${email}"></span></p>
+                  <a href="#" style="display: inline-block; background-color: #fa6248; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 10px;">Track Your Order</a>
+                </td>
+                <td width="50%" valign="top">
+                  <!-- Order Summary -->
+                  <h3 style="font-size: 16px; color: #000; margin-bottom: 10px;">Order Summary</h3>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Date</strong>: <span th:utext="${date}"></span></p>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Order Number</strong>: <span th:utext="${orderId}"></span></p>
+                  <p style="font-size: 14px; margin-bottom: 5px;"><strong>Payment Method</strong>: <span th:utext="${paymentMethod}"></span></p>
+                </td>
+              </tr>
+            </table>
 
-    <div class="billing-address">
-      <h3>Billing address</h3>
-      <p><strong>Name</strong>: <span th:utext="${username}"></span></p>
-      <p><strong>Address</strong>: <span th:utext="${address}"></span></p>
-      <p><strong>Phone</strong>: <span th:utext="${phone}"></span></p>
-      <p><strong>Email</strong>: <span th:utext="${email}"></span></p>
-      <button class="track-order-btn">Track Your Order</button>
-    </div>
-  </div>
-
-  <div class="order-summary-section">
-    <h3>Order Summary</h3>
-    <div class="order-info">
-      <p><strong>Date</strong>: <span th:utext="${date}"></span></p>
-      <p><strong>Order Number</strong>: <span th:utext="${orderId}"></span></p>
-      <p><strong>Payment Method</strong>: <span th:utext="${paymentMethod}"></span></p>
-    </div>
-
-    <table>
-      <tr>
-        <th>Product</th>
-        <th>Price</th>
-      </tr>
-      <!-- Thymeleaf iteration for each product -->
-      <tr th:each="product : ${products}">
-        <td>
-          <div class="product">
-            <!-- Image source is dynamic -->
-            <img th:src="@{${product.imageUrl}}" th:alt="${product.name}">
-            <div>
-              <!-- Product name and details are dynamic -->
-              <p th:text="${product.name}"></p>
-              <p>Pack: <span th:text="${product.pack}"></span>, Qty: <span th:text="${product.quantity}"></span></p>
-            </div>
-          </div>
-        </td>
-        <td th:text="${product.price}"></td>
-      </tr>
-      <tr>
-        <td>Sub Total</td>
-        <td th:text="${subTotal}"></td>
-      </tr>
-      <tr>
-        <td>Shipping</td>
-        <td th:text="${shippingCost}"></td>
-      </tr>
-      <tr>
-        <td>Tax</td>
-        <td th:text="${tax}"></td>
-      </tr>
-      <tr>
-        <td><strong>Order Total</strong></td>
-        <td><strong th:text="${total}"></strong></td>
-      </tr>
-    </table>
-  </div>
-</div>
+            <!-- Product Summary Table -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px;">
+              <tr>
+                <th align="left" style="font-size: 14px; color: #333; padding: 8px 0;">Product</th>
+                <th align="right" style="font-size: 14px; color: #333; padding: 8px 0;">Price</th>
+              </tr>
+              <tr th:each="product : ${products}">
+                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;">
+                  <table>
+                    <tr>
+                      <td>
+                        <img th:src="@{${product.imageUrl}}" th:alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">
+                      </td>
+                      <td>
+                        <p th:text="${product.name}" style="font-size: 14px; color: #333;"></p>
+                        <p style="font-size: 12px; color: #666;">Pack: <span th:text="${product.pack}"></span>, Qty: <span th:text="${product.quantity}"></span></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.price}"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">Sub Total</td>
+                <td align="right" th:text="${subTotal}"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">Shipping</td>
+                <td align="right" th:text="${shippingCost}"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0;">Tax</td>
+                <td align="right" th:text="${tax}"></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold;">Order Total</td>
+                <td style="padding: 8px 0; font-weight: bold;" align="right" th:text="${total}"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>

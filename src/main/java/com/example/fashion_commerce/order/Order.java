@@ -6,6 +6,7 @@ import com.mysema.query.annotations.QueryEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +21,18 @@ public class Order {
     private ShippingAddress shippingAddress;
     private List<String> productIDs;
     private OrderStatus orderStatus;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs, OrderStatus orderStatus) {
+    public Order() {}
+
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.productIDs = productIDs;
         this.orderStatus = orderStatus;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
     }
 
     public String getId() {
@@ -68,17 +75,33 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public LocalDateTime getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(LocalDateTime dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs) && orderStatus == order.orderStatus;
+        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs) && orderStatus == order.orderStatus && Objects.equals(dateCreated, order.dateCreated) && Objects.equals(dateUpdated, order.dateUpdated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contactInfo, shippingAddress, productIDs, orderStatus);
+        return Objects.hash(id, contactInfo, shippingAddress, productIDs, orderStatus, dateCreated, dateUpdated);
     }
 
     @Override
@@ -89,6 +112,10 @@ public class Order {
                 ", shippingAddress=" + shippingAddress +
                 ", productIDs=" + productIDs +
                 ", orderStatus=" + orderStatus +
+                ", dateCreated=" + dateCreated +
+                ", dateUpdated=" + dateUpdated +
                 '}';
     }
+
+
 }

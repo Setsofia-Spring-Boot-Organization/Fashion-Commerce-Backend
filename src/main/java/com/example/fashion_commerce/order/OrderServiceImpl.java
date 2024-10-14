@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,12 @@ public class OrderServiceImpl implements OrderService {
             // 2. create a template for the variables
             // 3. set a sensible email subject
             Map<String, Object> variables = Map.of(
-              "username", order.getContactInfo().getEmail()
+                    "username", order.getContactInfo().getEmail(),
+                    "address", order.getShippingAddress().getAddress(),
+                    "phone", order.getContactInfo().getPhone(),
+                    "email", order.getContactInfo().getEmail(),
+                    "date", order.getDateCreated(),
+                    "orderId", order.getId()
             );
 
             mailSender.sendMail(
@@ -82,7 +88,9 @@ public class OrderServiceImpl implements OrderService {
                 contactInfo,
                 shippingAddress,
                 createOrder.getProductIDs(),
-                OrderStatus.CREATED
+                OrderStatus.CREATED,
+                LocalDateTime.now(),
+                LocalDateTime.now()
         );
 
 
