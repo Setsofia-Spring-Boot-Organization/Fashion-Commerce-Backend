@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Receipt</title>
+  <link rel="stylesheet" href="orderConfirmation.css">
+</head>
+<body>
+<div class="container">
+  <div class="thank-you-section">
+    <h1>Thank you for your purchase!</h1>
+    <p>Your order will be processed within 24 hours during working days. We will notify you by email once your order has been shipped.</p>
+
+    <div class="billing-address">
+      <h3>Billing address</h3>
+      <p><strong>Name</strong>: <span th:utext="${username}"></span></p>
+      <p><strong>Address</strong>: <span th:utext="${address}"></span></p>
+      <p><strong>Phone</strong>: <span th:utext="${phone}"></span></p>
+      <p><strong>Email</strong>: <span th:utext="${email}"></span></p>
+      <button class="track-order-btn">Track Your Order</button>
+    </div>
+  </div>
+
+  <div class="order-summary-section">
+    <h3>Order Summary</h3>
+    <div class="order-info">
+      <p><strong>Date</strong>: <span th:utext="${date}"></span></p>
+      <p><strong>Order Number</strong>: <span th:utext="${orderId}"></span></p>
+      <p><strong>Payment Method</strong>: <span th:utext="${paymentMethod}"></span></p>
+    </div>
+
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+      </tr>
+      <!-- Thymeleaf iteration for each product -->
+      <tr th:each="product : ${products}">
+        <td>
+          <div class="product">
+            <!-- Image source is dynamic -->
+            <img th:src="@{${product.imageUrl}}" th:alt="${product.name}">
+            <div>
+              <!-- Product name and details are dynamic -->
+              <p th:text="${product.name}"></p>
+              <p>Pack: <span th:text="${product.pack}"></span>, Qty: <span th:text="${product.quantity}"></span></p>
+            </div>
+          </div>
+        </td>
+        <td th:text="${product.price}"></td>
+      </tr>
+      <tr>
+        <td>Sub Total</td>
+        <td th:text="${subTotal}"></td>
+      </tr>
+      <tr>
+        <td>Shipping</td>
+        <td th:text="${shippingCost}"></td>
+      </tr>
+      <tr>
+        <td>Tax</td>
+        <td th:text="${tax}"></td>
+      </tr>
+      <tr>
+        <td><strong>Order Total</strong></td>
+        <td><strong th:text="${total}"></strong></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
