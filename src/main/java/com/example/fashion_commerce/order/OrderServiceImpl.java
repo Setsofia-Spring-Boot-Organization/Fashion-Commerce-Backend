@@ -50,7 +50,9 @@ public class OrderServiceImpl implements OrderService {
                     "username", order.getContactInfo().getEmail(),
                     "address", order.getShippingAddress().getAddress(),
                     "phone", order.getContactInfo().getPhone(),
-                    "email", order.getContactInfo().getEmail()
+                    "email", order.getContactInfo().getEmail(),
+                    "date", order.getDateCreated(),
+                    "orderId", order.getId()
             );
 
             mailSender.sendMail(
