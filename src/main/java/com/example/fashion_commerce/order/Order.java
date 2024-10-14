@@ -2,6 +2,7 @@ package com.example.fashion_commerce.order;
 
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
+import com.example.fashion_commerce.product.Product;
 import com.mysema.query.annotations.QueryEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -19,17 +20,17 @@ public class Order {
 
     private ContactInfo contactInfo;
     private ShippingAddress shippingAddress;
-    private List<String> productIDs;
+    private List<Product> products;
     private OrderStatus orderStatus;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 
     public Order() {}
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<String> productIDs, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<Product> products, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
-        this.productIDs = productIDs;
+        this.products = products;
         this.orderStatus = orderStatus;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
@@ -59,12 +60,12 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public List<String> getProductIDs() {
-        return productIDs;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProductIDs(List<String> productIDs) {
-        this.productIDs = productIDs;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public OrderStatus getOrderStatus() {
@@ -96,12 +97,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(productIDs, order.productIDs) && orderStatus == order.orderStatus && Objects.equals(dateCreated, order.dateCreated) && Objects.equals(dateUpdated, order.dateUpdated);
+        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(products, order.products) && orderStatus == order.orderStatus && Objects.equals(dateCreated, order.dateCreated) && Objects.equals(dateUpdated, order.dateUpdated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contactInfo, shippingAddress, productIDs, orderStatus, dateCreated, dateUpdated);
+        return Objects.hash(id, contactInfo, shippingAddress, products, orderStatus, dateCreated, dateUpdated);
     }
 
     @Override
@@ -110,12 +111,10 @@ public class Order {
                 "id='" + id + '\'' +
                 ", contactInfo=" + contactInfo +
                 ", shippingAddress=" + shippingAddress +
-                ", productIDs=" + productIDs +
+                ", products=" + products +
                 ", orderStatus=" + orderStatus +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
                 '}';
     }
-
-
 }
