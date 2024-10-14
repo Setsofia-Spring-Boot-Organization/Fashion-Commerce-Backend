@@ -81,11 +81,11 @@
 <div class="email-container">
   <div class="header">
     <img src="cid:companyLogo" alt="Company Logo">
-    <h1>Order Confirmation</h1>
+    <h1>Order Received</h1>
   </div>
 
   <div class="order-info">
-    <h2>Thank you for your order, <span th:text="${customerName}"></span>!</h2>
+    <h2>Thank you for your order, <span th:utext="${username}"></span>!</h2>
     <p>Your order number is <strong>#<span th:text="${orderNumber}"></span></strong></p>
     <p>We’re happy to let you know that your order is being processed and will be shipped to you soon.</p>
   </div>
