@@ -15,7 +15,7 @@ public class Product {
     @MongoId
     private String id;
     private String name;
-    private String price;
+    private Double price;
     private String type;
     private List<String> sizes;
     private List<String> colors;
@@ -28,7 +28,9 @@ public class Product {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(String name, String price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean isAvailable, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product() {}
+
+    public Product(String name, Double price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean isAvailable, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -42,16 +44,6 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Product() {}
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -60,8 +52,20 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Double getPrice() {
         return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getType() {
@@ -76,32 +80,64 @@ public class Product {
         return sizes;
     }
 
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
+    }
+
     public List<String> getColors() {
         return colors;
     }
 
-    public List<String> getCategories() {
-        return categories;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public void setColors(List<String> colors) {
+        this.colors = colors;
     }
 
     public List<String> getImages() {
         return images;
     }
 
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -122,7 +158,7 @@ public class Product {
         return "Product{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 ", type='" + type + '\'' +
                 ", sizes=" + sizes +
                 ", colors=" + colors +

@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
         if (request.getName().isEmpty() || request.getName().isBlank())
             emptyFields.add("name");
 
-        if (request.getPrice().isEmpty() || request.getPrice().isBlank())
+        if (request.getPrice() == null)
             emptyFields.add("price");
 
         if (!emptyFields.isEmpty())

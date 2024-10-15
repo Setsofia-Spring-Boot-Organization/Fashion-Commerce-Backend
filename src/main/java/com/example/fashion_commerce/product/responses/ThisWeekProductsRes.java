@@ -7,5 +7,5 @@ public record ThisWeekProductsRes(
         List<String> images,
         String type,
         String name,
-        String price
+        Double price
 ) { }
