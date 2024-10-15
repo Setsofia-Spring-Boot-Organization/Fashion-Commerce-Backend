@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class CreateNewProductRequest {
         private String name;
-        private String price;
+        private Double price;
         private String type;
         private List<String>sizes;
         private List<String> colors;
@@ -16,7 +16,7 @@ public class CreateNewProductRequest {
         private List<String> categories;
         private String description;
 
-        public CreateNewProductRequest(String name, String price, String type, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> categories, String description) {
+        public CreateNewProductRequest(String name, Double price, String type, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> categories, String description) {
                 this.name = name;
                 this.price = price;
                 this.type = type;
@@ -33,7 +33,7 @@ public class CreateNewProductRequest {
                 return name;
         }
 
-        public void setPrice(String price) {
+        public void setPrice(Double price) {
                 this.price = price;
         }
 
@@ -61,7 +61,7 @@ public class CreateNewProductRequest {
                 this.name = name;
         }
 
-        public String getPrice() {
+        public Double getPrice() {
                 return price;
         }
 
