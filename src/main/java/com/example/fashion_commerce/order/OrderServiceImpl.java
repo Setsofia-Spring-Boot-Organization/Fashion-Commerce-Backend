@@ -46,8 +46,9 @@ public class OrderServiceImpl implements OrderService {
             // 2. create a template for the variables
             // 3. set a sensible email subject
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
             Map<String, Object> variables = Map.of(
-                    "username", order.getContactInfo().getEmail(),
+                    "username", username,
                     "address", order.getShippingAddress().getAddress(),
                     "phone", order.getContactInfo().getPhone(),
                     "email", order.getContactInfo().getEmail(),
