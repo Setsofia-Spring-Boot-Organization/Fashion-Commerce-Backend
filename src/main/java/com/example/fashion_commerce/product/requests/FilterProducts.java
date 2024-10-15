@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.requests;
 
 import java.util.List;
-import java.util.Objects;
 
 
 public class FilterProducts {
@@ -11,8 +10,8 @@ public class FilterProducts {
     private boolean isAvailable;
     private List<String> categories;
     private List<String> colors;
-    private String startPrice;
-    private String endPrice;
+    private double startPrice;
+    private double endPrice;
 
     public FilterProducts(List<String> sizes, boolean isAvailable, List<String> categories, List<String> colors) {
         this.sizes = sizes;
@@ -76,19 +75,19 @@ public class FilterProducts {
         this.categories = categories;
     }
 
-    public String getStartPrice() {
+    public double getStartPrice() {
         return startPrice;
     }
 
-    public void setStartPrice(String startPrice) {
+    public void setStartPrice(double startPrice) {
         this.startPrice = startPrice;
     }
 
-    public String getEndPrice() {
+    public double getEndPrice() {
         return endPrice;
     }
 
-    public void setEndPrice(String endPrice) {
+    public void setEndPrice(double endPrice) {
         this.endPrice = endPrice;
     }
 }

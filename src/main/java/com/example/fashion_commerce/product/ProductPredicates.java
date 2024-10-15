@@ -42,11 +42,8 @@ public class ProductPredicates {
         List<String> colors = new ArrayList<>();
         colorsIterator.forEachRemaining(colors::add);
 
-        if (filter.getStartPrice() == null || filter.getStartPrice().isEmpty()) {
-            filter.setStartPrice("0");
-        }
-        if (filter.getEndPrice() == null || filter.getEndPrice().isEmpty()) {
-            filter.setEndPrice("100000");
+        if (filter.getEndPrice() == 0) {
+            filter.setEndPrice(1000);
         }
 
         QProduct qProduct = new QProduct("product");

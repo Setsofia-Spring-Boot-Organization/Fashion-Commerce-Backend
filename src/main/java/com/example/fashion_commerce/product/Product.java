@@ -15,7 +15,7 @@ public class Product {
     @MongoId
     private String id;
     private String name;
-    private Double price;
+    private double price;
     private String type;
     private List<String> sizes;
     private List<String> colors;
@@ -30,7 +30,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, Double price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean isAvailable, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(String name, double price, String type, List<String> sizes, List<String> colors, List<String> images, List<String> categories, boolean isAvailable, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -60,11 +60,11 @@ public class Product {
         this.id = id;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
