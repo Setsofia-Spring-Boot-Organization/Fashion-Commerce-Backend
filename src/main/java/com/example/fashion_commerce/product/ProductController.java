@@ -89,8 +89,8 @@ public record ProductController(ProductService productService) {
             @RequestParam(required = false) boolean isAvailable,
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) List<String> colors,
-            @RequestParam(required = false) String startPrice,
-            @RequestParam(required = false) String endPrice
+            @RequestParam(required = false) double startPrice,
+            @RequestParam(required = false) double endPrice
     ) {
         FilterProducts filter = new FilterProducts();
         filter.setType(type);
