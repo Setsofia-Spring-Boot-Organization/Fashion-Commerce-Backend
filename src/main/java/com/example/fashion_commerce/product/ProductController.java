@@ -24,6 +24,15 @@ public record ProductController(ProductService productService) {
 
 
 
+    @PatchMapping("update/{product-id}")
+    public ResponseEntity<Response<Product>> updateProduct(
+            @PathVariable("product-id") String id,
+            @ModelAttribute CreateNewProductRequest request
+    ) {
+        return productService.updateProduct(id, request);
+    }
+
+
     @GetMapping("all")
     public ResponseEntity<Response<AllProductsRes>> getProducts() {
         return productService.getProducts();
