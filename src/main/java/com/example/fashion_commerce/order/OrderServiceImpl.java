@@ -18,6 +18,7 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -47,14 +48,26 @@ public class OrderServiceImpl implements OrderService {
             // 3. set a sensible email subject
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            Map<String, Object> variables = Map.of(
-                    "username", username,
-                    "address", order.getShippingAddress().getAddress(),
-                    "phone", order.getContactInfo().getPhone(),
-                    "email", order.getContactInfo().getEmail(),
-                    "date", formatter.format(order.getDateCreated()),
-                    "orderId", order.getId(),
-                    "products", order.getProducts()
+            List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
+
+            // calculate the costs
+            Double price = prices.stream().mapToDouble(Double::doubleValue).sum();
+            Double shippingCost = 0.0;
+            Double tax = 0.0;
+            Double totalPrice = (price + shippingCost + tax);
+
+            Map<String, Object> variables = Map.ofEntries(
+                    Map.entry("username", username),
+                    Map.entry("address", order.getShippingAddress().getAddress()),
+                    Map.entry("phone", order.getContactInfo().getPhone()),
+                    Map.entry("email", order.getContactInfo().getEmail()),
+                    Map.entry("date", formatter.format(order.getDateCreated())),
+                    Map.entry("orderId", order.getId()),
+                    Map.entry("products", order.getProducts()),
+                    Map.entry("subTotal", price),
+                    Map.entry("shippingCost", shippingCost),
+                    Map.entry("tax", tax),
+                    Map.entry("totalPrice", totalPrice)
             );
 
             mailSender.sendMail(
