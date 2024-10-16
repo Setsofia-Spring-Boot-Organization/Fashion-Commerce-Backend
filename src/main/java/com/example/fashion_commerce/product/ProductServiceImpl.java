@@ -15,6 +15,7 @@ import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
+import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -359,9 +360,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<Response<Product>> updateProduct(String id, CreateNewProductRequest request) {
+    public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
 
-        // find the product using it's is
+        // find the product using its id
         Product product = productRepository.findById(id).orElseThrow(() ->
             new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
         );
@@ -374,7 +375,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSizes(request.getSizes());
         product.setType(request.getType());
         product.setPrice(request.getPrice());
-        product.setAvailable(request);
+        product.setAvailable(request.isAvailable());
 
         return null;
     }
