@@ -10,7 +10,8 @@ public enum Error {
     INVALID_PRODUCT_IDS("invalid product id(s)"),
     INVALID_ORDER_STATUS("invalid order status"),
     INVALID_ORDER_ID("invalid order id"),
-    ERROR_CREATING_ORDER("error creating order");
+    ERROR_CREATING_ORDER("error creating order"),
+    CANNOT_DELETE_PRODUCT("cannot delete product");
 
     public final String label;
     Error(String label) {
