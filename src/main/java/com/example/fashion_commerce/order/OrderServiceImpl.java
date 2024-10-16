@@ -50,10 +50,11 @@ public class OrderServiceImpl implements OrderService {
             List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
 
             // calculate the costs
-            Double price = prices.stream().mapToDouble(Double::doubleValue).sum();
-            Double shippingCost = 0.0;
-            Double tax = 0.0;
-            Double totalPrice = (price + shippingCost + tax);
+            double price = prices.stream().mapToDouble(Double::doubleValue).sum();
+            double shippingCost = 0.0;
+            double tax = 0.0;
+            double tempTotalPrice = shippingCost + tax;
+            double totalPrice = price + tempTotalPrice;
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
