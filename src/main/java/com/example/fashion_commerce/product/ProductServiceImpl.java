@@ -403,11 +403,22 @@ public class ProductServiceImpl implements ProductService {
         // delete the product
         try {
             productRepository.delete(product);
+
+            Response<String> deleteResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "product updated successfully",
+                    ""
+            );
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(deleteResponse);
+
         } catch (Exception e) {
-            throw new FashionCommerceException(Error.CANNOT_DELETE_PRODUCT, new Throwable(Message.THE_REQUESTED_PRODUCT_CANNOT_BE_DELETE.label));
+            throw new FashionCommerceException(Error.CANNOT_DELETE_PRODUCT, new Throwable(Message.THE_REQUESTED_PRODUCT_CANNOT_BE_DELETED.label));
         }
     }
 
+
+    
     private Product getValidProduct(String id) {
         // find the product using its id
         return productRepository.findById(id).orElseThrow(() ->
