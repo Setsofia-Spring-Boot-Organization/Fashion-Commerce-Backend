@@ -34,6 +34,16 @@ public record ProductController(ProductService productService) {
     }
 
 
+
+    @DeleteMapping("delete")
+    public ResponseEntity<Response<?>> deleteProduct(
+            @RequestParam String id
+    ) {
+        return productService.deleteProduct(id);
+    }
+
+
+
     @GetMapping("all")
     public ResponseEntity<Response<AllProductsRes>> getProducts() {
         return productService.getProducts();
