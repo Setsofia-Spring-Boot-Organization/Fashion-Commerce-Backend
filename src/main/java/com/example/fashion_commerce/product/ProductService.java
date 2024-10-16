@@ -44,4 +44,6 @@ public interface ProductService {
     ResponseEntity<Response<FilterOptions>> getFilterOptions();
 
     ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request);
+
+    ResponseEntity<Response<?>> deleteProduct(String id);
 }
