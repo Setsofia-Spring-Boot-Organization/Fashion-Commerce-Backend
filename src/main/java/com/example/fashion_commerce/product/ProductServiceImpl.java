@@ -377,6 +377,19 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(request.getPrice());
         product.setAvailable(request.isAvailable());
 
-        return null;
+        try {
+            Product updatedProduct = productRepository.save(product);
+
+            Response<Product> productResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "product updated successfully",
+                    updatedProduct
+            );
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
+
+        } catch (Exception e) {
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
+        }
     }
 }
