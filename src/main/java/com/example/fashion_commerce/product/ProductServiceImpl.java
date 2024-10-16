@@ -357,4 +357,11 @@ public class ProductServiceImpl implements ProductService {
                 filterOptionsResponse
         );
     }
+
+    @Override
+    public ResponseEntity<Response<Product>> updateProduct(String id, CreateNewProductRequest request) {
+
+
+        return null;
+    }
 }
