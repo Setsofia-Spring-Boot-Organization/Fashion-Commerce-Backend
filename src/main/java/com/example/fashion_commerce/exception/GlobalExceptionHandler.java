@@ -29,7 +29,8 @@ public class GlobalExceptionHandler {
                  INVALID_PRODUCT_IDS,
                  INVALID_ORDER_STATUS,
                  INVALID_ORDER_ID -> status = HttpStatus.BAD_REQUEST;
-            case ERROR_CREATING_ORDER -> status = HttpStatus.CONFLICT;
+            case ERROR_CREATING_ORDER,
+                 CANNOT_DELETE_PRODUCT -> status = HttpStatus.CONFLICT;
             case NO_PRODUCT_FOUND -> status = HttpStatus.NOT_FOUND;
         }
 
