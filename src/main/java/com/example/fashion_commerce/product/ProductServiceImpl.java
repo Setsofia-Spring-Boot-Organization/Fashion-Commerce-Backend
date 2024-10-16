@@ -371,7 +371,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setCategories(request.getCategories());
         product.setColors(request.getColors());
-
+        product.setSizes(request.getSizes());
 
         return null;
     }
