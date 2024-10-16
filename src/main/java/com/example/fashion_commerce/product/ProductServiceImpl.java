@@ -360,9 +360,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, CreateNewProductRequest request) {
+
+        // find the product using it's is
         Product product = productRepository.findById(id).orElseThrow(() ->
             new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
         );
+
+        // update the product
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setCategories(request.getCategories());
 
         return null;
     }
