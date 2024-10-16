@@ -3,6 +3,7 @@ package com.example.fashion_commerce.product;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
+import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.ResponseEntity;
 
@@ -42,5 +43,5 @@ public interface ProductService {
 
     ResponseEntity<Response<FilterOptions>> getFilterOptions();
 
-    ResponseEntity<Response<Product>> updateProduct(String id, CreateNewProductRequest request);
+    ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request);
 }
