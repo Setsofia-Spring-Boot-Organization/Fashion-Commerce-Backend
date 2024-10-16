@@ -359,6 +359,8 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+
+
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
 
@@ -392,5 +394,11 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
         }
+    }
+
+
+    @Override
+    public ResponseEntity<Response<?>> deleteProduct(String id) {
+        return null;
     }
 }
