@@ -18,7 +18,6 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -32,7 +31,6 @@ public class OrderServiceImpl implements OrderService {
         this.productRepository = productRepository;
         this.mailSender = mailSender;
     }
-
 
 
 
@@ -51,10 +49,11 @@ public class OrderServiceImpl implements OrderService {
             List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
 
             // calculate the costs
-            Double price = prices.stream().mapToDouble(Double::doubleValue).sum();
-            Double shippingCost = 0.0;
-            Double tax = 0.0;
-            Double totalPrice = (price + shippingCost + tax);
+            double price = prices.stream().mapToDouble(Double::doubleValue).sum();
+            double shippingCost = 0.0;
+            double tax = 0.0;
+            double tempTotalPrice = shippingCost + tax;
+            double totalPrice = price + tempTotalPrice;
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
@@ -109,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
                 contactInfo,
                 shippingAddress,
                 products,
-                OrderStatus.CREATED,
+                OrderStatus.PENDING,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );

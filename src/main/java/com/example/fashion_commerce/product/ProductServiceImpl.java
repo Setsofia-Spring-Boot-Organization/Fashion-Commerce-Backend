@@ -15,6 +15,7 @@ import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
+import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -356,5 +357,40 @@ public class ProductServiceImpl implements ProductService {
         return ResponseEntity.status(HttpStatus.OK).body(
                 filterOptionsResponse
         );
+    }
+
+    @Override
+    public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
+
+        // find the product using its id
+        Product product = productRepository.findById(id).orElseThrow(() ->
+            new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
+        );
+
+        // update the product
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setCategories(request.getCategories());
+        product.setColors(request.getColors());
+        product.setSizes(request.getSizes());
+        product.setType(request.getType());
+        product.setPrice(request.getPrice());
+        product.setAvailable(request.isAvailable());
+
+        // save the updated product and return it in the response
+        try {
+            Product updatedProduct = productRepository.save(product);
+
+            Response<Product> productResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "product updated successfully",
+                    updatedProduct
+            );
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
+
+        } catch (Exception e) {
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
+        }
     }
 }
