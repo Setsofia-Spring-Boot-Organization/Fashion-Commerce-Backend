@@ -400,7 +400,12 @@ public class ProductServiceImpl implements ProductService {
         // find the product using its id
         Product product = getValidProduct(id);
 
-        return null;
+        // delete the product
+        try {
+            productRepository.delete(product);
+        } catch (Exception e) {
+            throw new FashionCommerceException(Error.CANNOT_DELETE_PRODUCT, new Throwable(Message.THE_REQUESTED_PRODUCT_CANNOT_BE_DELETE.label));
+        }
     }
 
     private Product getValidProduct(String id) {
