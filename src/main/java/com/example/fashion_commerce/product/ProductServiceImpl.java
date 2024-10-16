@@ -359,13 +359,13 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+
+
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
 
         // find the product using its id
-        Product product = productRepository.findById(id).orElseThrow(() ->
-            new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
-        );
+        Product product = getValidProduct(id);
 
         // update the product
         product.setName(request.getName());
@@ -392,5 +392,37 @@ public class ProductServiceImpl implements ProductService {
         } catch (Exception e) {
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
         }
+    }
+
+
+    @Override
+    public ResponseEntity<Response<?>> deleteProduct(String id) {
+        // find the product using its id
+        Product product = getValidProduct(id);
+
+        // delete the product
+        try {
+            productRepository.delete(product);
+
+            Response<String> deleteResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "product updated successfully",
+                    ""
+            );
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(deleteResponse);
+
+        } catch (Exception e) {
+            throw new FashionCommerceException(Error.CANNOT_DELETE_PRODUCT, new Throwable(Message.THE_REQUESTED_PRODUCT_CANNOT_BE_DELETED.label));
+        }
+    }
+
+
+
+    private Product getValidProduct(String id) {
+        // find the product using its id
+        return productRepository.findById(id).orElseThrow(() ->
+                new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
+        );
     }
 }
