@@ -418,7 +418,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    
+
     private Product getValidProduct(String id) {
         // find the product using its id
         return productRepository.findById(id).orElseThrow(() ->
