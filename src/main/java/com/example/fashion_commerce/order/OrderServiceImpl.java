@@ -108,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
                 contactInfo,
                 shippingAddress,
                 products,
-                OrderStatus.CREATED,
+                OrderStatus.PENDING,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
