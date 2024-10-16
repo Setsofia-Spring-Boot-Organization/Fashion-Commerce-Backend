@@ -365,9 +365,7 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
 
         // find the product using its id
-        Product product = productRepository.findById(id).orElseThrow(() ->
-            new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
-        );
+        Product product = getValidProduct(id);
 
         // update the product
         product.setName(request.getName());
@@ -399,6 +397,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<?>> deleteProduct(String id) {
+        // find the product using its id
+        Product product = getValidProduct(id);
+
         return null;
+    }
+
+    private Product getValidProduct(String id) {
+        // find the product using its id
+        return productRepository.findById(id).orElseThrow(() ->
+                new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label))
+        );
     }
 }
