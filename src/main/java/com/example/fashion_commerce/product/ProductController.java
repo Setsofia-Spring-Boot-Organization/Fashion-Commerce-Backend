@@ -4,6 +4,7 @@ import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
+import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public record ProductController(ProductService productService) {
     @PatchMapping("update/{product-id}")
     public ResponseEntity<Response<Product>> updateProduct(
             @PathVariable("product-id") String id,
-            @ModelAttribute CreateNewProductRequest request
+            @ModelAttribute UpdateProduct request
     ) {
         return productService.updateProduct(id, request);
     }
