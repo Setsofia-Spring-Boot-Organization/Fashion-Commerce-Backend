@@ -373,6 +373,7 @@ public class ProductServiceImpl implements ProductService {
         product.setColors(request.getColors());
         product.setSizes(request.getSizes());
         product.setType(request.getType());
+        product.setPrice(request.getPrice());
 
         return null;
     }
