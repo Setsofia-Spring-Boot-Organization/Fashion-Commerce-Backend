@@ -41,4 +41,6 @@ public interface ProductService {
     ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter);
 
     ResponseEntity<Response<FilterOptions>> getFilterOptions();
+
+    ResponseEntity<Response<Product>> updateProduct(String id, CreateNewProductRequest request);
 }
