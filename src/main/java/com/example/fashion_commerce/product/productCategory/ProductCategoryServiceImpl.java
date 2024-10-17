@@ -86,4 +86,20 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
     }
+
+    @Override
+    public void saveCategories(CreateNewCategory category) {
+        List<ProductCategory> productCategories = new ArrayList<>();
+
+        // verify the product type names
+        Set<String> validCategories = getValidCategories(category);
+
+        for (String name : validCategories) {
+            productCategories.add(
+                    new ProductCategory(name)
+            );
+        }
+
+        productCategoryRepository.saveAll(productCategories);
+    }
 }
