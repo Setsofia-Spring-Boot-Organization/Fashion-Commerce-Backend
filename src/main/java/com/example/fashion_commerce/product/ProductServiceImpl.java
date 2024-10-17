@@ -136,7 +136,13 @@ public class ProductServiceImpl implements ProductService {
         //save the product
         try {
             // save the product type, sizes, colors, categories
-
+            CreateFilterOptions options = new CreateFilterOptions(
+                    product.getCategories(),
+                    product.getColors(),
+                    product.getSizes(),
+                    List.of(product.getType())
+            );
+            createFilterOptions(options);
 
 
             return productRepository.save(product);
