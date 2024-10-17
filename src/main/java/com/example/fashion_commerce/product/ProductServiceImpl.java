@@ -368,9 +368,9 @@ public class ProductServiceImpl implements ProductService {
         Product product = getValidProduct(id);
 
         // update the product
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setCategories(request.getCategories());
+        product.setName(request.getName() == null? product.getName() : request.getName());
+        product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
+        product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
         product.setColors(request.getColors());
         product.setSizes(request.getSizes());
         product.setType(request.getType());
