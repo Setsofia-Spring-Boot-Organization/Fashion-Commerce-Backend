@@ -27,8 +27,6 @@ public class CreateNewProductRequest {
                 this.description = description;
         }
 
-        public CreateNewProductRequest() {}
-
         public String getName() {
                 return name;
         }
