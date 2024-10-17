@@ -88,4 +88,23 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         return ResponseEntity.status(HttpStatus.OK).body(productSizesResponse);
     }
+
+
+
+    @Override
+    public void saveSizes(CreateProductSize sizes) {
+        List<ProductSize> productSizes = new ArrayList<>();
+
+        // verify the product type names
+        List<String> validSizes = productSizeRepository.findAll().stream().map(ProductSize::getSize).toList();
+        sizes.sizes().removeAll(validSizes);
+
+        for (String size : sizes.sizes()) {
+            productSizes.add(
+                    new ProductSize(size)
+            );
+        }
+
+        productSizeRepository.saveAll(productSizes);
+    }
 }
