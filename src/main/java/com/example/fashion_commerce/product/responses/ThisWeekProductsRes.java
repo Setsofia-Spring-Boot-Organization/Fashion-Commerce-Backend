@@ -5,7 +5,7 @@ import java.util.List;
 public record ThisWeekProductsRes(
         String id,
         List<String> images,
-        String type,
+        List<String> types,
         String name,
         Double price
 ) { }
