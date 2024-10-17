@@ -15,6 +15,8 @@ import com.example.fashion_commerce.product.productColor.ProductColorService;
 import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import com.example.fashion_commerce.product.productSize.ProductSize;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
+import com.example.fashion_commerce.product.productSize.ProductSizeService;
+import com.example.fashion_commerce.product.productSize.requests.CreateProductSize;
 import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
@@ -42,8 +44,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductTypeRepository productTypeRepository;
     private final ProductCategoryService productCategoryService;
     private final ProductColorService productColorService;
+    private final ProductSizeService productSizeService;
 
-    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository, ProductCategoryService productCategoryService, ProductColorService productColorService) {
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository, ProductCategoryService productCategoryService, ProductColorService productColorService, ProductSizeService productSizeService) {
         this.productRepository = productRepository;
         this.cloudinaryService = cloudinaryService;
         this.productPredicates = productPredicates;
@@ -53,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
         this.productTypeRepository = productTypeRepository;
         this.productCategoryService = productCategoryService;
         this.productColorService = productColorService;
+        this.productSizeService = productSizeService;
     }
 
     @Override
@@ -133,6 +137,8 @@ public class ProductServiceImpl implements ProductService {
             CreateProductColor colors = new CreateProductColor(product.getColors());
             productColorService.saveColors(colors);
 
+            CreateProductSize sizes = new CreateProductSize(product.getSizes());
+            productSizeService.saveSizes(sizes);
 
             return productRepository.save(product);
         } catch (Exception exception) {
