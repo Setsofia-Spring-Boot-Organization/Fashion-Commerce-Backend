@@ -7,12 +7,20 @@ import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productCategory.ProductCategory;
 import com.example.fashion_commerce.product.productCategory.ProductCategoryRepository;
+import com.example.fashion_commerce.product.productCategory.ProductCategoryService;
+import com.example.fashion_commerce.product.productCategory.requests.CreateNewCategory;
 import com.example.fashion_commerce.product.productColor.ProductColor;
 import com.example.fashion_commerce.product.productColor.ProductColorRepository;
+import com.example.fashion_commerce.product.productColor.ProductColorService;
+import com.example.fashion_commerce.product.productColor.requests.CreateProductColor;
 import com.example.fashion_commerce.product.productSize.ProductSize;
 import com.example.fashion_commerce.product.productSize.ProductSizeRepository;
+import com.example.fashion_commerce.product.productSize.ProductSizeService;
+import com.example.fashion_commerce.product.productSize.requests.CreateProductSize;
 import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
+import com.example.fashion_commerce.product.productType.ProductTypeService;
+import com.example.fashion_commerce.product.productType.requests.CreateProductType;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
@@ -36,8 +44,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductSizeRepository productSizeRepository;
     private final ProductTypeRepository productTypeRepository;
+    private final ProductCategoryService productCategoryService;
+    private final ProductColorService productColorService;
+    private final ProductSizeService productSizeService;
+    private final ProductTypeService productTypeService;
 
-    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository, ProductCategoryService productCategoryService, ProductColorService productColorService, ProductSizeService productSizeService, ProductTypeService productTypeService) {
         this.productRepository = productRepository;
         this.cloudinaryService = cloudinaryService;
         this.productPredicates = productPredicates;
@@ -45,6 +57,10 @@ public class ProductServiceImpl implements ProductService {
         this.productColorRepository = productColorRepository;
         this.productSizeRepository = productSizeRepository;
         this.productTypeRepository = productTypeRepository;
+        this.productCategoryService = productCategoryService;
+        this.productColorService = productColorService;
+        this.productSizeService = productSizeService;
+        this.productTypeService = productTypeService;
     }
 
     @Override
@@ -118,6 +134,21 @@ public class ProductServiceImpl implements ProductService {
 
         //save the product
         try {
+            // save the product type, sizes, colors, categories
+            CreateNewCategory categories = new CreateNewCategory(product.getCategories());
+            productCategoryService.saveCategories(categories);
+
+            CreateProductColor colors = new CreateProductColor(product.getColors());
+            productColorService.saveColors(colors);
+
+            CreateProductSize sizes = new CreateProductSize(product.getSizes());
+            productSizeService.saveSizes(sizes);
+
+            List<String> productTypes = List.of(product.getType());
+            CreateProductType types = new CreateProductType(productTypes);
+//            productTypeService.saveTypes(types);
+
+
             return productRepository.save(product);
         } catch (Exception exception) {
 

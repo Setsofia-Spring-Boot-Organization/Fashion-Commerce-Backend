@@ -10,4 +10,6 @@ public interface ProductColorService {
     ResponseEntity<Response<List<ProductColor>>> createNewProductColor(CreateProductColor productColor);
 
     ResponseEntity<Response<List<ProductColor>>> getProductColors();
+
+    void saveColors(CreateProductColor colors);
 }

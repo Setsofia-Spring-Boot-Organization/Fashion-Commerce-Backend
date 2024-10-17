@@ -11,4 +11,6 @@ public interface ProductTypeService {
     ResponseEntity<Response<List<ProductType>>> createNewProduct(CreateProductType productType);
 
     ResponseEntity<Response<List<ProductType>>> getProductTypes();
+
+    void saveTypes(CreateProductType types);
 }

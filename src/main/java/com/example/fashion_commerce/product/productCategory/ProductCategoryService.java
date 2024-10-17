@@ -10,4 +10,6 @@ public interface ProductCategoryService {
     ResponseEntity<Response<List<ProductCategory>>> createNewProductCategory(CreateNewCategory category);
 
     ResponseEntity<Response<List<ProductCategory>>> getProductCategories();
+
+    void saveCategories(CreateNewCategory category);
 }

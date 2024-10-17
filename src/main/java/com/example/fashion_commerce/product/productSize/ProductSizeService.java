@@ -10,4 +10,6 @@ public interface ProductSizeService {
     ResponseEntity<Response<List<ProductSize>>> createNewProductSize(CreateProductSize productSize);
 
     ResponseEntity<Response<List<ProductSize>>> getAllProductSizes();
+
+    void saveSizes(CreateProductSize sizes);
 }
