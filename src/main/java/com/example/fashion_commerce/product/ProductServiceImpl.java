@@ -7,6 +7,8 @@ import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.product.productCategory.ProductCategory;
 import com.example.fashion_commerce.product.productCategory.ProductCategoryRepository;
+import com.example.fashion_commerce.product.productCategory.ProductCategoryService;
+import com.example.fashion_commerce.product.productCategory.requests.CreateNewCategory;
 import com.example.fashion_commerce.product.productColor.ProductColor;
 import com.example.fashion_commerce.product.productColor.ProductColorRepository;
 import com.example.fashion_commerce.product.productSize.ProductSize;
@@ -36,8 +38,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductSizeRepository productSizeRepository;
     private final ProductTypeRepository productTypeRepository;
+    private final ProductCategoryService productCategoryService;
 
-    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CloudinaryService cloudinaryService, ProductPredicates productPredicates, ProductCategoryRepository productCategoryRepository, ProductColorRepository productColorRepository, ProductSizeRepository productSizeRepository, ProductTypeRepository productTypeRepository, ProductCategoryService productCategoryService) {
         this.productRepository = productRepository;
         this.cloudinaryService = cloudinaryService;
         this.productPredicates = productPredicates;
@@ -45,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
         this.productColorRepository = productColorRepository;
         this.productSizeRepository = productSizeRepository;
         this.productTypeRepository = productTypeRepository;
+        this.productCategoryService = productCategoryService;
     }
 
     @Override
@@ -118,6 +122,10 @@ public class ProductServiceImpl implements ProductService {
 
         //save the product
         try {
+            // save the product type, sizes, colors, categories
+            CreateNewCategory categories = new CreateNewCategory(product.getCategories());
+            productCategoryService.saveCategories(categories);
+
             return productRepository.save(product);
         } catch (Exception exception) {
 
