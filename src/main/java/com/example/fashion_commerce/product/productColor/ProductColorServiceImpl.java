@@ -85,4 +85,22 @@ public class ProductColorServiceImpl implements ProductColorService {
 
         return ResponseEntity.status(HttpStatus.OK).body(productColorResponse);
     }
+
+
+    @Override
+    public void saveColors(CreateProductColor colors) {
+        List<ProductColor> productColors = new ArrayList<>();
+
+        // verify the product type names
+        List<String> validColors = productColorRepository.findAll().stream().map(ProductColor::getColor).toList();
+        colors.colors().removeAll(validColors);
+
+        for (String color : colors.colors()) {
+            productColors.add(
+                    new ProductColor(color)
+            );
+        }
+
+        productColorRepository.saveAll(productColors);
+    }
 }
