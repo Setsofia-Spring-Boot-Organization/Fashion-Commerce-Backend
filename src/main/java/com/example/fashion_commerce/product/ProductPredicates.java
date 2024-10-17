@@ -48,7 +48,7 @@ public class ProductPredicates {
 
         QProduct qProduct = new QProduct("product");
         Predicate predicate = qProduct
-                .type.equalsIgnoreCase(filter.getType())
+                .types.any().in(filter.getType())
                 .orAllOf(
                         qProduct.sizes.any().in(sizes),
                         qProduct.categories.any().in(categories),
