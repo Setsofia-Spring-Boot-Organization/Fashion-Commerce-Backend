@@ -28,7 +28,7 @@ public record ProductController(ProductService productService) {
     @PatchMapping("update/{product-id}")
     public ResponseEntity<Response<Product>> updateProduct(
             @PathVariable("product-id") String id,
-            @ModelAttribute UpdateProduct request
+            @RequestBody UpdateProduct request
     ) {
         return productService.updateProduct(id, request);
     }

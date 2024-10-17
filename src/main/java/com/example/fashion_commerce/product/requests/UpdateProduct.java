@@ -1,11 +1,12 @@
 package com.example.fashion_commerce.product.requests;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
 
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateProduct {
         private String name;
         private Double price;

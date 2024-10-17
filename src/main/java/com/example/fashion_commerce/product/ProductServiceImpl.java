@@ -368,14 +368,15 @@ public class ProductServiceImpl implements ProductService {
         Product product = getValidProduct(id);
 
         // update the product
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setCategories(request.getCategories());
-        product.setColors(request.getColors());
-        product.setSizes(request.getSizes());
-        product.setType(request.getType());
-        product.setPrice(request.getPrice());
+        product.setName(request.getName() == null? product.getName() : request.getName());
+        product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
+        product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
+        product.setColors(request.getColors().isEmpty()? product.getColors() : request.getColors());
+        product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
+        product.setType(request.getType() == null? product.getType() : request.getType());
+        product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
         product.setAvailable(request.isAvailable());
+        product.setUpdatedAt(LocalDateTime.now());
 
         // save the updated product and return it in the response
         try {
@@ -404,13 +405,13 @@ public class ProductServiceImpl implements ProductService {
         try {
             productRepository.delete(product);
 
-            Response<String> deleteResponse = new Response<>(
-                    HttpStatus.CREATED.value(),
-                    "product updated successfully",
-                    ""
+            Response<?> deleteResponse = new Response<>(
+                    HttpStatus.NO_CONTENT.value(),
+                    "product deleted successfully",
+                    null
             );
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(deleteResponse);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(deleteResponse);
 
         } catch (Exception e) {
             throw new FashionCommerceException(Error.CANNOT_DELETE_PRODUCT, new Throwable(Message.THE_REQUESTED_PRODUCT_CANNOT_BE_DELETED.label));
