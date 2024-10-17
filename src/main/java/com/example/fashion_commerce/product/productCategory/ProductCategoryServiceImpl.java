@@ -89,12 +89,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
     @Override
     public void saveCategories(CreateNewCategory category) {
+
         List<ProductCategory> productCategories = new ArrayList<>();
 
         // verify the product type names
-        Set<String> validCategories = getValidCategories(category);
+        List<String> validCategories = productCategoryRepository.findAll().stream().map(ProductCategory::getCategory).toList();
+        category.names().removeAll(validCategories);
 
-        for (String name : validCategories) {
+        for (String name : category.names()) {
             productCategories.add(
                     new ProductCategory(name)
             );
