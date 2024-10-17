@@ -21,6 +21,7 @@ import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.productType.ProductTypeService;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
+import com.example.fashion_commerce.product.requests.CreateFilterOptions;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
@@ -121,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product(
                 request.getName(),
                 request.getPrice(),
-                request.getType(),
+                request.getTypes(),
                 request.getSizes(),
                 request.getColors(),
                 images,
@@ -135,27 +136,34 @@ public class ProductServiceImpl implements ProductService {
         //save the product
         try {
             // save the product type, sizes, colors, categories
-            CreateNewCategory categories = new CreateNewCategory(product.getCategories());
-            productCategoryService.saveCategories(categories);
-
-            CreateProductColor colors = new CreateProductColor(product.getColors());
-            productColorService.saveColors(colors);
-
-            CreateProductSize sizes = new CreateProductSize(product.getSizes());
-            productSizeService.saveSizes(sizes);
-
-            List<String> productTypes = List.of(product.getType());
-            CreateProductType types = new CreateProductType(productTypes);
-//            productTypeService.saveTypes(types);
-
+            CreateFilterOptions options = new CreateFilterOptions(
+                    product.getCategories(),
+                    product.getColors(),
+                    product.getSizes(),
+                    product.getTypes()
+            );
+            System.out.println("options = " + options);
+            createFilterOptions(options);
 
             return productRepository.save(product);
         } catch (Exception exception) {
-
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }
     }
 
+    private void createFilterOptions(CreateFilterOptions options) {
+        CreateNewCategory categories = new CreateNewCategory(options.categories());
+        productCategoryService.saveCategories(categories);
+
+        CreateProductColor colors = new CreateProductColor(options.colors());
+        productColorService.saveColors(colors);
+
+        CreateProductSize sizes = new CreateProductSize(options.sizes());
+        productSizeService.saveSizes(sizes);
+
+        CreateProductType types = new CreateProductType(options.types());
+        productTypeService.saveTypes(types);
+    }
 
 
     @Override
@@ -265,7 +273,7 @@ public class ProductServiceImpl implements ProductService {
                     new ThisWeekProductsRes(
                             product.getId(),
                             product.getImages(),
-                            product.getType(),
+                            product.getTypes(),
                             product.getName(),
                             product.getPrice()
                     )
@@ -404,7 +412,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
         product.setColors(request.getColors().isEmpty()? product.getColors() : request.getColors());
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
-        product.setType(request.getType() == null? product.getType() : request.getType());
+        product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());

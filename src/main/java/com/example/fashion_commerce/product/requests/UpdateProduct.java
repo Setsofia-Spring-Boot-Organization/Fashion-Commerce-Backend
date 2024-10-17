@@ -10,7 +10,7 @@ import java.util.Objects;
 public class UpdateProduct {
         private String name;
         private Double price;
-        private String type;
+        private List<String> types;
         private List<String>sizes;
         private List<String> colors;
         private List<MultipartFile> images;
@@ -18,10 +18,10 @@ public class UpdateProduct {
         private String description;
         private boolean available;
 
-        public UpdateProduct(String name, Double price, String type, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> categories, String description, boolean available) {
+        public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> categories, String description, boolean available) {
                 this.name = name;
                 this.price = price;
-                this.type = type;
+                this.types = types;
                 this.sizes = sizes;
                 this.colors = colors;
                 this.images = images;
@@ -46,12 +46,12 @@ public class UpdateProduct {
                 this.price = price;
         }
 
-        public String getType() {
-                return type;
+        public List<String> getTypes() {
+                return types;
         }
 
-        public void setType(String type) {
-                this.type = type;
+        public void setTypes(List<String> types) {
+                this.types = types;
         }
 
         public List<String> getSizes() {
@@ -107,12 +107,12 @@ public class UpdateProduct {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
                 UpdateProduct that = (UpdateProduct) o;
-                return available == that.available && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(type, that.type) && Objects.equals(sizes, that.sizes) && Objects.equals(colors, that.colors) && Objects.equals(images, that.images) && Objects.equals(categories, that.categories) && Objects.equals(description, that.description);
+                return available == that.available && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(types, that.types) && Objects.equals(sizes, that.sizes) && Objects.equals(colors, that.colors) && Objects.equals(images, that.images) && Objects.equals(categories, that.categories) && Objects.equals(description, that.description);
         }
 
         @Override
         public int hashCode() {
-                return Objects.hash(name, price, type, sizes, colors, images, categories, description, available);
+                return Objects.hash(name, price, types, sizes, colors, images, categories, description, available);
         }
 
         @Override
@@ -120,7 +120,7 @@ public class UpdateProduct {
                 return "UpdateProduct{" +
                         "name='" + name + '\'' +
                         ", price=" + price +
-                        ", type='" + type + '\'' +
+                        ", types=" + types +
                         ", sizes=" + sizes +
                         ", colors=" + colors +
                         ", images=" + images +
