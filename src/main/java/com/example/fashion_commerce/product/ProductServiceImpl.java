@@ -21,6 +21,7 @@ import com.example.fashion_commerce.product.productType.ProductType;
 import com.example.fashion_commerce.product.productType.ProductTypeRepository;
 import com.example.fashion_commerce.product.productType.ProductTypeService;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
+import com.example.fashion_commerce.product.requests.CreateFilterOptions;
 import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
@@ -156,6 +157,9 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    private void createFilterOptions(CreateFilterOptions options) {
+
+    }
 
 
     @Override
