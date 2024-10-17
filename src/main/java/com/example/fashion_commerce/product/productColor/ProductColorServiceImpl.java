@@ -27,7 +27,7 @@ public class ProductColorServiceImpl implements ProductColorService {
         List<ProductColor> colors = new ArrayList<>();
 
         // verify the product type names
-        Set<String> validColors = getValidColors(productColor);
+        List<String> validColors = getValidColors(productColor);
 
         for (String color : validColors) {
             colors.add(
@@ -46,36 +46,20 @@ public class ProductColorServiceImpl implements ProductColorService {
         return ResponseEntity.status(HttpStatus.CREATED).body(productColorResponse);
     }
 
-    private Set<String> getValidColors(CreateProductColor productColor) {
+    private List<String> getValidColors(CreateProductColor productColor) {
 
-        Set<String> validColors = new HashSet<>();
-        List<ProductColor> colors = productColorRepository.findAll();
+        List<String> colors = productColorRepository.findAll().stream().map(ProductColor::getColor).toList();
+        productColor.colors().removeAll(colors);
 
-        if (colors.isEmpty()) {
-            validColors.addAll(productColor.colors());
-            return validColors;
-        }
-
-        List<String> existingColors = new ArrayList<>();
-        for (ProductColor color : colors) {
-            existingColors.add(color.getColor());
-        }
-
-        for (String color : productColor.colors()) {
-            for (String ignored : existingColors) {
-                if (!existingColors.contains(color)) {
-                    validColors.add(color);
-                }
-            }
-        }
-
-        return validColors;
+        return productColor.colors();
     }
 
 
     @Override
     public ResponseEntity<Response<List<ProductColor>>> getProductColors() {
         List<ProductColor> colors = productColorRepository.findAll();
+
+        System.out.println("colors = " + colors);
 
         Response<List<ProductColor>> productColorResponse = new Response<>(
                 HttpStatus.OK.value(),
