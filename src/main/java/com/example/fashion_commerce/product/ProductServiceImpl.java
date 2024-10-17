@@ -144,8 +144,9 @@ public class ProductServiceImpl implements ProductService {
             CreateProductSize sizes = new CreateProductSize(product.getSizes());
             productSizeService.saveSizes(sizes);
 
-            CreateProductType types = new CreateProductType(List.of(product.getType()));
-            productTypeService.saveTypes(types);
+            List<String> productTypes = List.of(product.getType());
+            CreateProductType types = new CreateProductType(productTypes);
+//            productTypeService.saveTypes(types);
 
 
             return productRepository.save(product);
