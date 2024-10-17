@@ -1,6 +1,7 @@
 package com.example.fashion_commerce.product.productType;
 
 import com.example.fashion_commerce.generics.Response;
+import com.example.fashion_commerce.product.productSize.ProductSize;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,21 +88,20 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
 
-
     @Override
     public void saveTypes(CreateProductType types) {
-        List<ProductType> productTypes = new ArrayList<>();
+        List<ProductType> productType = new ArrayList<>();
 
         // verify the product type names
         List<String> validTypes = productTypeRepository.findAll().stream().map(ProductType::getName).toList();
         types.names().removeAll(validTypes);
 
         for (String name : types.names()) {
-            productTypes.add(
+            productType.add(
                     new ProductType(name)
             );
         }
 
-        productTypeRepository.saveAll(productTypes);
+        productTypeRepository.saveAll(productType);
     }
 }
