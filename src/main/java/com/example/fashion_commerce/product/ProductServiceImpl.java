@@ -371,10 +371,10 @@ public class ProductServiceImpl implements ProductService {
         product.setName(request.getName() == null? product.getName() : request.getName());
         product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
         product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
-        product.setColors(request.getColors());
-        product.setSizes(request.getSizes());
-        product.setType(request.getType());
-        product.setPrice(request.getPrice());
+        product.setColors(request.getColors().isEmpty()? product.getColors() : request.getColors());
+        product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
+        product.setType(request.getType() == null? product.getType() : request.getType());
+        product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
 
