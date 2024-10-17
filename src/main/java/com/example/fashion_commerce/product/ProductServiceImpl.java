@@ -33,7 +33,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -123,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product(
                 request.getName(),
                 request.getPrice(),
-                request.getType(),
+                request.getTypes(),
                 request.getSizes(),
                 request.getColors(),
                 images,
@@ -141,13 +140,13 @@ public class ProductServiceImpl implements ProductService {
                     product.getCategories(),
                     product.getColors(),
                     product.getSizes(),
-                    Collections.singletonList(product.getType())
+                    product.getTypes()
             );
+            System.out.println("options = " + options);
             createFilterOptions(options);
 
             return productRepository.save(product);
         } catch (Exception exception) {
-
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA);
         }
     }
@@ -274,7 +273,7 @@ public class ProductServiceImpl implements ProductService {
                     new ThisWeekProductsRes(
                             product.getId(),
                             product.getImages(),
-                            product.getType(),
+                            product.getTypes(),
                             product.getName(),
                             product.getPrice()
                     )
@@ -413,7 +412,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
         product.setColors(request.getColors().isEmpty()? product.getColors() : request.getColors());
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
-        product.setType(request.getType() == null? product.getType() : request.getType());
+        product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
