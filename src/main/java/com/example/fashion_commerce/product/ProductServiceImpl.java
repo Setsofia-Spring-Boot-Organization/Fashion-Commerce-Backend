@@ -401,12 +401,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) {
+    public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException {
 
         // find the product using its id
         Product product = getValidProduct(id);
 
         // update the product
+        List<String> images = cloudinaryService.uploadFiles(request.getImages()); // upload the image to cloudinary
+
         product.setName(request.getName() == null? product.getName() : request.getName());
         product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
         product.setCategories(request.getCategories().isEmpty()? product.getCategories() : request.getCategories());
@@ -414,6 +416,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
         product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
+        product.setImages(images.isEmpty()? product.getImages() : images);
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
 

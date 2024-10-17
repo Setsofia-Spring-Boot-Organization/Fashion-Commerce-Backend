@@ -28,8 +28,8 @@ public record ProductController(ProductService productService) {
     @PatchMapping("update/{product-id}")
     public ResponseEntity<Response<Product>> updateProduct(
             @PathVariable("product-id") String id,
-            @RequestBody UpdateProduct request
-    ) {
+            @ModelAttribute UpdateProduct request
+    ) throws IOException {
         return productService.updateProduct(id, request);
     }
 
