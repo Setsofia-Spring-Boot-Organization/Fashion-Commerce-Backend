@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -140,10 +141,9 @@ public class ProductServiceImpl implements ProductService {
                     product.getCategories(),
                     product.getColors(),
                     product.getSizes(),
-                    List.of(product.getType())
+                    Collections.singletonList(product.getType())
             );
             createFilterOptions(options);
-
 
             return productRepository.save(product);
         } catch (Exception exception) {
