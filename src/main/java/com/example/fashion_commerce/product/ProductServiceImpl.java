@@ -376,6 +376,7 @@ public class ProductServiceImpl implements ProductService {
         product.setType(request.getType());
         product.setPrice(request.getPrice());
         product.setAvailable(request.isAvailable());
+        product.setUpdatedAt(LocalDateTime.now());
 
         // save the updated product and return it in the response
         try {
