@@ -85,4 +85,23 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         return ResponseEntity.status(HttpStatus.OK).body(productTypesResponse);
     }
+
+
+
+    @Override
+    public void saveTypes(CreateProductType types) {
+        List<ProductType> productTypes = new ArrayList<>();
+
+        // verify the product type names
+        List<String> validTypes = productTypeRepository.findAll().stream().map(ProductType::getName).toList();
+        types.names().removeAll(validTypes);
+
+        for (String name : types.names()) {
+            productTypes.add(
+                    new ProductType(name)
+            );
+        }
+
+        productTypeRepository.saveAll(productTypes);
+    }
 }
