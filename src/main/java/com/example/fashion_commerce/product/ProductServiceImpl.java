@@ -136,18 +136,7 @@ public class ProductServiceImpl implements ProductService {
         //save the product
         try {
             // save the product type, sizes, colors, categories
-            CreateNewCategory categories = new CreateNewCategory(product.getCategories());
-            productCategoryService.saveCategories(categories);
 
-            CreateProductColor colors = new CreateProductColor(product.getColors());
-            productColorService.saveColors(colors);
-
-            CreateProductSize sizes = new CreateProductSize(product.getSizes());
-            productSizeService.saveSizes(sizes);
-
-            List<String> productTypes = List.of(product.getType());
-            CreateProductType types = new CreateProductType(productTypes);
-//            productTypeService.saveTypes(types);
 
 
             return productRepository.save(product);
@@ -158,7 +147,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void createFilterOptions(CreateFilterOptions options) {
+        CreateNewCategory categories = new CreateNewCategory(options.categories());
+        productCategoryService.saveCategories(categories);
 
+        CreateProductColor colors = new CreateProductColor(options.colors());
+        productColorService.saveColors(colors);
+
+        CreateProductSize sizes = new CreateProductSize(options.sizes());
+        productSizeService.saveSizes(sizes);
+
+        CreateProductType types = new CreateProductType(options.types());
+        productTypeService.saveTypes(types);
     }
 
 
