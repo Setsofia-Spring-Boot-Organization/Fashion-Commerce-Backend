@@ -1,7 +1,6 @@
 package com.example.fashion_commerce.product.productType;
 
 import com.example.fashion_commerce.generics.Response;
-import com.example.fashion_commerce.product.productSize.ProductSize;
 import com.example.fashion_commerce.product.productType.requests.CreateProductType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
