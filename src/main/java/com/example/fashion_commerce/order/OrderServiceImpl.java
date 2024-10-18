@@ -204,7 +204,19 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // update the order status
-        order.setOrderStatus(orderStatus);
+        try {
+            order.setOrderStatus(orderStatus);
+            Order updatedOrder = orderRepository.save(order);
+
+            Response<Order> orderResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "order status updated successfuly",
+                    updatedOrder
+            );
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
+        } catch (Exception e) {
+
+        }
 
 
         return null;
