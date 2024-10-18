@@ -181,9 +181,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<Response<Order>> getOrder(String id) {
 
-        Order order = orderRepository.findById(id).orElseThrow(
-                () -> new FashionCommerceException(Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label))
-        );
+        Order order = verifyOrder(id);
 
         Response<Order> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
@@ -191,5 +189,39 @@ public class OrderServiceImpl implements OrderService {
                 order
         );
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
+    }
+
+
+    @Override
+    public ResponseEntity<Response<Order>> updateOrder(String id, String status) {
+
+        Order order = verifyOrder(id);
+        OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+
+        // confirm that the supplied status is correct
+        if (!Arrays.stream(OrderStatus.values()).toList().contains(orderStatus)) {
+            throw new FashionCommerceException(Error.INVALID_ORDER_STATUS, new Throwable(Message.THE_REQUESTED_ORDER_STATUS_IS_INVALID.label));
+        }
+
+        // update the order status
+        try {
+            order.setOrderStatus(orderStatus);
+            Order updatedOrder = orderRepository.save(order);
+
+            Response<Order> orderResponse = new Response<>(
+                    HttpStatus.CREATED.value(),
+                    "order status updated successfully",
+                    updatedOrder
+            );
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
+        } catch (Exception e) {
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
+        }
+    }
+
+    private Order verifyOrder(String id) {
+        return orderRepository.findById(id).orElseThrow(() -> new FashionCommerceException(
+                Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label)
+        ));
     }
 }
