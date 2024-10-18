@@ -40,10 +40,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = createdOrder(createOrder);
 
         try {
-            //TODO:
-            // 1. replace the hardcoded texts with variables
-            // 2. create a template for the variables
-            // 3. set a sensible email subject
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
             List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
