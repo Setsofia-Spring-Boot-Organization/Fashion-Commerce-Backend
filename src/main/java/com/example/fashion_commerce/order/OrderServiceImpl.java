@@ -215,11 +215,8 @@ public class OrderServiceImpl implements OrderService {
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
         } catch (Exception e) {
-
+            throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
         }
-
-
-        return null;
     }
 
     private Order verifyOrder(String id) {
