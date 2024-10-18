@@ -210,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
 
             Response<Order> orderResponse = new Response<>(
                     HttpStatus.CREATED.value(),
-                    "order status updated successfuly",
+                    "order status updated successfully",
                     updatedOrder
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
