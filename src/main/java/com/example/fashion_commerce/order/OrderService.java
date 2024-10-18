@@ -13,4 +13,6 @@ public interface OrderService {
     ResponseEntity<Response<List<Order>>> getOrders(boolean all, RequestOrderStatus status);
 
     ResponseEntity<Response<Order>> getOrder(String id);
+
+    ResponseEntity<Response<Order>> updateOrder(String id, String status);
 }
