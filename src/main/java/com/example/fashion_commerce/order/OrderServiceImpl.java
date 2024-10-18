@@ -181,9 +181,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<Response<Order>> getOrder(String id) {
 
-        Order order = orderRepository.findById(id).orElseThrow(
-                () -> new FashionCommerceException(Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label))
-        );
+        Order order = verifyOrder(id);
 
         Response<Order> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
@@ -196,6 +194,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<Order>> updateOrder(String id, String status) {
+
+        Order order = verifyOrder(id);
+        OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+
+        // confirm that the supplied status is correct
+        if (!Arrays.stream(OrderStatus.values()).toList().contains(orderStatus)) {
+            throw new FashionCommerceException(Error.INVALID_ORDER_STATUS, new Throwable(Message.THE_REQUESTED_ORDER_STATUS_IS_INVALID.label));
+        }
+
+        // update the order status
+        order.setOrderStatus(orderStatus);
+
+
         return null;
+    }
+
+    private Order verifyOrder(String id) {
+        return orderRepository.findById(id).orElseThrow(() -> new FashionCommerceException(
+                Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label)
+        ));
     }
 }
