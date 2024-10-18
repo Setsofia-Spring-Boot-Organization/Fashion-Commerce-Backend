@@ -192,4 +192,10 @@ public class OrderServiceImpl implements OrderService {
         );
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
+
+
+    @Override
+    public ResponseEntity<Response<Order>> updateOrder(String id, String status) {
+        return null;
+    }
 }
