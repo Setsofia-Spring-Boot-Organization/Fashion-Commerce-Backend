@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
             double shippingCost = 0.0;
             double tax = 0.0;
             double tempTotalPrice = shippingCost + tax;
-            double totalPrice = price + tempTotalPrice;
+            double totalPrice = (price + tempTotalPrice);
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
