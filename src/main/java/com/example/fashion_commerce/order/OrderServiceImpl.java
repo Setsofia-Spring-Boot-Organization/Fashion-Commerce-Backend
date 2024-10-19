@@ -8,6 +8,7 @@ import com.example.fashion_commerce.mail.MailSender;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
+import com.example.fashion_commerce.order.requests.OrderProductsIds;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
@@ -87,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> validIDs = validateIDs(createOrder.getProductIDs());
+        List<String> validIDs = validateIDs(createOrder.getProductIDs().stream().map(OrderProductsIds::id).toList());
         if (validIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
