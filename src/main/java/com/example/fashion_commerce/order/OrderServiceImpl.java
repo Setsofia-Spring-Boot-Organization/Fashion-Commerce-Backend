@@ -8,6 +8,7 @@ import com.example.fashion_commerce.mail.MailSender;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
+import com.example.fashion_commerce.order.requests.OrderProducts;
 import com.example.fashion_commerce.order.requests.OrderProductsIds;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
+            List<Double> prices = order.getProducts().stream().map(Product::getId).toList();
 
             // calculate the costs
             double price = prices.stream().mapToDouble(Double::doubleValue).sum();
@@ -93,10 +94,17 @@ public class OrderServiceImpl implements OrderService {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
 
-        List<Product> products = new ArrayList<>();
+        List<OrderProducts> products = new ArrayList<>();
         for (String id : validIDs) {
             Product product = productRepository.findProductById(id);
-            products.add(product);
+
+            for (OrderProductsIds orderProducts : createOrder.getProductIDs()) {
+                if (id.equals(orderProducts.id())) {
+                    products.add(
+                            new OrderProducts(product, orderProducts.quantity())
+                    );
+                }
+            }
         }
 
         ContactInfo contactInfo = createContactInfo(createOrder);
