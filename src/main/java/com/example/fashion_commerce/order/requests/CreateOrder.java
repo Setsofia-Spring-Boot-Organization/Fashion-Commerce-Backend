@@ -13,11 +13,11 @@ public class CreateOrder {
         private String address;
         private String city;
         private String postalCode;
-        private List<String> productIDs;
+        private List<OrderProductsIds> productIDs;
 
     public CreateOrder() {}
 
-    public CreateOrder(String email, String phone, String firstname, String lastname, String country, String region, String address, String city, String postalCode, List<String> productIDs) {
+    public CreateOrder(String email, String phone, String firstname, String lastname, String country, String region, String address, String city, String postalCode, List<OrderProductsIds> productIDs) {
         this.email = email;
         this.phone = phone;
         this.firstname = firstname;
@@ -102,11 +102,11 @@ public class CreateOrder {
         this.postalCode = postalCode;
     }
 
-    public List<String> getProductIDs() {
+    public List<OrderProductsIds> getProductIDs() {
         return productIDs;
     }
 
-    public void setProductIDs(List<String> productIDs) {
+    public void setProductIDs(List<OrderProductsIds> productIDs) {
         this.productIDs = productIDs;
     }
 
