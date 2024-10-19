@@ -2,6 +2,7 @@ package com.example.fashion_commerce.order;
 
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
+import com.example.fashion_commerce.order.requests.OrderProducts;
 import com.example.fashion_commerce.product.Product;
 import com.mysema.query.annotations.QueryEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,14 +21,14 @@ public class Order {
 
     private ContactInfo contactInfo;
     private ShippingAddress shippingAddress;
-    private List<Product> products;
+    private List<OrderProducts> products;
     private OrderStatus orderStatus;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 
     public Order() {}
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<Product> products, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<OrderProducts> products, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.products = products;
@@ -60,11 +61,11 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public List<Product> getProducts() {
+    public List<OrderProducts> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<OrderProducts> products) {
         this.products = products;
     }
 
