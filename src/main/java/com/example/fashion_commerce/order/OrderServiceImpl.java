@@ -90,7 +90,8 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> validIDs = validateIDs(createOrder.getProductIDs().stream().map(OrderProductsIds::id).toList());
+        List<String> ids = createOrder.getProductIDs().stream().map(OrderProductsIds::id).toList();
+        List<String> validIDs = validateIDs(ids);
         if (validIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
@@ -130,6 +131,9 @@ public class OrderServiceImpl implements OrderService {
 
     private List<String> validateIDs(List<String> ids) {
         List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
+
+        System.out.println("productIDs = " + ids);
+
         ids.retainAll(productIDs);
         return ids;
     }
