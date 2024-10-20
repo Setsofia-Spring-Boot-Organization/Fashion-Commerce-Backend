@@ -3,7 +3,6 @@ package com.example.fashion_commerce.order;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.OrderProducts;
-import com.example.fashion_commerce.product.Product;
 import com.mysema.query.annotations.QueryEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -25,8 +24,6 @@ public class Order {
     private OrderStatus orderStatus;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
-
-    public Order() {}
 
     public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<OrderProducts> products, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.contactInfo = contactInfo;
