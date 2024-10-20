@@ -50,8 +50,8 @@ public class OrderServiceImpl implements OrderService {
 
 
             // calculate the costs
-            double shippingCost = 0.0;
-            double tax = 0.0;
+            double shippingCost = order.getShippingAddress().getShippingCost();
+            double tax = order.getShippingAddress().getTax();
             double tempTotalPrice = shippingCost + tax;
             double totalPrice = (price + tempTotalPrice);
 
