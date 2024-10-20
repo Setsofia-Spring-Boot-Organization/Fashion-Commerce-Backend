@@ -45,10 +45,10 @@ public class OrderServiceImpl implements OrderService {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            List<Double> prices = order.getProducts().stream().map(Product::getId).toList();
+//            List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
 
             // calculate the costs
-            double price = prices.stream().mapToDouble(Double::doubleValue).sum();
+            double price = 0.0;
             double shippingCost = 0.0;
             double tax = 0.0;
             double tempTotalPrice = shippingCost + tax;
