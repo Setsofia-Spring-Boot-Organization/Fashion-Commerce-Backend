@@ -8,6 +8,8 @@ import com.example.fashion_commerce.mail.MailSender;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
+import com.example.fashion_commerce.order.requests.OrderProducts;
+import com.example.fashion_commerce.order.requests.OrderProductsIds;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
@@ -40,20 +42,18 @@ public class OrderServiceImpl implements OrderService {
         Order order = createdOrder(createOrder);
 
         try {
-            //TODO:
-            // 1. replace the hardcoded texts with variables
-            // 2. create a template for the variables
-            // 3. set a sensible email subject
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            List<Double> prices = order.getProducts().stream().map(Product::getPrice).toList();
+            List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
+            double price = products.stream().map(Product::getPrice).toList().stream().mapToDouble(Double::doubleValue).sum();
+
 
             // calculate the costs
-            double price = prices.stream().mapToDouble(Double::doubleValue).sum();
-            double shippingCost = 0.0;
-            double tax = 0.0;
+            double shippingCost = order.getShippingAddress().getShippingCost();
+            double tax = order.getShippingAddress().getTax();
             double tempTotalPrice = shippingCost + tax;
-            double totalPrice = price + tempTotalPrice;
+            double totalPrice = (price + tempTotalPrice);
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
@@ -90,15 +90,23 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> validIDs = validateIDs(createOrder.getProductIDs());
+        List<String> ids = createOrder.getProductIDs().stream().map(OrderProductsIds::getId).toList();
+        List<String> validIDs = validateIDs(ids);
         if (validIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
         }
 
-        List<Product> products = new ArrayList<>();
+        List<OrderProducts> products = new ArrayList<>();
         for (String id : validIDs) {
             Product product = productRepository.findProductById(id);
-            products.add(product);
+
+            for (OrderProductsIds orderProducts : createOrder.getProductIDs()) {
+                if (id.equals(orderProducts.getId())) {
+                    products.add(
+                            new OrderProducts(product, orderProducts.getQuantity())
+                    );
+                }
+            }
         }
 
         ContactInfo contactInfo = createContactInfo(createOrder);
@@ -123,7 +131,12 @@ public class OrderServiceImpl implements OrderService {
 
     private List<String> validateIDs(List<String> ids) {
         List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
+
+        // Ensure ids is modifiable by creating a new ArrayList
+        ids = new ArrayList<>(ids);
+
         ids.retainAll(productIDs);
+
         return ids;
     }
 
@@ -134,15 +147,17 @@ public class OrderServiceImpl implements OrderService {
         );
     }
 
-    private ShippingAddress createShippingAddress(CreateOrder createOrder) {
+    private ShippingAddress createShippingAddress(CreateOrder order) {
         return new ShippingAddress(
-                createOrder.getFirstname(),
-                createOrder.getLastname(),
-                createOrder.getCountry(),
-                createOrder.getRegion(),
-                createOrder.getAddress(),
-                createOrder.getCity(),
-                createOrder.getPostalCode()
+                order.getFirstname(),
+                order.getLastname(),
+                order.getCountry(),
+                order.getRegion(),
+                order.getAddress(),
+                order.getCity(),
+                order.getPostalCode(),
+                order.getShippingCost(),
+                order.getTax()
         );
     }
 
