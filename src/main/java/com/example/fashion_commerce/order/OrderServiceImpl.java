@@ -141,15 +141,17 @@ public class OrderServiceImpl implements OrderService {
         );
     }
 
-    private ShippingAddress createShippingAddress(CreateOrder createOrder) {
+    private ShippingAddress createShippingAddress(CreateOrder order) {
         return new ShippingAddress(
-                createOrder.getFirstname(),
-                createOrder.getLastname(),
-                createOrder.getCountry(),
-                createOrder.getRegion(),
-                createOrder.getAddress(),
-                createOrder.getCity(),
-                createOrder.getPostalCode()
+                order.getFirstname(),
+                order.getLastname(),
+                order.getCountry(),
+                order.getRegion(),
+                order.getAddress(),
+                order.getCity(),
+                order.getPostalCode(),
+                order.getShippingCost(),
+                order.getTax()
         );
     }
 
