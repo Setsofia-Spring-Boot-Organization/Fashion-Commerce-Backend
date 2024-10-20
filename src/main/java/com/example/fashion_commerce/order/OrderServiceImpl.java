@@ -131,9 +131,6 @@ public class OrderServiceImpl implements OrderService {
 
     private List<String> validateIDs(List<String> ids) {
         List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
-
-        System.out.println("productIDs = " + ids);
-
         ids.retainAll(productIDs);
         return ids;
     }
