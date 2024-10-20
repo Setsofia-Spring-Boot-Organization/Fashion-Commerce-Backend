@@ -53,16 +53,16 @@
                   <table>
                     <tr>
                       <td>
-                        <img th:src="@{${product.images[0]}}" th:alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">
+                        <img th:src="@{${product.product.images[0]}}" th:alt="${product.product.name}" style="width: 50px; height: 50px; object-fit: cover;">
                       </td>
                       <td>
-                        <p th:text="${product.name}" style="font-size: 14px; color: #333;"></p>
-                        <p style="font-size: 12px; color: #666;">Qty: <span th:text="'${product.quantity}'"></span></p>
+                        <p th:text="${product.product.name}" style="font-size: 14px; color: #333;"></p>
+                        <p style="font-size: 12px; color: #666;">Qty: <span th:text="${product.product.quantity}"></span></p>
                       </td>
                     </tr>
                   </table>
                 </td>
-                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.price}"></td>
+                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.product.price}"></td>
               </tr>
               <tr>
                 <td style="padding: 8px 0;">Sub Total</td>
