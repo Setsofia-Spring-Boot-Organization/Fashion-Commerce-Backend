@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Order createdOrder(CreateOrder createOrder) {
 
-        List<String> ids = createOrder.getProductIDs().stream().map(OrderProductsIds::id).toList();
+        List<String> ids = createOrder.getProductIDs().stream().map(OrderProductsIds::getId).toList();
         List<String> validIDs = validateIDs(ids);
         if (validIDs.isEmpty()) {
             throw new FashionCommerceException(Error.INVALID_PRODUCT_IDS, new Throwable(Message.THE_REQUESTED_PRODUCT_ID_IS_INCORRECT.label));
@@ -101,9 +101,9 @@ public class OrderServiceImpl implements OrderService {
             Product product = productRepository.findProductById(id);
 
             for (OrderProductsIds orderProducts : createOrder.getProductIDs()) {
-                if (id.equals(orderProducts.id())) {
+                if (id.equals(orderProducts.getId())) {
                     products.add(
-                            new OrderProducts(product, orderProducts.quantity())
+                            new OrderProducts(product, orderProducts.getQuantity())
                     );
                 }
             }
@@ -130,8 +130,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<String> validateIDs(List<String> ids) {
-        List<String> productIDs = productRepository.findAll().stream().map(Product::getId).toList();
+        List<String> productIDs = new ArrayList<>(productRepository.findAll().stream().map(Product::getId).toList());
+        System.out.println("productIDs = " + productIDs);
+
+        // Ensure ids is modifiable by creating a new ArrayList
+        ids = new ArrayList<>(ids);
+        System.out.println("ids = " + ids);
+
         ids.retainAll(productIDs);
+        System.out.println("ids = " + ids);
+
         return ids;
     }
 
