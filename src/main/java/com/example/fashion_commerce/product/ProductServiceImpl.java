@@ -26,6 +26,7 @@ import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
+import org.apache.tika.Tika;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -404,12 +405,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException {
 
+        Tika tika = new Tika();
+
         List<String> newImages;
         List<String> oldImages = new ArrayList<>();
 
         List<MultipartFile> images = new ArrayList<>();
         for (MultipartFile image : request.getImages()) {
-            if (image.getResource().isFile()) {
+
+            String mimeType  = tika.detect(image.getResource().getFile());
+
+
+            System.out.println("mimeType = " + mimeType);
+
+            if (mimeType.startsWith("https://res.cloudinary.com/dvul0elbb/image/upload/e_gen_background_replace:prompt_Light_blue_background_with_soft_reflections/")) {
 
                 images.add(image);
             }
