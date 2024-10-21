@@ -407,19 +407,12 @@ public class ProductServiceImpl implements ProductService {
 
         Tika tika = new Tika();
 
-        List<String> newImages;
-        List<String> oldImages = new ArrayList<>();
-
+        List<String> oldImages;
         List<MultipartFile> images = new ArrayList<>();
         for (MultipartFile image : request.getImages()) {
-
             String mimeType  = tika.detect(image.getBytes());
 
-
-            System.out.println("mimeType = " + mimeType);
-
             if (mimeType.startsWith("image/")) {
-
                 images.add(image);
             }
         }
@@ -430,10 +423,8 @@ public class ProductServiceImpl implements ProductService {
         // update the product
         List<String> uploadedImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
 
-        System.out.println("uploadedImages = " + uploadedImages);
-
-        newImages = new ArrayList<>(uploadedImages);
-        newImages.addAll(uploadedImages);
+        oldImages = new ArrayList<>(product.getImages());
+        oldImages.addAll(uploadedImages);
 
         product.setName(request.getName() == null? product.getName() : request.getName());
         product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
@@ -442,7 +433,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
         product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
-        product.setImages(newImages.isEmpty()? oldImages : newImages);
+        product.setImages(oldImages);
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
 
