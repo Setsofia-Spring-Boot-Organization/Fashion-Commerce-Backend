@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
                     Map.entry("subTotal", price),
                     Map.entry("shippingCost", shippingCost),
                     Map.entry("tax", tax),
-                    Map.entry("totalPrice", totalPrice)
+                    Map.entry("total", totalPrice)
             );
 
             mailSender.sendMail(
