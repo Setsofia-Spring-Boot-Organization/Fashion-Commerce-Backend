@@ -26,9 +26,11 @@ import com.example.fashion_commerce.product.requests.CreateNewProductRequest;
 import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
+import org.apache.tika.Tika;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -403,11 +405,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException {
 
+        Tika tika = new Tika();
+
+        List<String> oldImages;
+        List<MultipartFile> images = new ArrayList<>();
+        for (MultipartFile image : request.getImages()) {
+            String mimeType  = tika.detect(image.getBytes());
+
+            if (mimeType.startsWith("image/")) {
+                images.add(image);
+            }
+        }
+
         // find the product using its id
         Product product = getValidProduct(id);
 
         // update the product
-        List<String> images = cloudinaryService.uploadFiles(request.getImages()); // upload the image to cloudinary
+        List<String> uploadedImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
+
+        oldImages = new ArrayList<>(product.getImages());
+        oldImages.addAll(uploadedImages);
 
         product.setName(request.getName() == null? product.getName() : request.getName());
         product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
@@ -416,7 +433,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
         product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
-        product.setImages(images.isEmpty()? product.getImages() : images);
+        product.setImages(oldImages);
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
 
