@@ -409,10 +409,8 @@ public class ProductServiceImpl implements ProductService {
 
         List<MultipartFile> images = new ArrayList<>();
         for (MultipartFile image : request.getImages()) {
-            if (!image.getResource().isFile()) {
-                oldImages.add(String.valueOf(image));
+            if (image.getResource().isFile()) {
 
-            } else {
                 images.add(image);
             }
         }
