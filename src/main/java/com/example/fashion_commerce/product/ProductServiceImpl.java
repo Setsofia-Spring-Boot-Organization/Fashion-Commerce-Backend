@@ -413,12 +413,12 @@ public class ProductServiceImpl implements ProductService {
         List<MultipartFile> images = new ArrayList<>();
         for (MultipartFile image : request.getImages()) {
 
-            String mimeType  = tika.detect(image.getResource().getFile());
+            String mimeType  = tika.detect(image.getBytes());
 
 
             System.out.println("mimeType = " + mimeType);
 
-            if (mimeType.startsWith("https://res.cloudinary.com/dvul0elbb/image/upload/e_gen_background_replace:prompt_Light_blue_background_with_soft_reflections/")) {
+            if (mimeType.startsWith("image/")) {
 
                 images.add(image);
             }
