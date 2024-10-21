@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
             double tax = order.getShippingAddress().getTax();
             double tempTotalPrice = shippingCost + tax;
             double totalPrice = (price + tempTotalPrice);
-
+            
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
                     Map.entry("address", order.getShippingAddress().getAddress()),
