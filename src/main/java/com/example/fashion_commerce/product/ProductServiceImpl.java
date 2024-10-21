@@ -29,6 +29,7 @@ import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -402,6 +403,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException {
+
+        for (MultipartFile image : request.getImages()) {
+            if (image.getResource().isFile()) {
+
+            }
+        }
 
         // find the product using its id
         Product product = getValidProduct(id);
