@@ -404,10 +404,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException {
 
+        List<String> newImages = new ArrayList<>();
+        List<String> oldImages = new ArrayList<>();
+
         List<MultipartFile> images = new ArrayList<>();
         for (MultipartFile image : request.getImages()) {
             if (image.getResource().isFile()) {
                 images.add(image);
+            } else {
+                oldImages.add(String.valueOf(image));
             }
         }
 
@@ -415,7 +420,10 @@ public class ProductServiceImpl implements ProductService {
         Product product = getValidProduct(id);
 
         // update the product
-        List<String> uploadedImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
+        newImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
+
+        newImages = new ArrayList<>(oldImages);
+        newImages.addAll(oldImages);
 
         product.setName(request.getName() == null? product.getName() : request.getName());
         product.setDescription(request.getDescription() == null? product.getDescription() : request.getDescription());
@@ -424,7 +432,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
         product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
         product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
-        product.setImages(uploadedImages.isEmpty()? product.getImages() : uploadedImages);
+        product.setImages(newImages.isEmpty()? product.getImages() : newImages);
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
 
