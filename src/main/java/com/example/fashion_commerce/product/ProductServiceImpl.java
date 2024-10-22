@@ -409,6 +409,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> oldImages;
         List<MultipartFile> images = new ArrayList<>();
+
         for (MultipartFile image : request.getImages()) {
             String mimeType  = tika.detect(image.getBytes());
 
