@@ -411,7 +411,7 @@ public class ProductServiceImpl implements ProductService {
         List<MultipartFile> images = new ArrayList<>();
 
         // make sure there is a data in the image list
-        if (!request.getImages().isEmpty()) {
+        if (!request.getImages().isEmpty() || request.getImages() != null) {
             for (MultipartFile image : request.getImages()) {
                 String mimeType  = tika.detect(image.getBytes());
 
