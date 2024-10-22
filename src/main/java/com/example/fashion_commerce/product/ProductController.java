@@ -40,17 +40,17 @@ public record ProductController(ProductService productService) {
             @ModelAttribute String description,
             @ModelAttribute boolean available
     ) throws IOException {
-        UpdateProduct request = new UpdateProduct();
-        request.setName(name);
-        request.setPrice(price);
-        request.setTypes(types);
-        request.setSizes(sizes);
-        request.setColors(colors);
-        request.setImages(images);
-        request.setImageUrls(imageUrls);
-        request.setCategories(categories);
-        request.setDescription(description);
-        request.setAvailable(available);
+        UpdateProduct request = new UpdateProduct(
+        name,
+        price,
+        types,
+        sizes,
+        colors,
+        images,
+        imageUrls,
+        categories,
+        description,
+        available);
 
         return productService.updateProduct(id, request);
     }
