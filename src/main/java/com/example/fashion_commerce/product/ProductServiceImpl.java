@@ -409,6 +409,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> oldImages;
         List<MultipartFile> images = new ArrayList<>();
+
         for (MultipartFile image : request.getImages()) {
             String mimeType  = tika.detect(image.getBytes());
 
@@ -423,7 +424,7 @@ public class ProductServiceImpl implements ProductService {
         // update the product
         List<String> uploadedImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
 
-        oldImages = new ArrayList<>(product.getImages());
+        oldImages = new ArrayList<>(request.getImageUrls());
         oldImages.addAll(uploadedImages);
 
         product.setName(request.getName() == null? product.getName() : request.getName());
