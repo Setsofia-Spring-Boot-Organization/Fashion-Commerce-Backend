@@ -424,7 +424,7 @@ public class ProductServiceImpl implements ProductService {
         // update the product
         List<String> uploadedImages = cloudinaryService.uploadFiles(images); // upload the image to cloudinary
 
-        oldImages = new ArrayList<>(product.getImages());
+        oldImages = new ArrayList<>(request.getImageUrls());
         oldImages.addAll(uploadedImages);
 
         product.setName(request.getName() == null? product.getName() : request.getName());
