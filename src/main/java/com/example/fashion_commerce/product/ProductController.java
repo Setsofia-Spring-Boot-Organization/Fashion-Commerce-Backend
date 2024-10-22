@@ -29,28 +29,8 @@ public record ProductController(ProductService productService) {
     @PatchMapping("update/{product-id}")
     public ResponseEntity<Response<Product>> updateProduct(
             @PathVariable("product-id") String id,
-            @ModelAttribute String name,
-            @ModelAttribute double price,
-            @ModelAttribute List<String> types,
-            @ModelAttribute List<String>sizes,
-            @ModelAttribute List<String> colors,
-            @ModelAttribute List<MultipartFile> images,
-            @ModelAttribute List<String> imageUrls,
-            @ModelAttribute List<String> categories,
-            @ModelAttribute String description,
-            @ModelAttribute boolean available
+            @ModelAttribute UpdateProduct request
     ) throws IOException {
-        UpdateProduct request = new UpdateProduct(
-        name,
-        price,
-        types,
-        sizes,
-        colors,
-        images,
-        imageUrls,
-        categories,
-        description,
-        available);
 
         return productService.updateProduct(id, request);
     }
