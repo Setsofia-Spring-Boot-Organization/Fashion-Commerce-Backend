@@ -9,7 +9,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateProduct {
         private String name;
-        private Double price;
+        private double price;
         private List<String> types;
         private List<String>sizes;
         private List<String> colors;
@@ -19,9 +19,7 @@ public class UpdateProduct {
         private String description;
         private boolean available;
 
-    public UpdateProduct() {}
-
-    public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> imageUrls, List<String> categories, String description, boolean available) {
+    public UpdateProduct(String name, double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> imageUrls, List<String> categories, String description, boolean available) {
                 this.name = name;
                 this.price = price;
                 this.types = types;
@@ -32,7 +30,7 @@ public class UpdateProduct {
                 this.categories = categories;
                 this.description = description;
                 this.available = available;
-        }
+    }
 
         public String getName() {
                 return name;
@@ -42,11 +40,11 @@ public class UpdateProduct {
                 this.name = name;
         }
 
-        public Double getPrice() {
+        public double getPrice() {
                 return price;
         }
 
-        public void setPrice(Double price) {
+        public void setPrice(double price) {
                 this.price = price;
         }
 
