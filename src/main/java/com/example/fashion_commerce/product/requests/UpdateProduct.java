@@ -19,7 +19,7 @@ public class UpdateProduct {
         private String description;
         private boolean available;
 
-        public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> imageUrls, List<String> categories, String description, boolean available) {
+    public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> imageUrls, List<String> categories, String description, boolean available) {
                 this.name = name;
                 this.price = price;
                 this.types = types;
@@ -30,7 +30,7 @@ public class UpdateProduct {
                 this.categories = categories;
                 this.description = description;
                 this.available = available;
-        }
+    }
 
         public String getName() {
                 return name;

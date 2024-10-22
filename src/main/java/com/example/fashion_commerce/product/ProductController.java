@@ -8,6 +8,7 @@ import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,7 @@ public record ProductController(ProductService productService) {
             @PathVariable("product-id") String id,
             @ModelAttribute UpdateProduct request
     ) throws IOException {
+
         return productService.updateProduct(id, request);
     }
 
