@@ -14,17 +14,19 @@ public class UpdateProduct {
         private List<String>sizes;
         private List<String> colors;
         private List<MultipartFile> images;
+        private List<String> imageUrls;
         private List<String> categories;
         private String description;
         private boolean available;
 
-        public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> categories, String description, boolean available) {
+        public UpdateProduct(String name, Double price, List<String> types, List<String> sizes, List<String> colors, List<MultipartFile> images, List<String> imageUrls, List<String> categories, String description, boolean available) {
                 this.name = name;
                 this.price = price;
                 this.types = types;
                 this.sizes = sizes;
                 this.colors = colors;
                 this.images = images;
+                this.imageUrls = imageUrls;
                 this.categories = categories;
                 this.description = description;
                 this.available = available;
@@ -78,56 +80,65 @@ public class UpdateProduct {
                 this.images = images;
         }
 
-        public List<String> getCategories() {
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public List<String> getCategories() {
                 return categories;
         }
 
-        public void setCategories(List<String> categories) {
-                this.categories = categories;
-        }
+    public void setCategories(List<String> categories) {
+            this.categories = categories;
+    }
 
-        public String getDescription() {
-                return description;
-        }
+    public String getDescription() {
+            return description;
+    }
 
-        public void setDescription(String description) {
-                this.description = description;
-        }
+    public void setDescription(String description) {
+            this.description = description;
+    }
 
-        public boolean isAvailable() {
-                return available;
-        }
+    public boolean isAvailable() {
+            return available;
+    }
 
-        public void setAvailable(boolean available) {
-                this.available = available;
-        }
+    public void setAvailable(boolean available) {
+            this.available = available;
+    }
 
-        @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                UpdateProduct that = (UpdateProduct) o;
-                return available == that.available && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(types, that.types) && Objects.equals(sizes, that.sizes) && Objects.equals(colors, that.colors) && Objects.equals(images, that.images) && Objects.equals(categories, that.categories) && Objects.equals(description, that.description);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateProduct that = (UpdateProduct) o;
+        return available == that.available && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(types, that.types) && Objects.equals(sizes, that.sizes) && Objects.equals(colors, that.colors) && Objects.equals(images, that.images) && Objects.equals(imageUrls, that.imageUrls) && Objects.equals(categories, that.categories) && Objects.equals(description, that.description);
+    }
 
-        @Override
-        public int hashCode() {
-                return Objects.hash(name, price, types, sizes, colors, images, categories, description, available);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, types, sizes, colors, images, imageUrls, categories, description, available);
+    }
 
-        @Override
-        public String toString() {
-                return "UpdateProduct{" +
-                        "name='" + name + '\'' +
-                        ", price=" + price +
-                        ", types=" + types +
-                        ", sizes=" + sizes +
-                        ", colors=" + colors +
-                        ", images=" + images +
-                        ", categories=" + categories +
-                        ", description='" + description + '\'' +
-                        ", available=" + available +
-                        '}';
-        }
+    @Override
+    public String toString() {
+        return "UpdateProduct{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", types=" + types +
+                ", sizes=" + sizes +
+                ", colors=" + colors +
+                ", images=" + images +
+                ", imageUrls=" + imageUrls +
+                ", categories=" + categories +
+                ", description='" + description + '\'' +
+                ", available=" + available +
+                '}';
+    }
 }
 
