@@ -436,7 +436,7 @@ public class ProductServiceImpl implements ProductService {
         product.setColors(request.getColors().isEmpty()? product.getColors() : request.getColors());
         product.setSizes(request.getSizes().isEmpty()? product.getSizes() : request.getSizes());
         product.setType(request.getTypes() == null? product.getTypes() : request.getTypes());
-        product.setPrice(request.getPrice());
+        product.setPrice(request.getPrice() == null? product.getPrice() : request.getPrice());
         product.setImages(oldImages);
         product.setAvailable(request.isAvailable());
         product.setUpdatedAt(LocalDateTime.now());
