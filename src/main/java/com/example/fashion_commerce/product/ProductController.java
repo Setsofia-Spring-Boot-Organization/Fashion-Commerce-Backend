@@ -29,10 +29,11 @@ public record ProductController(ProductService productService) {
     @PatchMapping("update/{product-id}")
     public ResponseEntity<Response<Product>> updateProduct(
             @PathVariable("product-id") String id,
+            @RequestPart(name = "images", required = false) List<MultipartFile> images,
             @ModelAttribute UpdateProduct request
     ) throws IOException {
 
-        return productService.updateProduct(id, request);
+        return productService.updateProduct(id, images, request);
     }
 
 
