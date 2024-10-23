@@ -6,6 +6,7 @@ import com.example.fashion_commerce.product.requests.FilterProducts;
 import com.example.fashion_commerce.product.requests.UpdateProduct;
 import com.example.fashion_commerce.product.responses.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,7 +44,7 @@ public interface ProductService {
 
     ResponseEntity<Response<FilterOptions>> getFilterOptions();
 
-    ResponseEntity<Response<Product>> updateProduct(String id, UpdateProduct request) throws IOException;
+    ResponseEntity<Response<Product>> updateProduct(String id, List<MultipartFile> images, UpdateProduct request) throws IOException;
 
     ResponseEntity<Response<?>> deleteProduct(String id);
 }
