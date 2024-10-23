@@ -62,7 +62,7 @@
                     </tr>
                   </table>
                 </td>
-                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.product.price}"></td>
+                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.product.price} + '$times;' + ${product.quantity}"></td>
               </tr>
               <tr>
                 <td style="padding: 8px 0;">Sub Total</td>
