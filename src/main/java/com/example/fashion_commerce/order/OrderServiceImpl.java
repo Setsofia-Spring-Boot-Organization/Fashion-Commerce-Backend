@@ -46,14 +46,14 @@ public class OrderServiceImpl implements OrderService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
             List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
-            double price = products.stream().map(Product::getPrice).toList().stream().mapToDouble(Double::doubleValue).sum();
+            double subtotalPrice = products.stream().map(Product::getPrice).toList().stream().mapToDouble(Double::doubleValue).sum();
 
 
             // calculate the costs
             double shippingCost = order.getShippingAddress().getShippingCost();
             double tax = order.getShippingAddress().getTax();
             double tempTotalPrice = shippingCost + tax;
-            double totalPrice = (price + tempTotalPrice);
+            double totalPrice = (subtotalPrice + tempTotalPrice);
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
                     Map.entry("date", formatter.format(order.getDateCreated())),
                     Map.entry("orderId", order.getId()),
                     Map.entry("products", order.getProducts()),
-                    Map.entry("subTotal", price),
+                    Map.entry("subTotal", subtotalPrice),
                     Map.entry("shippingCost", shippingCost),
                     Map.entry("tax", tax),
                     Map.entry("total", totalPrice)
