@@ -205,9 +205,21 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = verifyOrder(id);
 
-        for (OrderProducts product : order.getProducts()) {
+        List<Double> tempSubtotalPrice = new ArrayList<>();
 
+        for (OrderProducts product : order.getProducts()) {
+            double price = product.getProduct().getPrice();
+            int quantity = product.getQuantity();
+
+            tempSubtotalPrice.add((price * quantity));
         }
+
+        // calculate the costs
+        double shippingCost = order.getShippingAddress().getShippingCost();
+        double tax = order.getShippingAddress().getTax();
+        double tempTotalPrice = shippingCost + tax;
+        double subtotalPrice = tempSubtotalPrice.stream().mapToDouble(Double::doubleValue).sum();
+        double totalPrice = (subtotalPrice + tempTotalPrice);
 
         Response<Order> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
