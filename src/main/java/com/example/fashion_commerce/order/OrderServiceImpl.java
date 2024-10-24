@@ -206,6 +206,10 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = verifyOrder(id);
 
+        for (OrderProducts product : order.getProducts()) {
+
+        }
+
         Response<Order> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "order",
