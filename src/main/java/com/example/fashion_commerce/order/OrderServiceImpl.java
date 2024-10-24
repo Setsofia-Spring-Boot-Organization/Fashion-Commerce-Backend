@@ -49,13 +49,13 @@ public class OrderServiceImpl implements OrderService {
             List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
 //            double subtotalPrice = products.stream().map(Product::getPrice).toList().stream().mapToDouble(Double::doubleValue).sum();
 
-           List<Double> subtotalPrice = new ArrayList<>();
+           List<Double> tempSubtotalPrice = new ArrayList<>();
 
             for (OrderProducts product : order.getProducts()) {
                 double price = product.getProduct().getPrice();
                 int quantity = product.getQuantity();
 
-                subtotalPrice.add((price * quantity));
+                tempSubtotalPrice.add((price * quantity));
             }
 
             // calculate the costs
