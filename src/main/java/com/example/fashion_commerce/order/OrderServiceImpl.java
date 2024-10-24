@@ -10,6 +10,7 @@ import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.order.requests.OrderProducts;
 import com.example.fashion_commerce.order.requests.OrderProductsIds;
+import com.example.fashion_commerce.order.responses.OrderDetails;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
@@ -45,9 +46,8 @@ public class OrderServiceImpl implements OrderService {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
 
-           List<Double> tempSubtotalPrice = new ArrayList<>();
+            List<Double> tempSubtotalPrice = new ArrayList<>();
 
             for (OrderProducts product : order.getProducts()) {
                 double price = product.getProduct().getPrice();
@@ -202,14 +202,35 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public ResponseEntity<Response<Order>> getOrder(String id) {
+    public ResponseEntity<Response<OrderDetails>> getOrder(String id) {
 
         Order order = verifyOrder(id);
 
-        Response<Order> orderResponse = new Response<>(
+        List<Double> tempSubtotalPrice = new ArrayList<>();
+        for (OrderProducts product : order.getProducts()) {
+            double price = product.getProduct().getPrice();
+            int quantity = product.getQuantity();
+
+            tempSubtotalPrice.add((price * quantity));
+        }
+
+        // calculate the costs
+        double shippingCost = order.getShippingAddress().getShippingCost();
+        double tax = order.getShippingAddress().getTax();
+        double tempTotalPrice = shippingCost + tax;
+        double subtotalPrice = tempSubtotalPrice.stream().mapToDouble(Double::doubleValue).sum();
+        double totalPrice = (subtotalPrice + tempTotalPrice);
+
+        Response<OrderDetails> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "order",
-                order
+                new OrderDetails(
+                        order,
+                        subtotalPrice,
+                        shippingCost,
+                        tax,
+                        totalPrice
+                )
         );
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
