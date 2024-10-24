@@ -45,9 +45,8 @@ public class OrderServiceImpl implements OrderService {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
-            List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
 
-           List<Double> tempSubtotalPrice = new ArrayList<>();
+            List<Double> tempSubtotalPrice = new ArrayList<>();
 
             for (OrderProducts product : order.getProducts()) {
                 double price = product.getProduct().getPrice();
