@@ -3,6 +3,7 @@ package com.example.fashion_commerce.order;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
+import com.example.fashion_commerce.order.responses.OrderDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ public class OrderController {
 
 
     @GetMapping(path = "/get")
-    public ResponseEntity<Response<Order>> getOrder(
+    public ResponseEntity<Response<OrderDetails>> getOrder(
             @RequestParam String id
     ) {
         return orderService.getOrder(id);
