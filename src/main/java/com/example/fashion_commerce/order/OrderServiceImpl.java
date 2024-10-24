@@ -20,7 +20,6 @@ import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -47,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String username = order.getShippingAddress().getFirstname() + " " + order.getShippingAddress().getLastname(); // combine the username
             List<Product> products = order.getProducts().stream().map(OrderProducts::getProduct).toList();
-//            double subtotalPrice = products.stream().map(Product::getPrice).toList().stream().mapToDouble(Double::doubleValue).sum();
 
            List<Double> tempSubtotalPrice = new ArrayList<>();
 
@@ -62,7 +60,8 @@ public class OrderServiceImpl implements OrderService {
             double shippingCost = order.getShippingAddress().getShippingCost();
             double tax = order.getShippingAddress().getTax();
             double tempTotalPrice = shippingCost + tax;
-            double totalPrice = (subtotalPrice.stream().mapToDouble(Double::doubleValue).sum() + tempTotalPrice);
+            double subtotalPrice = tempSubtotalPrice.stream().mapToDouble(Double::doubleValue).sum();
+            double totalPrice = (subtotalPrice + tempTotalPrice);
 
             Map<String, Object> variables = Map.ofEntries(
                     Map.entry("username", username),
