@@ -29,45 +29,45 @@ public class UpdateProduct {
                 this.available = available;
     }
 
-        public String getName() {
-                return name;
-        }
+    public String getName() {
+            return name;
+    }
 
-        public void setName(String name) {
-                this.name = name;
-        }
+    public void setName(String name) {
+            this.name = name;
+    }
 
-        public Double getPrice() {
-                return price;
-        }
+    public Double getPrice() {
+            return price;
+    }
 
-        public void setPrice(Double price) {
-                this.price = price;
-        }
+    public void setPrice(Double price) {
+            this.price = price;
+    }
 
-        public List<String> getTypes() {
-                return types;
-        }
+    public List<String> getTypes() {
+            return types;
+    }
 
-        public void setTypes(List<String> types) {
-                this.types = types;
-        }
+    public void setTypes(List<String> types) {
+            this.types = types;
+    }
 
-        public List<String> getSizes() {
-                return sizes;
-        }
+    public List<String> getSizes() {
+            return sizes;
+    }
 
-        public void setSizes(List<String> sizes) {
-                this.sizes = sizes;
-        }
+    public void setSizes(List<String> sizes) {
+            this.sizes = sizes;
+    }
 
-        public List<String> getColors() {
-                return colors;
-        }
+    public List<String> getColors() {
+            return colors;
+    }
 
-        public void setColors(List<String> colors) {
-                this.colors = colors;
-        }
+    public void setColors(List<String> colors) {
+            this.colors = colors;
+    }
 
 
     public List<String> getImageUrls() {
