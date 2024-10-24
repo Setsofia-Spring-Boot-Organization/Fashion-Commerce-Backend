@@ -10,6 +10,7 @@ import com.example.fashion_commerce.order.checkout.ShippingAddress;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.order.requests.OrderProducts;
 import com.example.fashion_commerce.order.requests.OrderProductsIds;
+import com.example.fashion_commerce.order.responses.OrderDetails;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
 import org.springframework.http.HttpStatus;
@@ -201,12 +202,11 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public ResponseEntity<Response<Order>> getOrder(String id) {
+    public ResponseEntity<Response<OrderDetails>> getOrder(String id) {
 
         Order order = verifyOrder(id);
 
         List<Double> tempSubtotalPrice = new ArrayList<>();
-
         for (OrderProducts product : order.getProducts()) {
             double price = product.getProduct().getPrice();
             int quantity = product.getQuantity();
@@ -221,10 +221,16 @@ public class OrderServiceImpl implements OrderService {
         double subtotalPrice = tempSubtotalPrice.stream().mapToDouble(Double::doubleValue).sum();
         double totalPrice = (subtotalPrice + tempTotalPrice);
 
-        Response<Order> orderResponse = new Response<>(
+        Response<OrderDetails> orderResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "order",
-                order
+                new OrderDetails(
+                        order,
+                        subtotalPrice,
+                        shippingCost,
+                        tax,
+                        totalPrice
+                )
         );
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
