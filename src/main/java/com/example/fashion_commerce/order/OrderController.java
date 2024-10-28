@@ -3,6 +3,7 @@ package com.example.fashion_commerce.order;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
+import com.example.fashion_commerce.order.requests.UpdateOrder;
 import com.example.fashion_commerce.order.responses.OrderDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +53,9 @@ public class OrderController {
     @PatchMapping("update/{order-id}")
     public ResponseEntity<Response<Order>> updateOrder(
             @PathVariable("order-id") String id,
-            @RequestParam String status
+            @RequestParam String status,
+            @RequestBody UpdateOrder notes
     ) {
-        return orderService.updateOrder(id, status);
+        return orderService.updateOrder(id, status, notes);
     }
 }
