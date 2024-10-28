@@ -261,7 +261,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public ResponseEntity<Response<Order>> updateOrder(String id, String status) {
+    public ResponseEntity<Response<Order>> updateOrder(String id, String status, String notes) {
 
         Order order = verifyOrder(id);
         OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
@@ -274,6 +274,7 @@ public class OrderServiceImpl implements OrderService {
         // update the order status
         try {
             order.setOrderStatus(orderStatus);
+            order.setNotes(notes);
             Order updatedOrder = orderRepository.save(order);
 
             Response<Order> orderResponse = new Response<>(
