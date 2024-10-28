@@ -52,8 +52,9 @@ public class OrderController {
     @PatchMapping("update/{order-id}")
     public ResponseEntity<Response<Order>> updateOrder(
             @PathVariable("order-id") String id,
-            @RequestParam String status
+            @RequestParam String status,
+            @RequestBody String notes
     ) {
-        return orderService.updateOrder(id, status);
+        return orderService.updateOrder(id, status, notes);
     }
 }
