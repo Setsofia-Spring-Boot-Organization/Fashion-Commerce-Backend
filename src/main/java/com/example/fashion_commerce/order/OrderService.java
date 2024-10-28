@@ -15,5 +15,5 @@ public interface OrderService {
 
     ResponseEntity<Response<OrderDetails>> getOrder(String id);
 
-    ResponseEntity<Response<Order>> updateOrder(String id, String status);
+    ResponseEntity<Response<Order>> updateOrder(String id, String status, String notes);
 }
