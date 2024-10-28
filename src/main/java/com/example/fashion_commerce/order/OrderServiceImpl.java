@@ -98,10 +98,9 @@ public class OrderServiceImpl implements OrderService {
 
     private void notifyAdminOfNewOrders() {
         Map<String, Object> newOrderVariables = Map.of(
-                "customername", "",
+                "customerName", "",
                 "orderId", "",
                 "date", "",
-                "total", "",
                 "products", "",
                 "subTotal", "",
                 "shippingCost", "",
