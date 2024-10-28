@@ -102,7 +102,11 @@ public class OrderServiceImpl implements OrderService {
                 "orderId", "",
                 "date", "",
                 "total", "",
-                "products", ""
+                "products", "",
+                "subTotal", "",
+                "shippingCost", "",
+                "tax", "",
+                "total", ""
         );
 
     }
