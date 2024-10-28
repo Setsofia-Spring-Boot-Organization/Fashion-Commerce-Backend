@@ -3,6 +3,7 @@ package com.example.fashion_commerce.order;
 import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.order.requests.CreateOrder;
 import com.example.fashion_commerce.order.requests.RequestOrderStatus;
+import com.example.fashion_commerce.order.requests.UpdateOrder;
 import com.example.fashion_commerce.order.responses.OrderDetails;
 import org.springframework.http.ResponseEntity;
 
@@ -15,5 +16,5 @@ public interface OrderService {
 
     ResponseEntity<Response<OrderDetails>> getOrder(String id);
 
-    ResponseEntity<Response<Order>> updateOrder(String id, String status, String notes);
+    ResponseEntity<Response<Order>> updateOrder(String id, String status, UpdateOrder notes);
 }
