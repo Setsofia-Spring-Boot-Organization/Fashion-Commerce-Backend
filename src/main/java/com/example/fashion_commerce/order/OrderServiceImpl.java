@@ -96,6 +96,17 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    private void notifyAdminOfNewOrders() {
+        Map<String, Object> newOrderVariables = Map.of(
+                "customername", "",
+                "orderId", "",
+                "date", "",
+                "total", "",
+                "products", ""
+        );
+
+    }
+
     private Order createdOrder(CreateOrder createOrder) {
 
         List<String> ids = createOrder.getProductIDs().stream().map(OrderProductsIds::getId).toList();
