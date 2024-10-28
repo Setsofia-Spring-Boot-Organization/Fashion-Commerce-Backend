@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
         );
 
         mailSender.sendMail(
-                "admin.email",
+                "setsofia.nusetor.kojo@gmail.com",
                 "New Order Received: " + order.getId(),
                 newOrderVariables,
                 "newOrderAdminNotification"
