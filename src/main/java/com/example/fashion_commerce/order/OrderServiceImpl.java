@@ -108,7 +108,12 @@ public class OrderServiceImpl implements OrderService {
                 "total", ""
         );
 
-
+        mailSender.sendMail(
+                "",
+                "",
+                "",
+                ""
+        );
     }
 
     private Order createdOrder(CreateOrder createOrder) {
