@@ -96,12 +96,12 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void notifyAdminOfNewOrders() {
+    private void notifyAdminOfNewOrders(Order order) {
         Map<String, Object> newOrderVariables = Map.of(
-                "customerName", "",
-                "orderId", "",
-                "date", "",
-                "products", "",
+                "customerName", order.getShippingAddress().getLastname() + " " + order.getShippingAddress().getFirstname(),
+                "orderId", order.getId(),
+                "date", order.getDateCreated(),
+                "products", order.getProducts(),
                 "subTotal", "",
                 "shippingCost", "",
                 "tax", "",
@@ -109,10 +109,10 @@ public class OrderServiceImpl implements OrderService {
         );
 
         mailSender.sendMail(
-                "",
-                "",
-                "",
-                ""
+                "admin.email",
+                "New Order Received: " + order.getId(),
+                newOrderVariables,
+                "newOrderAdminNotification"
         );
     }
 
