@@ -13,6 +13,7 @@ import com.example.fashion_commerce.order.requests.OrderProductsIds;
 import com.example.fashion_commerce.order.responses.OrderDetails;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,8 @@ public class OrderServiceImpl implements OrderService {
                     "orderConfirmation"
             );
 
+            notifyAdminOfNewOrders(order, subtotalPrice, totalPrice);
+
             Response<Order> orderResponse = new Response<>(
                     HttpStatus.CREATED.value(),
                     "order created successfully",
@@ -96,16 +99,16 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private void notifyAdminOfNewOrders(Order order) {
+    private void notifyAdminOfNewOrders(Order order, double subtotal, double totalCost) throws MessagingException {
         Map<String, Object> newOrderVariables = Map.of(
                 "customerName", order.getShippingAddress().getLastname() + " " + order.getShippingAddress().getFirstname(),
                 "orderId", order.getId(),
                 "date", order.getDateCreated(),
                 "products", order.getProducts(),
-                "subTotal", "",
-                "shippingCost", "",
-                "tax", "",
-                "total", ""
+                "subTotal", subtotal,
+                "shippingCost", order.getShippingAddress().getShippingCost(),
+                "tax", order.getShippingAddress().getTax(),
+                "total", totalCost
         );
 
         mailSender.sendMail(
