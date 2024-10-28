@@ -22,14 +22,16 @@ public class Order {
     private ShippingAddress shippingAddress;
     private List<OrderProducts> products;
     private OrderStatus orderStatus;
+    private String notes;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
 
-    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<OrderProducts> products, OrderStatus orderStatus, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+    public Order(ContactInfo contactInfo, ShippingAddress shippingAddress, List<OrderProducts> products, OrderStatus orderStatus, String notes, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.contactInfo = contactInfo;
         this.shippingAddress = shippingAddress;
         this.products = products;
         this.orderStatus = orderStatus;
+        this.notes = notes;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
     }
@@ -74,6 +76,14 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public LocalDateTime getDateCreated() {
         return dateCreated;
     }
@@ -95,12 +105,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(products, order.products) && orderStatus == order.orderStatus && Objects.equals(dateCreated, order.dateCreated) && Objects.equals(dateUpdated, order.dateUpdated);
+        return Objects.equals(id, order.id) && Objects.equals(contactInfo, order.contactInfo) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(products, order.products) && orderStatus == order.orderStatus && Objects.equals(notes, order.notes) && Objects.equals(dateCreated, order.dateCreated) && Objects.equals(dateUpdated, order.dateUpdated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contactInfo, shippingAddress, products, orderStatus, dateCreated, dateUpdated);
+        return Objects.hash(id, contactInfo, shippingAddress, products, orderStatus, notes, dateCreated, dateUpdated);
     }
 
     @Override
@@ -111,6 +121,7 @@ public class Order {
                 ", shippingAddress=" + shippingAddress +
                 ", products=" + products +
                 ", orderStatus=" + orderStatus +
+                ", notes=" + notes +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
                 '}';
