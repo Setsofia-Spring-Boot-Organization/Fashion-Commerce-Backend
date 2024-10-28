@@ -274,6 +274,8 @@ public class OrderServiceImpl implements OrderService {
             order.setNotes(notes.notes());
             Order updatedOrder = orderRepository.save(order);
 
+            orderStatusUpdateNotification(order);
+
             Response<Order> orderResponse = new Response<>(
                     HttpStatus.CREATED.value(),
                     "order status updated successfully",
@@ -283,6 +285,42 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             throw new FashionCommerceException(Error.ERROR_SAVING_DATA, new Throwable(Message.CANNOT_SAVE_THE_DATA.label));
         }
+    }
+
+    private void orderStatusUpdateNotification(Order order) throws MessagingException {
+        List<Double> tempSubtotalPrice = new ArrayList<>();
+
+        for (OrderProducts product : order.getProducts()) {
+            double price = product.getProduct().getPrice();
+            int quantity = product.getQuantity();
+
+            tempSubtotalPrice.add((price * quantity));
+        }
+
+        // calculate the costs
+        double shippingCost = order.getShippingAddress().getShippingCost();
+        double tax = order.getShippingAddress().getTax();
+        double tempTotalPrice = shippingCost + tax;
+        double subtotalPrice = tempSubtotalPrice.stream().mapToDouble(Double::doubleValue).sum();
+        double totalPrice = (subtotalPrice + tempTotalPrice);
+
+        Map<String, Object> variables = Map.ofEntries(
+                Map.entry("orderId", order.getId()),
+                Map.entry("status", order.getOrderStatus()),
+                Map.entry("notes", order.getNotes()),
+                Map.entry("products", order.getProducts()),
+                Map.entry("subTotal", subtotalPrice),
+                Map.entry("shippingCost", shippingCost),
+                Map.entry("tax", tax),
+                Map.entry("total", totalPrice)
+        );
+
+        mailSender.sendMail(
+                order.getContactInfo().getEmail(),
+                "Your Order Status Has Been Updated - Order #" + order.getId(),
+                variables,
+                "orderStatusUpdateNotification"
+        );
     }
 
     private Order verifyOrder(String id) {

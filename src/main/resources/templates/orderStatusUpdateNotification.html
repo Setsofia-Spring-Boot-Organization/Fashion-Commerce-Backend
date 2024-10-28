@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Update</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f4ef; margin: 0; padding: 0;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9f4ef; padding: 40px 0;">
+    <tr>
+        <td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="700" style="background-color: #fff; border-radius: 15px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);">
+                <tr>
+                    <td style="padding: 40px;">
+                        <!-- Order Status Update -->
+                        <h1 style="font-size: 24px; color: #000;">Your Order Status Has Been Updated</h1>
+                        <p style="font-size: 14px; color: #333; line-height: 1.6;">
+                            We wanted to let you know that the status of your order has changed. Below are the updated details:
+                        </p>
+
+                        <!-- Order Information -->
+                        <h3 style="font-size: 16px; color: #000; margin-bottom: 10px;">Order Information</h3>
+                        <p style="font-size: 14px; margin-bottom: 5px;"><strong>Order Number</strong>: <span th:utext="${orderId}"></span></p>
+                        <p style="font-size: 14px; margin-bottom: 5px;"><strong>Status</strong>: <span th:utext="${status}"></span></p>
+
+                        <!-- Admin Notes -->
+                        <h3 style="font-size: 16px; color: #000; margin-top: 20px; margin-bottom: 10px;">Notes from Our Team</h3>
+                        <p style="font-size: 14px; color: #333;" th:utext="${notes}">
+                            <!-- Admin notes will be inserted here -->
+                        </p>
+
+                        <!-- Order Summary -->
+                        <h3 style="font-size: 16px; color: #000; margin-top: 20px; margin-bottom: 10px;">Order Summary</h3>
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th align="left" style="font-size: 14px; color: #333; padding: 8px 0;">Product</th>
+                                <th align="right" style="font-size: 14px; color: #333; padding: 8px 0;">Price</th>
+                            </tr>
+                            <tr th:each="product : ${products}">
+                                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;">
+                                    <p th:text="${product.product.name}" style="font-size: 14px; color: #333;"></p>
+                                    <p style="font-size: 12px; color: #666;">Qty: <span th:text="${product.quantity}"></span></p>
+                                </td>
+                                <td style="border-bottom: 1px solid #ddd; padding: 8px 0;" align="right" th:text="${product.product.price} + ' x ' + ${product.quantity}"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0;">Sub Total</td>
+                                <td align="right" th:text="${subTotal}"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0;">Shipping</td>
+                                <td align="right" th:text="${shippingCost}"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0;">Tax</td>
+                                <td align="right" th:text="${tax}"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 0; font-weight: bold;">Order Total</td>
+                                <td style="padding: 8px 0; font-weight: bold;" align="right" th:text="${total}"></td>
+                            </tr>
+                        </table>
+
+                        <p style="font-size: 14px; color: #333; margin-top: 20px;">
+                            If you have any questions, please feel free to reach out to our support team.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
