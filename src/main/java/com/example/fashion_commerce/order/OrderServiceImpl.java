@@ -271,7 +271,7 @@ public class OrderServiceImpl implements OrderService {
         // update the order status
         try {
             order.setOrderStatus(orderStatus);
-            order.setNotes(notes.getNotes());
+            order.setNotes(notes.notes());
             Order updatedOrder = orderRepository.save(order);
 
             Response<Order> orderResponse = new Response<>(
