@@ -285,6 +285,21 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    private void orderStatusUpdateNotification() {
+        Map<String, Object> variables = Map.ofEntries(
+                Map.entry("orderId", ""),
+                Map.entry("status", ""),
+                Map.entry("notes", ""),
+                Map.entry("products", ""),
+                Map.entry("subTotal", ""),
+                Map.entry("shippingCost", ""),
+                Map.entry("tax", ""),
+                Map.entry("total", "")
+        );
+
+
+    }
+
     private Order verifyOrder(String id) {
         return orderRepository.findById(id).orElseThrow(() -> new FashionCommerceException(
                 Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label)
