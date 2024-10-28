@@ -7,9 +7,7 @@ import com.example.fashion_commerce.generics.Response;
 import com.example.fashion_commerce.mail.MailSender;
 import com.example.fashion_commerce.order.checkout.ContactInfo;
 import com.example.fashion_commerce.order.checkout.ShippingAddress;
-import com.example.fashion_commerce.order.requests.CreateOrder;
-import com.example.fashion_commerce.order.requests.OrderProducts;
-import com.example.fashion_commerce.order.requests.OrderProductsIds;
+import com.example.fashion_commerce.order.requests.*;
 import com.example.fashion_commerce.order.responses.OrderDetails;
 import com.example.fashion_commerce.product.Product;
 import com.example.fashion_commerce.product.ProductRepository;
@@ -17,7 +15,6 @@ import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.example.fashion_commerce.order.requests.RequestOrderStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -261,7 +258,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public ResponseEntity<Response<Order>> updateOrder(String id, String status, String notes) {
+    public ResponseEntity<Response<Order>> updateOrder(String id, String status, UpdateOrder notes) {
 
         Order order = verifyOrder(id);
         OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
@@ -274,7 +271,7 @@ public class OrderServiceImpl implements OrderService {
         // update the order status
         try {
             order.setOrderStatus(orderStatus);
-            order.setNotes(notes);
+            order.setNotes(notes.getNotes());
             Order updatedOrder = orderRepository.save(order);
 
             Response<Order> orderResponse = new Response<>(
