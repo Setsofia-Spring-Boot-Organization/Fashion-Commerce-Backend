@@ -26,7 +26,7 @@ public interface ProductService {
      *
      * @return a {@link ResponseEntity} containing a {@link Response} with the details of the new product collection
      */
-    ResponseEntity<Response<List<GetNewCollectionRes>>> getNewCollections();
+    ResponseEntity<Response<List<Product>>> getNewCollections();
 
     ResponseEntity<Response<Product>> getProduct(String id);
 
