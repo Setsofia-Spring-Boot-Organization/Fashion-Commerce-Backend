@@ -178,6 +178,8 @@ public class ProductServiceImpl implements ProductService {
 
         if (newCollections.isEmpty()) {
             newCollections = productRepository.findAllRandom();
+        } else if (newCollections.size() < 5) {
+            newCollections.addAll(productRepository.findAllRandom());
         }
 
         Response<List<Product>> response = new Response<>(
