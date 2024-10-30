@@ -168,17 +168,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
     @Override
     public ResponseEntity<Response<List<Product>>> getNewCollections() {
-
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
         List<Product> newCollections;
         newCollections = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
 
-
         if (newCollections.isEmpty()) {
             newCollections = productRepository.findAllRandom();
+        } else if (newCollections.size() < 5) {
+            newCollections.addAll(productRepository.findAllRandom());
         }
 
         Response<List<Product>> response = new Response<>(
