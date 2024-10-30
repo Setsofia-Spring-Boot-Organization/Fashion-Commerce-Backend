@@ -168,6 +168,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
     @Override
     public ResponseEntity<Response<List<Product>>> getNewCollections() {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
