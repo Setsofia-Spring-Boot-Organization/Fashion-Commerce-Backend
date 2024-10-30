@@ -169,35 +169,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<List<GetNewCollectionRes>>> getNewCollections() {
+    public ResponseEntity<Response<List<Product>>> getNewCollections() {
 
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
-        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
-        List<GetNewCollectionRes> newCollections = new ArrayList<>();
+        List<Product> newCollections;
+        newCollections = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
 
-        for (Product product : products) {
-            newCollections.add(
-                    new GetNewCollectionRes(
-                            product.getId(),
-                            product.getImages()
-                    )
-            );
-        }
 
         if (newCollections.isEmpty()) {
-            List<Product> products1 = productRepository.findAllRandom();
-            for (Product product : products1) {
-                newCollections.add(
-                        new GetNewCollectionRes(
-                                product.getId(),
-                                product.getImages()
-                        )
-                );
-            }
+            newCollections = productRepository.findAllRandom();
         }
 
-        Response<List<GetNewCollectionRes>> response = new Response<>(
+        Response<List<Product>> response = new Response<>(
                 HttpStatus.OK.value(),
                 "new collections",
                 newCollections
