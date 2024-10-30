@@ -185,6 +185,18 @@ public class ProductServiceImpl implements ProductService {
             );
         }
 
+        if (newCollections.isEmpty()) {
+            List<Product> products1 = productRepository.findAllRandom();
+            for (Product product : products1) {
+                newCollections.add(
+                        new GetNewCollectionRes(
+                                product.getId(),
+                                product.getImages()
+                        )
+                );
+            }
+        }
+
         Response<List<GetNewCollectionRes>> response = new Response<>(
                 HttpStatus.OK.value(),
                 "new collections",
