@@ -55,7 +55,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-collection")
-    public ResponseEntity<Response<List<GetNewCollectionRes>>> getNewCollections() {
+    public ResponseEntity<Response<List<Product>>> getNewCollections() {
         return productService.getNewCollections();
     }
 
