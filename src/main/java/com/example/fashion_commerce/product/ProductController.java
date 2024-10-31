@@ -89,7 +89,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-this-week")
-    public ResponseEntity<Response<List<ThisWeekProductsRes>>> getThisWeekProducts() {
+    public ResponseEntity<Response<List<Product>>> getThisWeekProducts() {
         return productService.getThisWeekProducts();
     }
 
