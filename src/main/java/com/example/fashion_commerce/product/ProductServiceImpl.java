@@ -360,12 +360,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter) {
 
-        List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
+        List<Product> products;
+        products = productPredicates.globalProductFilter(filter);
+
+        if (products.isEmpty()) {
+            products = productRepository.findAllRandom();
+        } else if (products.size() < 5) {
+            products.addAll(productRepository.findAllRandom());
+        }
 
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "filtered products",
-                filteredProducts
+                products
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
