@@ -360,12 +360,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter) {
 
-        List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
+        List<Product> products;
+        products = productPredicates.globalProductFilter(filter);
+
+
 
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "filtered products",
-                filteredProducts
+                products
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
