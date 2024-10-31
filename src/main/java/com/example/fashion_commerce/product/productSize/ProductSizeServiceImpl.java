@@ -101,7 +101,7 @@ public class ProductSizeServiceImpl implements ProductSizeService {
 
         for (String size : sizes.sizes()) {
             productSizes.add(
-                    new ProductSize(size)
+                    new ProductSize(size.toUpperCase())
             );
         }
 
