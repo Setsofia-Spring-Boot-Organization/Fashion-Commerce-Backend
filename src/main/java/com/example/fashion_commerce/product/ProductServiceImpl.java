@@ -35,7 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -170,19 +172,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<List<Product>>> getNewCollections() {
+    public ResponseEntity<Response<Set<Product>>> getNewCollections() {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
 
-        List<Product> newCollections;
-        newCollections = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
+        Set<Product> newCollections;
+        newCollections = new HashSet<>(productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays));
 
         if (newCollections.isEmpty()) {
-            newCollections = productRepository.findAllRandom();
+            newCollections = new HashSet<>(productRepository.findAllRandom());
         } else if (newCollections.size() < 5) {
             newCollections.addAll(productRepository.findAllRandom());
         }
 
-        Response<List<Product>> response = new Response<>(
+        Response<Set<Product>> response = new Response<>(
                 HttpStatus.OK.value(),
                 "new collections",
                 newCollections
@@ -259,23 +261,22 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<List<Product>>> getThisWeekProducts() {
+    public ResponseEntity<Response<Set<Product>>> getThisWeekProducts() {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
 
-        List<Product> products;
-        products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
+        Set<Product> products;
+        products = new HashSet<>(productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays));
 
         if (products.isEmpty()) {
-            products = productRepository.findAllRandom();
+            products = new HashSet<>(productRepository.findAllRandom());
         } else if (products.size() < 5) {
             products.addAll(productRepository.findAllRandom());
         }
 
-        Response<List<Product>> productsResponse = new Response<>(
+        Response<Set<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "new products this week",
-                products,
-                String.valueOf(products.size())
+                products, String.valueOf(products.size())
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/product")
@@ -55,7 +56,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-collection")
-    public ResponseEntity<Response<List<Product>>> getNewCollections() {
+    public ResponseEntity<Response<Set<Product>>> getNewCollections() {
         return productService.getNewCollections();
     }
 
@@ -89,7 +90,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-this-week")
-    public ResponseEntity<Response<List<Product>>> getThisWeekProducts() {
+    public ResponseEntity<Response<Set<Product>>> getThisWeekProducts() {
         return productService.getThisWeekProducts();
     }
 
