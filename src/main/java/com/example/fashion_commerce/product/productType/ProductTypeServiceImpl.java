@@ -97,7 +97,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
         for (String name : types.names()) {
             productType.add(
-                    new ProductType(name)
+                    new ProductType(name.toUpperCase())
             );
         }
 
