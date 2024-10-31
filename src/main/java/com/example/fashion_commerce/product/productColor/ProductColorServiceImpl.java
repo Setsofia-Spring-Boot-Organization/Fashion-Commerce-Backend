@@ -79,7 +79,7 @@ public class ProductColorServiceImpl implements ProductColorService {
 
         for (String color : colors.colors()) {
             productColors.add(
-                    new ProductColor(color)
+                    new ProductColor(color.toUpperCase())
             );
         }
 
