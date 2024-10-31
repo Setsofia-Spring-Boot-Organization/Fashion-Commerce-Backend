@@ -1,4 +1,4 @@
-package com.example.fashion_commerce.configurations;
+package com.example.fashion_commerce.scheduler;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import org.springframework.web.client.RestTemplate;
 public class Scheduler {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 5000)
     public void request() {
-        String url = "https://fashion-commerce.onrender.com";
+        String url = "https://fashion-commerce.onrender.com/api/v1/schedule";
 
         try {
             String response = restTemplate.getForObject(url, String.class);
