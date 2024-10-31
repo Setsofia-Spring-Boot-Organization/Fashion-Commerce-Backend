@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -274,8 +275,7 @@ public class ProductServiceImpl implements ProductService {
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "new products this week",
-                products,
-                String.valueOf(products.size())
+                products, String.valueOf(products.size())
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
