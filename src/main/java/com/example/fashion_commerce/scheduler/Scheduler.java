@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class Scheduler {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 3000)
     public void request() {
         String url = "https://fashion-commerce.onrender.com/api/v1/schedule";
 

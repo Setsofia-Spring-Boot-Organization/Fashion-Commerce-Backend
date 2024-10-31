@@ -98,7 +98,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 
         for (String name : category.names()) {
             productCategories.add(
-                    new ProductCategory(name)
+                    new ProductCategory(name.toUpperCase())
             );
         }
 
