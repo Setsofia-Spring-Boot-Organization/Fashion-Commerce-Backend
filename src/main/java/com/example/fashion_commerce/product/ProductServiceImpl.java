@@ -259,31 +259,23 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<Response<List<ThisWeekProductsRes>>> getThisWeekProducts() {
-
+    public ResponseEntity<Response<List<Product>>> getThisWeekProducts() {
         LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(7);
 
+        List<Product> products;
+        products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
 
-        List<Product> products = productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays);
-        List<ThisWeekProductsRes> newThisWeek = new ArrayList<>();
-
-        for (Product product : products) {
-            newThisWeek.add(
-                    new ThisWeekProductsRes(
-                            product.getId(),
-                            product.getImages(),
-                            product.getTypes(),
-                            product.getName(),
-                            product.getPrice()
-                    )
-            );
+        if (products.isEmpty()) {
+            products = productRepository.findAllRandom();
+        } else if (products.size() < 5) {
+            products.addAll(productRepository.findAllRandom());
         }
 
-        Response<List<ThisWeekProductsRes>> productsResponse = new Response<>(
+        Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "new products this week",
-                newThisWeek,
-                String.valueOf(newThisWeek.size())
+                products,
+                String.valueOf(products.size())
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
@@ -359,20 +351,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<List<Product>>> filterAllProducts(FilterProducts filter) {
-
-        List<Product> products;
-        products = productPredicates.globalProductFilter(filter);
-
-        if (products.isEmpty()) {
-            products = productRepository.findAllRandom();
-        } else if (products.size() < 5) {
-            products.addAll(productRepository.findAllRandom());
-        }
+        List<Product> filteredProducts = productPredicates.globalProductFilter(filter);
 
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
                 "filtered products",
-                products
+                filteredProducts
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(productsResponse);
