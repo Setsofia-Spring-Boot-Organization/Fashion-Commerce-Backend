@@ -27,7 +27,7 @@ public interface ProductService {
      *
      * @return a {@link ResponseEntity} containing a {@link Response} with the details of the new product collection
      */
-    ResponseEntity<Response<List<Product>>> getNewCollections();
+    ResponseEntity<Response<Set<Product>>> getNewCollections();
 
     ResponseEntity<Response<Product>> getProduct(String id);
 
@@ -35,7 +35,7 @@ public interface ProductService {
 
     ResponseEntity<Response<List<Product>>> searchProduct(String product);
 
-    ResponseEntity<Response<List<Product>>> getThisWeekProducts();
+    ResponseEntity<Response<Set<Product>>> getThisWeekProducts();
 
     ResponseEntity<Response<List<Product>>> filterProductsFromLastYear(boolean all, String gender);
 
