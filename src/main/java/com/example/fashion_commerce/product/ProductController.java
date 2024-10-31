@@ -56,7 +56,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-collection")
-    public ResponseEntity<Response<List<Product>>> getNewCollections() {
+    public ResponseEntity<Response<Set<Product>>> getNewCollections() {
         return productService.getNewCollections();
     }
 
@@ -90,7 +90,7 @@ public record ProductController(ProductService productService) {
 
 
     @GetMapping("new-this-week")
-    public ResponseEntity<Response<List<Product>>> getThisWeekProducts() {
+    public ResponseEntity<Response<Set<Product>>> getThisWeekProducts() {
         return productService.getThisWeekProducts();
     }
 
