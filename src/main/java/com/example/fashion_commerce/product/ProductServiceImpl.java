@@ -363,7 +363,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products;
         products = productPredicates.globalProductFilter(filter);
 
-
+        if (products.isEmpty()) {
+            products = productRepository.findAllRandom();
+        } else if (products.size() < 5) {
+            products.addAll(productRepository.findAllRandom());
+        }
 
         Response<List<Product>> productsResponse = new Response<>(
                 HttpStatus.OK.value(),
