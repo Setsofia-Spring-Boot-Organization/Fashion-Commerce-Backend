@@ -173,10 +173,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Response<Set<Product>>> getNewCollections() {
-        LocalDateTime lastSevenDays = LocalDateTime.now().minusDays(3);
+        LocalDateTime lastThreeDays = LocalDateTime.now().minusDays(3);
 
         Set<Product> newCollections;
-        newCollections = new HashSet<>(productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastSevenDays));
+        newCollections = new HashSet<>(productRepository.findAllByCreatedAtAfterOrderByCreatedAtDesc(lastThreeDays));
 
         if (newCollections.isEmpty()) {
             newCollections = new HashSet<>(productRepository.findAllRandom());
