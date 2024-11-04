@@ -4,5 +4,5 @@ import java.util.List;
 
 public record GraphOrderAnalytics (
     List<String> labels,
-    List<Integer> data
+    List<Double> data
 ){}
