@@ -4,5 +4,5 @@ public record OrderAnalytics(
     int totalOrder,
     int pendingOrders,
     int deliveredOrders,
-    int canceledOrders
+    int cancelledOrders
 ) { }
