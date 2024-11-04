@@ -390,7 +390,6 @@ public class OrderServiceImpl implements OrderService {
         graph.put("Nov", nov);
         graph.put("Dec", dec);
 
-
         Response<GraphOrderAnalytics> response = getGraphOrderAnalyticsResponse(graph);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
