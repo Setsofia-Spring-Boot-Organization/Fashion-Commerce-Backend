@@ -26,8 +26,8 @@ public interface OrderRepository extends MongoRepository<Order, String>, Queryds
         return (List<Order>) findAll(predicate);
     }
 
-    default List<Order> findOrdersByMonth() {
-        LocalDateTime startDate = LocalDateTime.now().withMonth(10).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+    default List<Order> findOrdersByMonth(int month) {
+        LocalDateTime startDate = LocalDateTime.now().withMonth(month).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endDate = startDate.plusMonths(1);
 
         QOrder qOrder = new QOrder("Orders");
