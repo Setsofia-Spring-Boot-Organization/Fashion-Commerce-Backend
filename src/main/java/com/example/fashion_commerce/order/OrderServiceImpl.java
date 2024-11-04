@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.order;
 
+import com.example.fashion_commerce.admin.responses.GraphOrderAnalytics;
 import com.example.fashion_commerce.admin.responses.OrderAnalytics;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.exception.FashionCommerceException;
@@ -361,25 +362,37 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
-        Map<String, Integer> graph = Map.ofEntries(
-                Map.entry("January", 0),
-                Map.entry("February",1),
-                Map.entry("March",2),
-                Map.entry("April",3),
-                Map.entry("May",4),
-                Map.entry("June",5),
-                Map.entry("July",6),
-                Map.entry("August",7),
-                Map.entry("September",8),
-                Map.entry("October",9),
-                Map.entry("November",10),
-                Map.entry("December",11)
-        );
+        LinkedHashMap<String, Integer> graph = new LinkedHashMap<>();
 
-        Response<?> response = new Response<>(
+        graph.put("Jan", 0);
+        graph.put("Feb", 1);
+        graph.put("Mar", 2);
+        graph.put("Apr", 3);
+        graph.put("May", 4);
+        graph.put("Jun", 5);
+        graph.put("Jul", 6);
+        graph.put("Aug", 7);
+        graph.put("Sep", 8);
+        graph.put("Oct", 9);
+        graph.put("Nov", 10);
+        graph.put("Dec", 11);
+
+
+        List<String> months = new ArrayList<>();
+        List<Integer> sales = new ArrayList<>();
+
+        for (var data : graph.entrySet()) {
+            months.add(data.getKey());
+            sales.add(data.getValue());
+        }
+
+        Response<GraphOrderAnalytics> response = new Response<>(
                 HttpStatus.OK.value(),
                 "order graph analytics",
-                graph
+                new GraphOrderAnalytics(
+                        months,
+                        sales
+                )
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
