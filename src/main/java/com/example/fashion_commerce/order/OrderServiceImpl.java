@@ -356,4 +356,11 @@ public class OrderServiceImpl implements OrderService {
 
         return orderRepository.findOrderByDateAndStatus(lastMonth, status);
     }
+
+
+
+    @Override
+    public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
+        return null;
+    }
 }
