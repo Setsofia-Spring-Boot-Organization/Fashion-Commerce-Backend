@@ -332,6 +332,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics() {
+        List<Order> orders = orderRepository.findAll();
+        List<Order> pendingOrders = getAllOrders("PENDING");
+        List<Order> deliveredOrders = getAllOrders("DELIVERED");
+        List<Order> cancelledOrders = getAllOrders("CANCELLED");
+
+
         return null;
+    }
+
+    private List<Order> getAllOrders(String status) {
+        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
+
+        return orderRepository.findOrderByDateAndStatus(lastMonth, status);
     }
 }
