@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.order;
 
+import com.example.fashion_commerce.admin.responses.OrderAnalytics;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.exception.Message;
@@ -327,5 +328,32 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new FashionCommerceException(
                 Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label)
         ));
+    }
+
+    @Override
+    public ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics() {
+        List<Order> orders = orderRepository.findAll();
+        List<Order> pendingOrders = getAllOrders("PENDING");
+        List<Order> deliveredOrders = getAllOrders("DELIVERED");
+        List<Order> cancelledOrders = getAllOrders("CANCELLED");
+
+        Response<OrderAnalytics> orderResponse = new Response<>(
+          HttpStatus.OK.value(),
+          "order analytics",
+          new OrderAnalytics(
+                  orders.size(),
+                  pendingOrders.size(),
+                  deliveredOrders.size(),
+                  cancelledOrders.size()
+          )
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
+    }
+
+    private List<Order> getAllOrders(String status) {
+        LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
+
+        return orderRepository.findOrderByDateAndStatus(lastMonth, status);
     }
 }
