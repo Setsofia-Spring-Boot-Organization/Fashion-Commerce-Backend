@@ -361,6 +361,27 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
-        return null;
+        Map<String, Integer> graph = Map.ofEntries(
+                Map.entry("January", 0),
+                Map.entry("February",1),
+                Map.entry("March",2),
+                Map.entry("April",3),
+                Map.entry("May",4),
+                Map.entry("June",5),
+                Map.entry("July",6),
+                Map.entry("August",7),
+                Map.entry("September",8),
+                Map.entry("October",9),
+                Map.entry("November",10),
+                Map.entry("December",11)
+        );
+
+        Response<?> response = new Response<>(
+                HttpStatus.OK.value(),
+                "order graph analytics",
+                graph
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
