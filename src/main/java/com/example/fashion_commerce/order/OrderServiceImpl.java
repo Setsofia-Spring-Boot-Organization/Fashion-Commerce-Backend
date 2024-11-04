@@ -364,6 +364,11 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
         LinkedHashMap<String, Integer> graph = new LinkedHashMap<>();
 
+        List<List<OrderProducts>> janSales = orderRepository.findOrdersByMonth().stream().map(Order::getProducts).toList();
+
+
+        System.out.println("janSales = " + janSales);
+
         graph.put("Jan", 0);
         graph.put("Feb", 1);
         graph.put("Mar", 2);
