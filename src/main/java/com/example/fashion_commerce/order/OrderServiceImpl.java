@@ -362,33 +362,50 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
-        LinkedHashMap<String, Integer> graph = new LinkedHashMap<>();
+        LinkedHashMap<String, Double> graph = new LinkedHashMap<>();
+
+        double jan = getTotalMonthlySales(1);
+        double feb = getTotalMonthlySales(2);
+        double mar = getTotalMonthlySales(3);
+        double apr = getTotalMonthlySales(4);
+        double may = getTotalMonthlySales(5);
+        double jun = getTotalMonthlySales(6);
+        double jul = getTotalMonthlySales(7);
+        double aug = getTotalMonthlySales(8);
+        double sep = getTotalMonthlySales(9);
+        double oct = getTotalMonthlySales(10);
+        double nov = getTotalMonthlySales(11);
+        double dec = getTotalMonthlySales(12);
+
+        graph.put("Jan", jan);
+        graph.put("Feb", feb);
+        graph.put("Mar", mar);
+        graph.put("Apr", apr);
+        graph.put("May", may);
+        graph.put("Jun", jun);
+        graph.put("Jul", jul);
+        graph.put("Aug", aug);
+        graph.put("Sep", sep);
+        graph.put("Oct", oct);
+        graph.put("Nov", nov);
+        graph.put("Dec", dec);
 
 
+        Response<GraphOrderAnalytics> response = getGraphOrderAnalyticsResponse(graph);
 
-        graph.put("Jan", 0);
-        graph.put("Feb", 1);
-        graph.put("Mar", 2);
-        graph.put("Apr", 3);
-        graph.put("May", 4);
-        graph.put("Jun", 5);
-        graph.put("Jul", 6);
-        graph.put("Aug", 7);
-        graph.put("Sep", 8);
-        graph.put("Oct", 9);
-        graph.put("Nov", 10);
-        graph.put("Dec", 11);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
-
+    private static Response<GraphOrderAnalytics> getGraphOrderAnalyticsResponse(LinkedHashMap<String, Double> graph) {
         List<String> months = new ArrayList<>();
-        List<Integer> sales = new ArrayList<>();
+        List<Double> sales = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> data : graph.entrySet()) {
+        for (Map.Entry<String, Double> data : graph.entrySet()) {
             months.add(data.getKey());
             sales.add(data.getValue());
         }
 
-        Response<GraphOrderAnalytics> response = new Response<>(
+        return new Response<>(
                 HttpStatus.OK.value(),
                 "order graph analytics",
                 new GraphOrderAnalytics(
@@ -396,11 +413,9 @@ public class OrderServiceImpl implements OrderService {
                         sales
                 )
         );
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    private double totalMonthlySales(int month) {
+    private double getTotalMonthlySales(int month) {
         List<List<OrderProducts>> orders = orderRepository.findOrdersByMonth(month).stream().map(Order::getProducts).toList();
         double finalPrice = 0;
 
