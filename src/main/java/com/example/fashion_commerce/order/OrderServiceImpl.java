@@ -364,10 +364,7 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
         LinkedHashMap<String, Integer> graph = new LinkedHashMap<>();
 
-        List<List<OrderProducts>> janSales = orderRepository.findOrdersByMonth().stream().map(Order::getProducts).toList();
 
-
-        System.out.println("janSales = " + janSales);
 
         graph.put("Jan", 0);
         graph.put("Feb", 1);
@@ -401,5 +398,24 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    private double totalMonthlySales(int month) {
+        List<List<OrderProducts>> orders = orderRepository.findOrdersByMonth(month).stream().map(Order::getProducts).toList();
+        double finalPrice = 0;
+
+        for (var order : orders) {
+            for (OrderProducts orderProducts : order) {
+                System.out.println("orderProducts = " + orderProducts);
+
+                double quantity = orderProducts.getQuantity();
+                double productPrice = orderProducts.getProduct().getPrice();
+
+                double tempPrice = quantity * productPrice;
+                finalPrice += tempPrice;
+            }
+        }
+
+        return finalPrice;
     }
 }
