@@ -381,7 +381,7 @@ public class OrderServiceImpl implements OrderService {
         List<String> months = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
 
-        for (var data : graph.entrySet()) {
+        for (Map.Entry<String, Integer> data : graph.entrySet()) {
             months.add(data.getKey());
             sales.add(data.getValue());
         }
