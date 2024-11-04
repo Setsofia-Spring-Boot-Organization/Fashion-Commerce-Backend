@@ -348,7 +348,7 @@ public class OrderServiceImpl implements OrderService {
           )
         );
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
 
     private List<Order> getAllOrders(String status) {
