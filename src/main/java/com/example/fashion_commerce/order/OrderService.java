@@ -20,4 +20,6 @@ public interface OrderService {
     ResponseEntity<Response<Order>> updateOrder(String id, String status, UpdateOrder notes);
 
     ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics();
+
+    ResponseEntity<Response<?>> getGraphOrderAnalytics();
 }
