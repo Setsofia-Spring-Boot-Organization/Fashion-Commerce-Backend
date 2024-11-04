@@ -21,4 +21,9 @@ public class DashboardController {
     public ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics() {
         return orderService.getOrderAnalytics();
     }
+
+    @GetMapping("order/graph-analytics")
+    public ResponseEntity<Response<?>> getOrderGraphAnalytics() {
+        return orderService.getGraphOrderAnalytics();
+    }
 }

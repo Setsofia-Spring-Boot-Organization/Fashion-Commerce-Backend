@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.order;
 
+import com.example.fashion_commerce.admin.responses.GraphOrderAnalytics;
 import com.example.fashion_commerce.admin.responses.OrderAnalytics;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.exception.FashionCommerceException;
@@ -355,5 +356,80 @@ public class OrderServiceImpl implements OrderService {
         LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
 
         return orderRepository.findOrderByDateAndStatus(lastMonth, status);
+    }
+
+
+
+    @Override
+    public ResponseEntity<Response<?>> getGraphOrderAnalytics() {
+        LinkedHashMap<String, Double> graph = new LinkedHashMap<>();
+
+        double jan = getTotalMonthlySales(1);
+        double feb = getTotalMonthlySales(2);
+        double mar = getTotalMonthlySales(3);
+        double apr = getTotalMonthlySales(4);
+        double may = getTotalMonthlySales(5);
+        double jun = getTotalMonthlySales(6);
+        double jul = getTotalMonthlySales(7);
+        double aug = getTotalMonthlySales(8);
+        double sep = getTotalMonthlySales(9);
+        double oct = getTotalMonthlySales(10);
+        double nov = getTotalMonthlySales(11);
+        double dec = getTotalMonthlySales(12);
+
+        graph.put("Jan", jan);
+        graph.put("Feb", feb);
+        graph.put("Mar", mar);
+        graph.put("Apr", apr);
+        graph.put("May", may);
+        graph.put("Jun", jun);
+        graph.put("Jul", jul);
+        graph.put("Aug", aug);
+        graph.put("Sep", sep);
+        graph.put("Oct", oct);
+        graph.put("Nov", nov);
+        graph.put("Dec", dec);
+
+        Response<GraphOrderAnalytics> response = getGraphOrderAnalyticsResponse(graph);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    private static Response<GraphOrderAnalytics> getGraphOrderAnalyticsResponse(LinkedHashMap<String, Double> graph) {
+        List<String> months = new ArrayList<>();
+        List<Double> sales = new ArrayList<>();
+
+        for (Map.Entry<String, Double> data : graph.entrySet()) {
+            months.add(data.getKey());
+            sales.add(data.getValue());
+        }
+
+        return new Response<>(
+                HttpStatus.OK.value(),
+                "order graph analytics",
+                new GraphOrderAnalytics(
+                        months,
+                        sales
+                )
+        );
+    }
+
+    private double getTotalMonthlySales(int month) {
+        List<List<OrderProducts>> orders = orderRepository.findOrdersByMonth(month).stream().map(Order::getProducts).toList();
+        double finalPrice = 0;
+
+        for (var order : orders) {
+            for (OrderProducts orderProducts : order) {
+                System.out.println("orderProducts = " + orderProducts);
+
+                double quantity = orderProducts.getQuantity();
+                double productPrice = orderProducts.getProduct().getPrice();
+
+                double tempPrice = quantity * productPrice;
+                finalPrice += tempPrice;
+            }
+        }
+
+        return finalPrice;
     }
 }
