@@ -1,5 +1,8 @@
 package com.example.fashion_commerce.admin.responses;
 
-public class GraphOrderAnalytics {
-    
-}
+import java.util.List;
+
+public record GraphOrderAnalytics (
+    List<String> labels,
+    List<Integer> data
+){}
