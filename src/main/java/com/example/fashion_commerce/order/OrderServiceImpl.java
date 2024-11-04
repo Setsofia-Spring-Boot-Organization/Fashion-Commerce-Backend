@@ -337,6 +337,16 @@ public class OrderServiceImpl implements OrderService {
         List<Order> deliveredOrders = getAllOrders("DELIVERED");
         List<Order> cancelledOrders = getAllOrders("CANCELLED");
 
+        Response<OrderAnalytics> orderResponse = new Response<>(
+          HttpStatus.OK.value(),
+          "order analytics",
+          new OrderAnalytics(
+                  orders.size(),
+                  pendingOrders.size(),
+                  deliveredOrders.size(),
+                  cancelledOrders.size()
+          )
+        );
 
         return null;
     }
