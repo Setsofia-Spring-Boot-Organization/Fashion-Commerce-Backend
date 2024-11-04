@@ -1,5 +1,6 @@
 package com.example.fashion_commerce.order;
 
+import com.example.fashion_commerce.admin.responses.OrderAnalytics;
 import com.example.fashion_commerce.exception.Error;
 import com.example.fashion_commerce.exception.FashionCommerceException;
 import com.example.fashion_commerce.exception.Message;
@@ -327,5 +328,10 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new FashionCommerceException(
                 Error.INVALID_ORDER_ID, new Throwable(Message.THE_REQUESTED_ORDER_ID_IS_INCORRECT.label)
         ));
+    }
+
+    @Override
+    public ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics() {
+        return null;
     }
 }
