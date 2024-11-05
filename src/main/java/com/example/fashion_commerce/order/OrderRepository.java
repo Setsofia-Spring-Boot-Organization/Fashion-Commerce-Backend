@@ -19,10 +19,17 @@ public interface OrderRepository extends MongoRepository<Order, String>, Queryds
 
     default List<Order> findOrderByDateAndStatus(LocalDateTime date, String status) {
         QOrder qOrder = new QOrder("orders");
-        Predicate predicate = qOrder.dateCreated.after(date).and(
-                qOrder.orderStatus.eq(OrderStatus.valueOf(status.toUpperCase()))
-        );
+        Predicate predicate;
 
+        if (status.equals("all")) {
+            predicate = qOrder.dateCreated.after(date);
+        } else {
+            predicate = qOrder.dateCreated.after(date).and(
+                    qOrder.orderStatus.eq(OrderStatus.valueOf(status.toUpperCase()))
+            );
+        }
+
+        assert predicate != null;
         return (List<Order>) findAll(predicate);
     }
 
