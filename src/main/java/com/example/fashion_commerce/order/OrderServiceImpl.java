@@ -333,29 +333,43 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<Response<OrderAnalytics>> getOrderAnalytics() {
-        List<Order> orders = orderRepository.findAll();
-        List<Order> pendingOrders = getAllOrders("PENDING");
-        List<Order> deliveredOrders = getAllOrders("DELIVERED");
-        List<Order> cancelledOrders = getAllOrders("CANCELLED");
+        double orders = getAllOrders("all");
+        double pendingOrders = getAllOrders("PENDING");
+        double deliveredOrders = getAllOrders("DELIVERED");
+        double cancelledOrders = getAllOrders("CANCELLED");
 
         Response<OrderAnalytics> orderResponse = new Response<>(
           HttpStatus.OK.value(),
           "order analytics",
           new OrderAnalytics(
-                  orders.size(),
-                  pendingOrders.size(),
-                  deliveredOrders.size(),
-                  cancelledOrders.size()
+                  orders,
+                  pendingOrders,
+                  deliveredOrders,
+                  cancelledOrders
           )
         );
 
         return ResponseEntity.status(HttpStatus.OK).body(orderResponse);
     }
 
-    private List<Order> getAllOrders(String status) {
+    private double getAllOrders(String status) {
         LocalDateTime lastMonth = LocalDateTime.now().minusMonths(1);
 
-        return orderRepository.findOrderByDateAndStatus(lastMonth, status);
+        List<Order> orders = orderRepository.findOrderByDateAndStatus(lastMonth, status);
+
+        double finalPrice = 0;
+        for (var order : orders) {
+            for (OrderProducts orderProducts : order.getProducts()) {
+
+                double quantity = orderProducts.getQuantity();
+                double productPrice = orderProducts.getProduct().getPrice();
+
+                double tempPrice = quantity * productPrice;
+                finalPrice += tempPrice;
+            }
+        }
+
+        return finalPrice;
     }
 
 
@@ -420,7 +434,6 @@ public class OrderServiceImpl implements OrderService {
 
         for (var order : orders) {
             for (OrderProducts orderProducts : order) {
-                System.out.println("orderProducts = " + orderProducts);
 
                 double quantity = orderProducts.getQuantity();
                 double productPrice = orderProducts.getProduct().getPrice();
