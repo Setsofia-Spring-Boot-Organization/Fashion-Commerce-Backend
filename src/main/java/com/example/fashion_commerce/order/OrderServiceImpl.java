@@ -361,7 +361,7 @@ public class OrderServiceImpl implements OrderService {
         for (var order : orders) {
             for (OrderProducts orderProducts : order.getProducts()) {
 
-                double quantity = orderProducts.getQuantity();
+                int quantity = orderProducts.getQuantity();
                 double productPrice = orderProducts.getProduct().getPrice();
 
                 double tempPrice = quantity * productPrice;
