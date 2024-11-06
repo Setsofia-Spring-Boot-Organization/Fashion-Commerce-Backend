@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -357,19 +358,11 @@ public class OrderServiceImpl implements OrderService {
 
         List<Order> orders = orderRepository.findOrderByDateAndStatus(lastMonth, status);
 
-        double finalPrice = 0;
-        for (var order : orders) {
-            for (OrderProducts orderProducts : order.getProducts()) {
-
-                int quantity = orderProducts.getQuantity();
-                double productPrice = orderProducts.getProduct().getPrice();
-
-                double tempPrice = quantity * productPrice;
-                finalPrice += tempPrice;
-            }
-        }
-
-        return finalPrice;
+        return orders.stream()
+                .map(Order::getProducts)
+                .flatMap(Collection::stream)
+                .map(orderProduct -> orderProduct.getProduct().getPrice() * orderProduct.getQuantity())
+                .reduce((double) 0, Double::sum);
     }
 
 
